@@ -6,46 +6,64 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/08/30 18:15:39 by vpoka            ###   ########.fr        #
+#    Updated: 2025/08/30 18:28:53 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+# Project configuration
 NAME = cub3D
-
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
+# Directories
 SRC_DIR = src
 OBJ_DIR = objs
 LIBFT_DIR = libft
 INC_DIR = include
 
+# Libraries and includes
 LIBFT = $(LIBFT_DIR)/libft.a
 INCLUDE = -I$(INC_DIR) -I$(LIBFT_DIR)
 
-SRCS = $(SRC_DIR)/*
+# Source files
+SRCS = $(wildcard $(SRC_DIR)/*.c)
+OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
 
-OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+# Colors for nice output
+RED = \033[0;31m
+GREEN = \033[0;32m
+YELLOW = \033[0;33m
+BLUE = \033[0;34m
+RESET = \033[0m
+
+# Rules
+all: $(NAME)
 
 $(LIBFT):
-	make -C $(LIBFT_DIR)
+	@echo "$(YELLOW)Building libft...$(RESET)"
+	@make -C $(LIBFT_DIR)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
 
-all: $(LIBFT) $(NAME)
+$(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
+	@echo "$(BLUE)Compiling $<$(RESET)"
+	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
-$(NAME): $(OBJ_DIR) $(OBJS)
-	$(CC) $(CFLAGS) $(INCLUDE) $(OBJS) $(LIBFT) -o $(NAME)
+$(NAME): $(LIBFT) $(OBJS)
+	@echo "$(GREEN)Linking $(NAME)...$(RESET)"
+	@$(CC) $(CFLAGS) $(INCLUDE) $(OBJS) $(LIBFT) -o $(NAME)
+	@echo "$(GREEN)$(NAME) compiled successfully!$(RESET)"
 
 clean:
-	rm -rf $(OBJ_DIR)
-	make -C $(LIBFT_DIR) clean
+	@echo "$(RED)Cleaning object files...$(RESET)"
+	@rm -rf $(OBJ_DIR)
+	@make -C $(LIBFT_DIR) clean
 
-fclean:
-	rm -rf $(OBJ_DIR) $(NAME)
-	make -C $(LIBFT_DIR) fclean
+fclean: clean
+	@echo "$(RED)Cleaning $(NAME)...$(RESET)"
+	@rm -f $(NAME)
+	@make -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
