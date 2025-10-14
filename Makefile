@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/14 21:00:17 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/14 21:27:53 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,16 @@ define log
 	@ printf "$($(1))[$(1)]$(RST) $(2)\n"
 endef
 
+#-----RUN IN DIRECTORY FUNCTION-----#
+
+# Usage: $(call run_in_dir,directory_path,make_command)
+# Example: $(call run_in_dir,libft,complete)
+define run_in_dir
+	@ printf "\n"
+	@ make $(2) -C $(1)
+	@ printf "\n"
+endef
+
 #-----RULES-----#
 
 all: $(NAME)
@@ -72,7 +82,7 @@ $(B)/%.o: $(S)/%.c
 
 $(NAME): TOTAL_FILES = $(words $(SRCS))
 $(NAME): $(B) $(OBJS)
-	@ make complete --directory=libft
+	$(call run_in_dir,libft,complete)
 	$(call log,INFO,building $(NAME))
 	@ $(COMP) $(OBJS) $(LIBFT) -o $(NAME)
 	$(call log,SUCCESS,$(NAME) built successfully!)
@@ -80,12 +90,12 @@ $(NAME): $(B) $(OBJS)
 clean:
 	@ rm -rf $(B)
 	$(call log,WARNING,deleted $(B) directory for $(NAME)!)
-	@ make clean --directory=libft
+	$(call run_in_dir,libft,clean)
 
 fclean: clean
 	@ rm -f $(NAME)
 	$(call log,WARNING,deleted $(NAME)!)
-	@ make fclean --directory=libft
+	$(call run_in_dir,libft,fclean)
 
 re: fclean all
 
