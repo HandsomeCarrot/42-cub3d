@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/14 19:37:05 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/14 21:00:17 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,36 +40,57 @@ BLUE = \033[1;34m
 MAGENTA = \033[1;35m
 CYAN = \033[1;36m
 
+#-----LOG LEVELS-----#
+
+INFO = $(BLUE)
+WARNING = $(YELLOW)
+ERROR = $(RED)
+SUCCESS = $(GREEN)
+DEBUG = $(MAGENTA)
+
+#-----LOG FUNCTION-----#
+
+# Usage: $(call log,LEVEL,message)
+# Example: $(call log,INFO,Building library...)
+define log
+	@ printf "$($(1))[$(1)]$(RST) $(2)\n"
+endef
+
 #-----RULES-----#
 
 all: $(NAME)
 
 $(B):
 	@ mkdir -p $(B)
-	@ printf "$(YELLOW)$(NAME): compiling...$(RST)\n"
+	$(call log,INFO,Created $(B) directory for $(NAME))
 
+COMPILED_FILES = 0
 $(B)/%.o: $(S)/%.c
-	$(COMP) -MD -MP -c $< -o $@
+	$(eval COMPILED_FILES=$(shell echo $$(($(COMPILED_FILES)+1))))
+	$(call log,DEBUG,Compiling [$(COMPILED_FILES)/$(TOTAL_FILES)]: $<)
+	@ $(COMP) -MD -MP -c $< -o $@
 
+$(NAME): TOTAL_FILES = $(words $(SRCS))
 $(NAME): $(B) $(OBJS)
 	@ make complete --directory=libft
-	$(COMP) $(OBJS) $(LIBFT) -o $(NAME)
-	@ printf "$(GREEN)$(NAME) built successfully!$(RST)\n"
+	$(call log,INFO,building $(NAME))
+	@ $(COMP) $(OBJS) $(LIBFT) -o $(NAME)
+	$(call log,SUCCESS,$(NAME) built successfully!)
 
 clean:
 	@ rm -rf $(B)
-	@ printf "$(RED)deleted BUILD files$(RST)\n"
+	$(call log,WARNING,deleted $(B) directory for $(NAME)!)
 	@ make clean --directory=libft
 
 fclean: clean
 	@ rm -f $(NAME)
-	@ printf "$(RED)deleted PROGRAM file$(RST)\n"
+	$(call log,WARNING,deleted $(NAME)!)
 	@ make fclean --directory=libft
 
 re: fclean all
 
 run: re
-	@ printf "$(CYAN)$(NAME): starting...$(RST)\n"
+	$(call log,INFO,executing $(NAME))
 	@ ./$(NAME)
 
 .PHONY: all clean fclean re run

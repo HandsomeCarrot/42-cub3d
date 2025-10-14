@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/14 12:43:39 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/14 19:50:39 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/14 20:59:15 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -87,39 +87,61 @@ BLUE = \033[1;34m
 MAGENTA = \033[1;35m
 CYAN = \033[1;36m
 
+#-----LOG LEVELS-----#
+
+INFO = $(BLUE)
+WARNING = $(YELLOW)
+ERROR = $(RED)
+SUCCESS = $(GREEN)
+DEBUG = $(MAGENTA)
+
+#-----LOG FUNCTION-----#
+
+# Usage: $(call log,LEVEL,message)
+# Example: $(call log,INFO,Building library...)
+define log
+	@ printf "$($(1))[$(1)]$(RST) $(2)\n"
+endef
+
 #-----RULES-----#
 
 all: $(NAME)
 
 $(B):
 	@ mkdir -p $(B)
+	$(call log,INFO,Created $(B) directory for $(NAME))
 
+COMPILED_FILES = 0
 $(B)/%.o: $(S)/%.c
-	@ printf "compiling $<\n"
+	$(eval COMPILED_FILES=$(shell echo $$(($(COMPILED_FILES)+1))))	
+	$(call log,DEBUG,Compiling [$(COMPILED_FILES)/$(TOTAL_FILES)]: $<)
 	@ $(COMP) -c $< -o $@
 
+$(NAME): TOTAL_FILES = $(words $(SRCS))
 $(NAME): $(B) $(OBJS)
-	@ printf "$(YELLOW)linking $(NAME) with standard functions$(RST)\n"
+	$(call log,INFO,linking $(NAME) with standard functions)
 	@ $(ARNAME) $(OBJS)
-	@ printf "$(GREEN)$(NAME) built successfully!$(RST)\n"
+	$(call log,SUCCESS,$(NAME) built successfully!)
 
+bonus: TOTAL_FILES = $(words $(BONUS_SRCS))
 bonus: $(B) $(BONUS_OBJS)
-	@ printf "$(YELLOW)linking $(NAME) with bonus functions$(RST)\n"
+	$(call log,INFO,linking $(NAME) with bonus functions)
 	@ $(ARNAME) $(OBJS)
-	@ printf "$(GREEN)$(NAME) built successfully!$(RST)\n"
+	$(call log,SUCCESS,$(NAME) built successfully!)
 
+complete: TOTAL_FILES = $(words $(SRCS) $(BONUS_SRCS))
 complete: $(B) $(ALL_OBJS)
-	@ printf "$(YELLOW)linking $(NAME) with all functions$(RST)\n"
+	$(call log,INFO,linking $(NAME) with all functions)
 	@ $(ARNAME) $(OBJS)
-	@ printf "$(GREEN)$(NAME) built successfully!$(RST)\n"
+	$(call log,SUCCESS,$(NAME) built successfully!)
 
 clean:
 	@ rm -rf $(B)
-	@ printf "$(RED)deleted BUILD files$(RST)\n"
+	$(call log,WARNING,deleted $(B) directory for $(NAME)!)
 
 fclean: clean
 	@ rm -f $(NAME)
-	@ printf "$(RED)deleted LIBRARY file$(RST)\n"
+	$(call log,WARNING,deleted $(NAME)!)
 
 re: fclean $(NAME)
 
