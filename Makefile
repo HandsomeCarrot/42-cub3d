@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/14 10:53:00 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/14 10:55:10 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,8 @@ CFLAGS = -Wall -Wextra -Werror -MD -MP
 INCLUDE = -Iinclude -Ilibft
 COMP = $(CC) $(CFLAGS) $(INCLUDE)
 
+LIBFT = libft/libft.a
+
 S = src
 SRCS =	$(addprefix $(S)/, \
 		main.c)
@@ -27,7 +29,6 @@ SRCS =	$(addprefix $(S)/, \
 B = build
 OBJS = $(SRCS:$(S)/%.c=$(B)/%.o)
 DEPS = $(OBJS:.o=.d)
-LIBFT = libft/libft.a
 
 #-----COLORS-----#
 
