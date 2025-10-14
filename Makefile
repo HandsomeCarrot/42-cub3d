@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/14 18:45:38 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/14 19:37:05 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@
 NAME = cub3d
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -MD -MP
+CFLAGS = -Wall -Wextra -Werror
 
 INCLUDE = -Iinclude -Ilibft/include
 COMP = $(CC) $(CFLAGS) $(INCLUDE)
@@ -42,8 +42,6 @@ CYAN = \033[1;36m
 
 #-----RULES-----#
 
--include $(DEPS)
-
 all: $(NAME)
 
 $(B):
@@ -51,13 +49,10 @@ $(B):
 	@ printf "$(YELLOW)$(NAME): compiling...$(RST)\n"
 
 $(B)/%.o: $(S)/%.c
-	$(COMP) -c $< -o $@
+	$(COMP) -MD -MP -c $< -o $@
 
-$(LIBFT):
-	@ echo "$(YELLOW)Building libft...$(RESET)"
+$(NAME): $(B) $(OBJS)
 	@ make complete --directory=libft
-
-$(NAME): $(LIBFT) $(B) $(OBJS)
 	$(COMP) $(OBJS) $(LIBFT) -o $(NAME)
 	@ printf "$(GREEN)$(NAME) built successfully!$(RST)\n"
 
@@ -78,3 +73,5 @@ run: re
 	@ ./$(NAME)
 
 .PHONY: all clean fclean re run
+
+-include $(DEPS)

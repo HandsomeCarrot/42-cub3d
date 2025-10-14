@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/14 12:43:39 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/14 16:29:18 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/14 19:35:27 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,8 +89,6 @@ CYAN = \033[1;36m
 
 #-----RULES-----#
 
--include $(DEPS)
-
 all: $(NAME)
 
 $(B):
@@ -123,3 +121,5 @@ fclean: clean
 re: fclean $(NAME)
 
 .PHONY: all, bonus, complete, clean, fclean, re
+
+-include $(DEPS)
