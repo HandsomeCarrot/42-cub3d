@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/14 12:43:39 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/14 15:31:03 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/14 16:29:18 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,9 +75,7 @@ OBJS = $(SRCS:$(S)/%.c=$(B)/%.o)
 BONUS_OBJS = $(BONUS_SRCS:$(S)/%.c=$(B)/%.o)
 ALL_OBJS = $(OBJS) $(BONUS_OBJS)
 
-DEPS = $(OBJS:.o=.d)
-BONUS_DEPS = $(BONUS_OBJS:.o=.d)
-ALL_DEPS = $(ALL_OBJS:.o=.d)
+DEPS = $(OBJS:.o=.d) $(BONUS_OBJS:.o=.d)
 
 #-----COLORS-----#
 
@@ -100,18 +98,18 @@ $(B):
 	@ printf "$(YELLOW)$(NAME): compiling ...$(RST)\n"
 
 $(B)/%.o: $(S)/%.c
-	@ $(COMP) -c $< -o $@
+	$(COMP) -c $< -o $@
 
 $(NAME): $(B) $(OBJS)
-	@ $(ARNAME) $(OBJS)
+	$(ARNAME) $(OBJS)
 	@ printf "$(GREEN)$(NAME) (basic) built successfully!$(RST)\n"
 
 bonus: $(B) $(BONUS_OBJS)
-	@ $(ARNAME) $(BONUS_OBJS)
+	$(ARNAME) $(BONUS_OBJS)
 	@ printf "$(GREEN)$(NAME) (bonus) built successfully!$(RST)\n"
 
 complete: $(B) $(ALL_OBJS)
-	@ $(ARNAME) $(ALL_OBJS)
+	$(ARNAME) $(ALL_OBJS)
 	@ printf "$(GREEN)$(NAME) (complete) built successfully!$(RST)\n"
 
 clean:
