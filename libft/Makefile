@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/14 12:43:39 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/14 15:13:36 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/14 15:31:03 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,6 @@ INC = -Iinclude
 COMP = $(CC) $(CFLAGS) $(INC)
 
 ARNAME = ar rcs $(NAME)
-
-RM = rm -rf
 
 S = src
 SRCS =	$(addprefix $(S)/, \
@@ -62,15 +60,15 @@ SRCS =	$(addprefix $(S)/, \
 		ft_toupper.c)
 
 BONUS_SRCS =	$(addprefix $(S)/, \
-		ft_lstnew_bonus.c \
-		ft_lstadd_back_bonus.c \
-		ft_lstadd_front_bonus.c \
-		ft_lstclear_bonus.c \
-		ft_lstdelone_bonus.c \
-		ft_lstiter_bonus.c \
-		ft_lstlast_bonus.c \
-		ft_lstmap_bonus.c \
-		ft_lstsize_bonus.c)
+				ft_lstnew_bonus.c \
+				ft_lstadd_back_bonus.c \
+				ft_lstadd_front_bonus.c \
+				ft_lstclear_bonus.c \
+				ft_lstdelone_bonus.c \
+				ft_lstiter_bonus.c \
+				ft_lstlast_bonus.c \
+				ft_lstmap_bonus.c \
+				ft_lstsize_bonus.c)
 
 B = build
 OBJS = $(SRCS:$(S)/%.c=$(B)/%.o)
@@ -102,26 +100,26 @@ $(B):
 	@ printf "$(YELLOW)$(NAME): compiling ...$(RST)\n"
 
 $(B)/%.o: $(S)/%.c
-	$(COMP) -c $< -o $@
+	@ $(COMP) -c $< -o $@
 
 $(NAME): $(B) $(OBJS)
-	$(ARNAME) $(OBJS)
-	@ printf "$(GREEN)$(NAME) library built successfully!$(RST)\n"
+	@ $(ARNAME) $(OBJS)
+	@ printf "$(GREEN)$(NAME) (basic) built successfully!$(RST)\n"
 
 bonus: $(B) $(BONUS_OBJS)
-	$(ARNAME) $(BONUS_OBJS)
-	@ printf "$(GREEN)$(NAME) bonus library built successfully!$(RST)\n"
+	@ $(ARNAME) $(BONUS_OBJS)
+	@ printf "$(GREEN)$(NAME) (bonus) built successfully!$(RST)\n"
 
 complete: $(B) $(ALL_OBJS)
-	$(ARNAME) $(ALL_OBJS)
-	@ printf "$(GREEN)$(NAME) complete library built successfully!$(RST)\n"
+	@ $(ARNAME) $(ALL_OBJS)
+	@ printf "$(GREEN)$(NAME) (complete) built successfully!$(RST)\n"
 
 clean:
-	rm -rf $(ALL_OBJS)
-	@ printf "$(RED)deleted OBJECT files$(RST)\n"
+	@ rm -rf $(B)
+	@ printf "$(RED)deleted BUILD files$(RST)\n"
 
 fclean: clean
-	rm -f $(NAME)
+	@ rm -f $(NAME)
 	@ printf "$(RED)deleted LIBRARY file$(RST)\n"
 
 re: fclean $(NAME)
