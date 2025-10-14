@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/14 10:55:10 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/14 18:45:38 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ NAME = cub3d
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -MD -MP
 
-INCLUDE = -Iinclude -Ilibft
+INCLUDE = -Iinclude -Ilibft/include
 COMP = $(CC) $(CFLAGS) $(INCLUDE)
 
 LIBFT = libft/libft.a
@@ -54,8 +54,8 @@ $(B)/%.o: $(S)/%.c
 	$(COMP) -c $< -o $@
 
 $(LIBFT):
-	@echo "$(YELLOW)Building libft...$(RESET)"
-	@make -C $(LIBFT_DIR)
+	@ echo "$(YELLOW)Building libft...$(RESET)"
+	@ make complete --directory=libft
 
 $(NAME): $(LIBFT) $(B) $(OBJS)
 	$(COMP) $(OBJS) $(LIBFT) -o $(NAME)
@@ -64,12 +64,12 @@ $(NAME): $(LIBFT) $(B) $(OBJS)
 clean:
 	@ rm -rf $(B)
 	@ printf "$(RED)deleted BUILD files$(RST)\n"
-	@ make -C libft clean
+	@ make clean --directory=libft
 
 fclean: clean
 	@ rm -f $(NAME)
 	@ printf "$(RED)deleted PROGRAM file$(RST)\n"
-	make -C libft fclean
+	@ make fclean --directory=libft
 
 re: fclean all
 
