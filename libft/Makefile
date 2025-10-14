@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/14 12:43:39 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/14 12:43:51 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/14 14:26:48 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,9 @@ NAME = libft.a
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -MD -MP
+
+INC = -Iinclude
+COMP = $(CC) $(CFLAGS) $(INC)
 
 ARNAME = ar rcs $(NAME)
 
@@ -95,16 +98,20 @@ CYAN = \033[1;36m
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(B):
+	@ mkdir -p $(B)
+	@ printf "$(YELLOW)$(NAME): compiling...$(RST)\n"
+
+$(B)/%.o: $(S)/%.c
+	$(COMP) -c $< -o $@
+
+$(NAME): $(B) $(OBJS)
 	$(ARNAME) $^
 
-$(BONUS) : $(BONUS_OBJS)
+bonus: $(B) $(BONUS_OBJS)
 	$(ARNAME) $^
-	touch $(BONUS)
 
-bonus: $(BONUS)
-
-allbonus: $(ALL_OBJS)
+complete: $(B) $(ALL_OBJS)
 	$(ARNAME) $^
 
 clean:
