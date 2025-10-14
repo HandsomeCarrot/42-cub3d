@@ -6,65 +6,74 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/08/30 18:28:53 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/14 10:53:00 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# Project configuration
-NAME = cub3D
+#-----VARIABLES-----#
+
+NAME = cub3d
+
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -MD -MP
 
-# Directories
-SRC_DIR = src
-OBJ_DIR = objs
-LIBFT_DIR = libft
-INC_DIR = include
+INCLUDE = -Iinclude -Ilibft
+COMP = $(CC) $(CFLAGS) $(INCLUDE)
 
-# Libraries and includes
-LIBFT = $(LIBFT_DIR)/libft.a
-INCLUDE = -I$(INC_DIR) -I$(LIBFT_DIR)
+S = src
+SRCS =	$(addprefix $(S)/, \
+		main.c)
 
-# Source files
-SRCS = $(wildcard $(SRC_DIR)/*.c)
-OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
+B = build
+OBJS = $(SRCS:$(S)/%.c=$(B)/%.o)
+DEPS = $(OBJS:.o=.d)
+LIBFT = libft/libft.a
 
-# Colors for nice output
-RED = \033[0;31m
-GREEN = \033[0;32m
-YELLOW = \033[0;33m
-BLUE = \033[0;34m
-RESET = \033[0m
+#-----COLORS-----#
 
-# Rules
+RST = \033[0m
+RED = \033[1;31m
+GREEN = \033[1;32m
+YELLOW = \033[1;33m
+BLUE = \033[1;34m
+MAGENTA = \033[1;35m
+CYAN = \033[1;36m
+
+#-----RULES-----#
+
+-include $(DEPS)
+
 all: $(NAME)
+
+$(B):
+	@ mkdir -p $(B)
+	@ printf "$(YELLOW)$(NAME): compiling...$(RST)\n"
+
+$(B)/%.o: $(S)/%.c
+	$(COMP) -c $< -o $@
 
 $(LIBFT):
 	@echo "$(YELLOW)Building libft...$(RESET)"
 	@make -C $(LIBFT_DIR)
 
-$(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
-
-$(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
-	@echo "$(BLUE)Compiling $<$(RESET)"
-	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
-
-$(NAME): $(LIBFT) $(OBJS)
-	@echo "$(GREEN)Linking $(NAME)...$(RESET)"
-	@$(CC) $(CFLAGS) $(INCLUDE) $(OBJS) $(LIBFT) -o $(NAME)
-	@echo "$(GREEN)$(NAME) compiled successfully!$(RESET)"
+$(NAME): $(LIBFT) $(B) $(OBJS)
+	$(COMP) $(OBJS) $(LIBFT) -o $(NAME)
+	@ printf "$(GREEN)$(NAME) built successfully!$(RST)\n"
 
 clean:
-	@echo "$(RED)Cleaning object files...$(RESET)"
-	@rm -rf $(OBJ_DIR)
-	@make -C $(LIBFT_DIR) clean
+	@ rm -rf $(B)
+	@ printf "$(RED)deleted BUILD files$(RST)\n"
+	@ make -C libft clean
 
 fclean: clean
-	@echo "$(RED)Cleaning $(NAME)...$(RESET)"
-	@rm -f $(NAME)
-	@make -C $(LIBFT_DIR) fclean
+	@ rm -f $(NAME)
+	@ printf "$(RED)deleted PROGRAM file$(RST)\n"
+	make -C libft fclean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+run: re
+	@ printf "$(CYAN)$(NAME): starting...$(RST)\n"
+	@ ./$(NAME)
+
+.PHONY: all clean fclean re run
