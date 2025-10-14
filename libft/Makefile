@@ -1,13 +1,29 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/10/14 12:43:39 by vpoka             #+#    #+#              #
+#    Updated: 2025/10/14 12:43:51 by vpoka            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+#-----VARIABLES-----#
+
 NAME = libft.a
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -MD -MP
 
 ARNAME = ar rcs $(NAME)
 
-RM = rm -f
+RM = rm -rf
 
-SRCS =	ft_atoi.c \
+S = src
+SRCS =	$(addprefix $(S)/, \
+		ft_atoi.c \
 		ft_bzero.c \
 		ft_calloc.c \
 		ft_isalnum.c \
@@ -40,26 +56,42 @@ SRCS =	ft_atoi.c \
 		ft_strtrim.c \
 		ft_substr.c \
 		ft_tolower.c \
-		ft_toupper.c
+		ft_toupper.c)
 
-OBJS := $(SRCS:%.c=%.o)
+BONUS_SRCS =	$(addprefix $(S)/, \
+		ft_lstnew_bonus.c \
+		ft_lstadd_back_bonus.c \
+		ft_lstadd_front_bonus.c \
+		ft_lstclear_bonus.c \
+		ft_lstdelone_bonus.c \
+		ft_lstiter_bonus.c \
+		ft_lstlast_bonus.c \
+		ft_lstmap_bonus.c \
+		ft_lstnew_bonus.c \
+		ft_lstsize_bonus.c)
 
-BONUS_SRCS =	ft_lstnew_bonus.c \
-				ft_lstadd_back_bonus.c \
-			 	ft_lstadd_front_bonus.c \
-				ft_lstclear_bonus.c \
-				ft_lstdelone_bonus.c \
-				ft_lstiter_bonus.c \
-				ft_lstlast_bonus.c \
-				ft_lstmap_bonus.c \
-			 	ft_lstnew_bonus.c \
-				ft_lstsize_bonus.c
-
-BONUS_OBJS := $(BONUS_SRCS:%.c=%.o)
-
-BONUS = libft_bonus
-
+B = build
+OBJS = $(SRCS:$(S)/%.c=$(B)/%.o)
+BONUS_OBJS = $(BONUS_SRCS:$(S)/%.c=$(B)/%.o)
 ALL_OBJS = $(OBJS) $(BONUS_OBJS)
+
+DEPS = $(OBJS:.o=.d)
+BONUS_DEPS = $(BONUS_OBJS:.o=.d)
+ALL_DEPS = $(ALL_OBJS:.o=.d)
+
+#-----COLORS-----#
+
+RST = \033[0m
+RED = \033[1;31m
+GREEN = \033[1;32m
+YELLOW = \033[1;33m
+BLUE = \033[1;34m
+MAGENTA = \033[1;35m
+CYAN = \033[1;36m
+
+#-----RULES-----#
+
+-include $(DEPS)
 
 all: $(NAME)
 
