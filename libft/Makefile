@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/14 12:43:39 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/14 19:35:27 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/14 19:50:39 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,22 +93,25 @@ all: $(NAME)
 
 $(B):
 	@ mkdir -p $(B)
-	@ printf "$(YELLOW)$(NAME): compiling ...$(RST)\n"
 
 $(B)/%.o: $(S)/%.c
-	$(COMP) -c $< -o $@
+	@ printf "compiling $<\n"
+	@ $(COMP) -c $< -o $@
 
 $(NAME): $(B) $(OBJS)
-	$(ARNAME) $(OBJS)
-	@ printf "$(GREEN)$(NAME) (basic) built successfully!$(RST)\n"
+	@ printf "$(YELLOW)linking $(NAME) with standard functions$(RST)\n"
+	@ $(ARNAME) $(OBJS)
+	@ printf "$(GREEN)$(NAME) built successfully!$(RST)\n"
 
 bonus: $(B) $(BONUS_OBJS)
-	$(ARNAME) $(BONUS_OBJS)
-	@ printf "$(GREEN)$(NAME) (bonus) built successfully!$(RST)\n"
+	@ printf "$(YELLOW)linking $(NAME) with bonus functions$(RST)\n"
+	@ $(ARNAME) $(OBJS)
+	@ printf "$(GREEN)$(NAME) built successfully!$(RST)\n"
 
 complete: $(B) $(ALL_OBJS)
-	$(ARNAME) $(ALL_OBJS)
-	@ printf "$(GREEN)$(NAME) (complete) built successfully!$(RST)\n"
+	@ printf "$(YELLOW)linking $(NAME) with all functions$(RST)\n"
+	@ $(ARNAME) $(OBJS)
+	@ printf "$(GREEN)$(NAME) built successfully!$(RST)\n"
 
 clean:
 	@ rm -rf $(B)
