@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/14 12:43:39 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/14 14:26:48 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/14 14:30:49 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,6 @@ BONUS_SRCS =	$(addprefix $(S)/, \
 		ft_lstiter_bonus.c \
 		ft_lstlast_bonus.c \
 		ft_lstmap_bonus.c \
-		ft_lstnew_bonus.c \
 		ft_lstsize_bonus.c)
 
 B = build
@@ -100,25 +99,35 @@ all: $(NAME)
 
 $(B):
 	@ mkdir -p $(B)
-	@ printf "$(YELLOW)$(NAME): compiling...$(RST)\n"
 
 $(B)/%.o: $(S)/%.c
+	@ printf "$(YELLOW)$(NAME): compiling $<...$(RST)\n"
 	$(COMP) -c $< -o $@
 
 $(NAME): $(B) $(OBJS)
+	@ printf "$(YELLOW)$(NAME): building library...$(RST)\n"
 	$(ARNAME) $^
+	@ printf "$(GREEN)$(NAME) built successfully!$(RST)\n"
 
 bonus: $(B) $(BONUS_OBJS)
+	@ printf "$(YELLOW)$(NAME): building bonus library...$(RST)\n"
 	$(ARNAME) $^
+	@ printf "$(GREEN)$(NAME) bonus built successfully!$(RST)\n"
 
 complete: $(B) $(ALL_OBJS)
+	@ printf "$(YELLOW)$(NAME): building complete library...$(RST)\n"
 	$(ARNAME) $^
+	@ printf "$(GREEN)$(NAME) complete built successfully!$(RST)\n"
 
 clean:
+	@ printf "$(RED)Cleaning object files...$(RST)\n"
 	$(RM) $(ALL_OBJS)
+	@ printf "$(RED)deleted OBJECT files$(RST)\n"
 
 fclean: clean
-	$(RM) $(NAME) $(BONUS)
+	@ printf "$(RED)Cleaning library...$(RST)\n"
+	$(RM) $(NAME)
+	@ printf "$(RED)deleted LIBRARY file$(RST)\n"
 
 re: fclean $(NAME)
 
