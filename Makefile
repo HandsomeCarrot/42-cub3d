@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/14 21:27:53 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/14 21:59:14 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,11 +81,13 @@ $(B)/%.o: $(S)/%.c
 	@ $(COMP) -MD -MP -c $< -o $@
 
 $(NAME): TOTAL_FILES = $(words $(SRCS))
-$(NAME): $(B) $(OBJS)
-	$(call run_in_dir,libft,complete)
+$(NAME): libft $(B) $(OBJS)
 	$(call log,INFO,building $(NAME))
 	@ $(COMP) $(OBJS) $(LIBFT) -o $(NAME)
 	$(call log,SUCCESS,$(NAME) built successfully!)
+
+libft:
+	$(call run_in_dir,libft,complete)
 
 clean:
 	@ rm -rf $(B)
@@ -103,6 +105,6 @@ run: re
 	$(call log,INFO,executing $(NAME))
 	@ ./$(NAME)
 
-.PHONY: all clean fclean re run
+.PHONY: all libft clean fclean re run
 
 -include $(DEPS)
