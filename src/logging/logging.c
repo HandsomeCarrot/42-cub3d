@@ -6,21 +6,22 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:34:49 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/15 20:41:46 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/15 21:37:29 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "logging.h"
 
 /**
- * @brief Prints the logging level to stderr.
+ * @brief Prints the logging level tag to standard error output.
  *
- * If the LOGGING_LEVEL is set high enough for requested logging level,
- * it will print the defined message for that level to stderr.
+ * This static helper function checks if the global LOGGING_LEVEL is high
+ * enough to allow logging at the requested level. If allowed, it prints
+ * the corresponding log level tag (e.g., [ERROR], [WARNING]) to stderr.
  *
- * @param level the requested logging level.
+ * @param level The logging level to print.
  *
- * @return 1 if logging level is allowed, 0 otherwise.
+ * @return 1 if the logging level is allowed and printed, 0 otherwise.
  */
 static int	print_log_level(t_log_level level)
 {
@@ -38,21 +39,28 @@ static int	print_log_level(t_log_level level)
 }
 
 /**
- * @brief Prints a message to stderr with some extra info.
+ * @brief Prints a formatted log message to standard error with context.
  *
- * It prints a formatted message with the extra info and the message,
- * if the logging level is high enough.
+ * This function prints a log message to stderr if the specified logging
+ * level is enabled. It includes the log level tag, the source file name,
+ * and the line number where the log_msg function was called, followed by
+ * the user-provided message.
  *
- * @param file the file name where log_msg() got called.
- * @param line the line in which log_msg() got called in.
- * @param lvl the logging level of the message (ERROR, WARNING, INFO, DEBUG)
- * @param msg the message to print
+ * The `file` and `line` parameters should be passed using the `__FILE__`
+ * and `__LINE__` macros respectively to provide accurate source location.
+ *
+ * @param lvl The logging level of the message (ERROR, WARNING, INFO, DEBUG).
+ * @param file The source file name where log_msg() was called. Typically
+ *             passed as the `__FILE__` macro.
+ * @param line The line number in the source file where log_msg() was called.
+ *             Typically passed as the `__LINE__` macro.
+ * @param msg The message string to print.
  */
 void	log_msg(t_log_level lvl, char *file, int line, char *msg)
 {
 	if (!print_log_level(lvl))
 		return ;
-	if (file || line)
+	if (file)
 	{
 		ft_putstr_fd(": ", STDERR_FILENO);
 		ft_putstr_fd(file, STDERR_FILENO);
