@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 17:26:09 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/14 19:35:07 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/15 20:26:45 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,6 @@
 int	main(void)
 {
 	printf("Hello CUB3D!\n");
+	LOG(ERROR, "test");
 	return (0);
 }
