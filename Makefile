@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/15 16:46:36 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/15 21:00:37 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,9 @@ LIBFT = libft/libft.a
 
 S = src
 SRCS =	$(addprefix $(S)/, \
-		main.c)
+		main.c \
+		$(addprefix logging/, \
+		logging.c))
 
 B = build
 OBJS = $(SRCS:$(S)/%.c=$(B)/%.o)
@@ -81,10 +83,12 @@ $(LIBFT):
 
 $(B):
 	@ mkdir -p $(B)
-	$(call log,INFO,Created $(B) directory for $(NAME))
+	$(call log,DEBUG,Created $(B) directory for $(NAME))
 
 $(B)/%.o: $(S)/%.c | $(B)
 	$(call log,DEBUG,Compiling $<)
+	@ mkdir -p $(@D)
+	$(call log,DEBUG,Created directory $(@D))
 	@ $(COMP) $(DPFLAGS) -c $< -o $@
 
 clean:
@@ -100,9 +104,28 @@ fclean: clean
 re: fclean all
 
 run: re
+	@ printf "\n"
 	$(call log,INFO,executing $(NAME))
 	@ ./$(NAME)
 
-.PHONY: all libft clean fclean re run
+#-----LOG LEVEL RULES-----#
+
+log0: CFLAGS += -DLOGGING_LEVEL=0
+log0: re
+	$(call log,INFO,logging level set to 0)
+
+log2: CFLAGS += -DLOGGING_LEVEL=2
+log2: re
+	$(call log,INFO,logging level set to 2)
+
+log3: CFLAGS += -DLOGGING_LEVEL=3
+log3: re
+	$(call log,INFO,logging level set to 3)
+
+log4: CFLAGS += -DLOGGING_LEVEL=4
+log4: re
+	$(call log,INFO,logging level set to 4)
+
+.PHONY: all libft clean fclean re run log0 log2 log3 log4
 
 -include $(DEPS)
