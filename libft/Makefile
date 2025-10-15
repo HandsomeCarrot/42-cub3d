@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/14 12:43:39 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/14 20:59:15 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/15 15:41:14 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,25 +57,20 @@ SRCS =	$(addprefix $(S)/, \
 		ft_strtrim.c \
 		ft_substr.c \
 		ft_tolower.c \
-		ft_toupper.c)
-
-BONUS_SRCS =	$(addprefix $(S)/, \
-				ft_lstnew_bonus.c \
-				ft_lstadd_back_bonus.c \
-				ft_lstadd_front_bonus.c \
-				ft_lstclear_bonus.c \
-				ft_lstdelone_bonus.c \
-				ft_lstiter_bonus.c \
-				ft_lstlast_bonus.c \
-				ft_lstmap_bonus.c \
-				ft_lstsize_bonus.c)
+		ft_toupper.c \
+		ft_lstnew_bonus.c \
+		ft_lstadd_back_bonus.c \
+		ft_lstadd_front_bonus.c \
+		ft_lstclear_bonus.c \
+		ft_lstdelone_bonus.c \
+		ft_lstiter_bonus.c \
+		ft_lstlast_bonus.c \
+		ft_lstmap_bonus.c \
+		ft_lstsize_bonus.c)
 
 B = build
 OBJS = $(SRCS:$(S)/%.c=$(B)/%.o)
-BONUS_OBJS = $(BONUS_SRCS:$(S)/%.c=$(B)/%.o)
-ALL_OBJS = $(OBJS) $(BONUS_OBJS)
-
-DEPS = $(OBJS:.o=.d) $(BONUS_OBJS:.o=.d)
+DEPS = $(OBJS:.o=.d)
 
 #-----COLORS-----#
 
@@ -111,29 +106,14 @@ $(B):
 	@ mkdir -p $(B)
 	$(call log,INFO,Created $(B) directory for $(NAME))
 
-COMPILED_FILES = 0
-$(B)/%.o: $(S)/%.c
-	$(eval COMPILED_FILES=$(shell echo $$(($(COMPILED_FILES)+1))))	
-	$(call log,DEBUG,Compiling [$(COMPILED_FILES)/$(TOTAL_FILES)]: $<)
+$(B)/%.o: $(S)/%.c | $(B)
+	$(call log,DEBUG,Compiling $<)
 	@ $(COMP) -c $< -o $@
 
-$(NAME): TOTAL_FILES = $(words $(SRCS))
-$(NAME): $(B) $(OBJS)
-	$(call log,INFO,linking $(NAME) with standard functions)
+$(NAME): $(OBJS)
+	$(call log,INFO,Linking $(NAME) (standard functions))
 	@ $(ARNAME) $(OBJS)
-	$(call log,SUCCESS,$(NAME) built successfully!)
-
-bonus: TOTAL_FILES = $(words $(BONUS_SRCS))
-bonus: $(B) $(BONUS_OBJS)
-	$(call log,INFO,linking $(NAME) with bonus functions)
-	@ $(ARNAME) $(OBJS)
-	$(call log,SUCCESS,$(NAME) built successfully!)
-
-complete: TOTAL_FILES = $(words $(SRCS) $(BONUS_SRCS))
-complete: $(B) $(ALL_OBJS)
-	$(call log,INFO,linking $(NAME) with all functions)
-	@ $(ARNAME) $(OBJS)
-	$(call log,SUCCESS,$(NAME) built successfully!)
+	$(call log,SUCCESS,$(NAME) linked successfully!)
 
 clean:
 	@ rm -rf $(B)
@@ -145,6 +125,6 @@ fclean: clean
 
 re: fclean $(NAME)
 
-.PHONY: all, bonus, complete, clean, fclean, re
+.PHONY: all clean fclean re
 
 -include $(DEPS)
