@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/14 21:59:14 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/15 16:46:36 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ NAME = cub3d
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
+DPFLAGS = -MP -MD
 
 INCLUDE = -Iinclude -Ilibft/include
 COMP = $(CC) $(CFLAGS) $(INCLUDE)
@@ -70,24 +71,21 @@ endef
 
 all: $(NAME)
 
-$(B):
-	@ mkdir -p $(B)
-	$(call log,INFO,Created $(B) directory for $(NAME))
-
-COMPILED_FILES = 0
-$(B)/%.o: $(S)/%.c
-	$(eval COMPILED_FILES=$(shell echo $$(($(COMPILED_FILES)+1))))
-	$(call log,DEBUG,Compiling [$(COMPILED_FILES)/$(TOTAL_FILES)]: $<)
-	@ $(COMP) -MD -MP -c $< -o $@
-
-$(NAME): TOTAL_FILES = $(words $(SRCS))
-$(NAME): libft $(B) $(OBJS)
+$(NAME): $(LIBFT) $(OBJS)
 	$(call log,INFO,building $(NAME))
 	@ $(COMP) $(OBJS) $(LIBFT) -o $(NAME)
 	$(call log,SUCCESS,$(NAME) built successfully!)
 
-libft:
-	$(call run_in_dir,libft,complete)
+$(LIBFT):
+	$(call run_in_dir,libft)
+
+$(B):
+	@ mkdir -p $(B)
+	$(call log,INFO,Created $(B) directory for $(NAME))
+
+$(B)/%.o: $(S)/%.c | $(B)
+	$(call log,DEBUG,Compiling $<)
+	@ $(COMP) $(DPFLAGS) -c $< -o $@
 
 clean:
 	@ rm -rf $(B)
