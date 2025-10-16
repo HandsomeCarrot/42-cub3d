@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/16 19:25:27 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/16 19:32:45 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,16 @@
 //}
 
 /**
- * @brief checks if the file has 'extension' as extension.
- * 
- * Looks at the last characters of file and compares them to 'extension'.
- * If they are identical, then it returns 0. If there is a difference it
- * returns 1.
- * 
- * @param file the file path
- * @param extension the extension to compare it to (.cub, ...)
- * 
- * @return 1 on error, 0 on success.
+ * @brief Checks if the given file has the correct extension.
+ *
+ * This function verifies whether the file extension of the provided filename
+ * matches the specified extension. It is used to validate file types during
+ * parsing operations.
+ *
+ * @param file A null-terminated string representing the filename to check.
+ * @param extension A null-terminated string representing the expected file extension
+ *                  (e.g., ".cub" for Cub3D map files).
+ * @return 0 if the file extension matches, 1 on any error.
  */
 static int	correct_file_extension(char *file, char *extension)
 {
