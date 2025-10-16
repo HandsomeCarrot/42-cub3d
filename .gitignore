@@ -54,3 +54,6 @@ dkms.conf
 # debug information files
 *.dwo
 cub3d
+
+# Hamza container
+.devcontainer
