@@ -6,25 +6,11 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 18:31:51 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/16 17:19:02 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/16 18:48:14 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-/**
- * @brief checks if the file in the path exists and has the wanted permissions.
- * 
- * Checks if the file pointed to by path_of_file, has read/write/execute
- * permissions. It will check the permissions that are not set to 0.
- * 
- * @return 1 on error, 0 on success.
- */
-//int	check_file_existence(char *path_to_file, int read, int write, int execute)
-//{
-//	(void)path_to_file;
-//	return (0);
-//}
 
 /**
  * @brief Parses the input of the user
@@ -36,9 +22,9 @@
  * 
  * @return 1 on error, 0 on success
  */
-int	parse_input(int argc, char **argv)
+static int	parse_input(int argc, char **argv)
 {
-	if (argc != 2 || !argv[1])
+	if (argc != 2 || !argv || !argv[0] || !argv[1])
 	{
 		log_msg(ERROR, __FILE__, __LINE__, "invalid input");
 		return (1);
