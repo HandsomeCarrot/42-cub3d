@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:34:49 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/15 21:37:29 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/16 19:07:40 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static int	print_log_level(t_log_level level)
  *
  * The `file` and `line` parameters should be passed using the `__FILE__`
  * and `__LINE__` macros respectively to provide accurate source location.
+ * DOES NOT PRINT A NEWLINE CHARACTER!
  *
  * @param lvl The logging level of the message (ERROR, WARNING, INFO, DEBUG).
  * @param file The source file name where log_msg() was called. Typically
@@ -72,5 +73,4 @@ void	log_msg(t_log_level lvl, char *file, int line, char *msg)
 		ft_putstr_fd(" -> ", STDERR_FILENO);
 		ft_putstr_fd(msg, STDERR_FILENO);
 	}
-	ft_putchar_fd('\n', STDERR_FILENO);
 }
