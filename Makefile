@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/15 21:00:37 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/16 18:01:23 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ NAME = cub3d
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 DPFLAGS = -MP -MD
+MLXFLAGS = -lmlx -lXext -lX11
 
 INCLUDE = -Iinclude -Ilibft/include
 COMP = $(CC) $(CFLAGS) $(INCLUDE)
@@ -27,7 +28,11 @@ S = src
 SRCS =	$(addprefix $(S)/, \
 		main.c \
 		$(addprefix logging/, \
-		logging.c))
+		logging.c) \
+		$(addprefix inits/, \
+		main_init.c) \
+		$(addprefix cleanup/, \
+		main_cleanup.c))
 
 B = build
 OBJS = $(SRCS:$(S)/%.c=$(B)/%.o)
@@ -75,7 +80,7 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
 	$(call log,INFO,building $(NAME))
-	@ $(COMP) $(OBJS) $(LIBFT) -o $(NAME)
+	@ $(COMP) $(MLXFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 	$(call log,SUCCESS,$(NAME) built successfully!)
 
 $(LIBFT):
