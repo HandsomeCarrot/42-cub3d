@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 18:31:51 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/16 13:59:53 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/16 17:19:02 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,16 @@
  * 
  * @return 1 on error, 0 on success.
  */
-int	check_file_existence(char *path_to_file, int read, int write, int execute)
-{
-	(void)path_to_file;
-	return (0);
-}
+//int	check_file_existence(char *path_to_file, int read, int write, int execute)
+//{
+//	(void)path_to_file;
+//	return (0);
+//}
 
 /**
  * @brief Parses the input of the user
  * 
  * It will scan the input if it only has the map file as input.
- * It will also check if the map file is a valid file.
  * 
  * @param argc the amount of strings in argv
  * @param argv all the input given by user (strings)
@@ -60,9 +59,10 @@ int	parse_input(int argc, char **argv)
  * 
  * @return 1 on error, 0 on success.
  */
-int	parse(int argc, char **argv)
+int	parse(int argc, char **argv, t_data *data)
 {
-	//parse input
+	if (parse_input(argc, argv))
+		return (1);
 	//parse map
 	//parse img files
 	return (0);
