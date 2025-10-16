@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/16 19:32:45 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/16 20:19:23 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,27 @@
  * 
  * @param file the given file
  * 
- * @return 1 on error, 0 on success.
+ * @return -1 on error, >= 0 on success.
  */
-//static int	file_readable(char *file)
-//{
-//	(void)file;
-//	return (0);
-//}
+static int	open_file_read(char *file)
+{
+	int	fd;
+
+	if (!file || !*file)
+	{
+		log_msg(WARNING, __FILE__, __LINE__, "got invalid parameter\n");
+		return (-1);
+	}
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+	{
+		log_msg(ERROR, __FILE__, __LINE__, "unable to open file: ");
+		ft_putstr_fd(file, STDERR_FILENO);
+		ft_putendl_fd(strerror(errno), STDERR_FILENO);
+		return (-1);
+	}
+	return (fd);
+}
 
 /**
  * @brief Checks if the given file has the correct extension.
@@ -45,7 +59,7 @@ static int	correct_file_extension(char *file, char *extension)
 
 	if (!file || !extension)
 	{
-		log_msg(ERROR, __FILE__, __LINE__, "got NULL pointer");
+		log_msg(WARNING, __FILE__, __LINE__, "got invalid parameter\n");
 		return (1);
 	}
 	file_name_len = ft_strlen(file);
