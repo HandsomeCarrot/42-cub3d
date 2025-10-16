@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 18:31:51 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/16 18:48:14 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/16 19:03:55 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	parse(int argc, char **argv, t_data *data)
 {
 	if (parse_input(argc, argv))
 		return (1);
+	(void)data;
 	//parse map
 	//parse img files
 	return (0);
