@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/13 17:26:09 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/16 17:56:01 by vpoka            ###   ########.fr       */
+/*   Created: 2025/10/16 17:55:19 by vpoka             #+#    #+#             */
+/*   Updated: 2025/10/16 17:58:54 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "inits.h"
 
-int	main(void)
+t_data	*init_data(void)
 {
 	t_data	*data;
 
-	data = init_data();
+	data = ft_calloc(1, sizeof(t_data));
 	if (!data)
-		return (1);
-	main_cleanup(data);
-	return (0);
+		log_msg(ERROR, __FILE__, __LINE__, "memory allocation failed");
+	else
+	{
+		data->mlx_ptr = mlx_init();
+		if (!data->mlx_ptr)
+		{
+			log_msg(ERROR, __FILE__, __LINE__, "failed to initialize mlx");
+			free(data);
+			return (NULL);
+		}
+	}
+	return (data);
 }

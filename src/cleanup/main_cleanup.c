@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_cleanup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/13 17:26:09 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/16 17:56:01 by vpoka            ###   ########.fr       */
+/*   Created: 2025/10/16 17:55:19 by vpoka             #+#    #+#             */
+/*   Updated: 2025/10/16 17:58:43 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "cleanup.h"
 
-int	main(void)
+void	main_cleanup(t_data *data)
 {
-	t_data	*data;
-
-	data = init_data();
-	if (!data)
-		return (1);
-	main_cleanup(data);
-	return (0);
+	if (data)
+	{
+		mlx_destroy_display(data->mlx_ptr);
+		free(data);
+	}
 }
