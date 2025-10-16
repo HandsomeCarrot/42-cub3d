@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/16 17:26:43 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/16 18:01:23 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,11 @@ S = src
 SRCS =	$(addprefix $(S)/, \
 		main.c \
 		$(addprefix logging/, \
-		logging.c))
+		logging.c) \
+		$(addprefix inits/, \
+		main_init.c) \
+		$(addprefix cleanup/, \
+		main_cleanup.c))
 
 B = build
 OBJS = $(SRCS:$(S)/%.c=$(B)/%.o)
