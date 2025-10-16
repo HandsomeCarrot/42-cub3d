@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/16 20:19:23 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/16 20:28:49 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ static int	open_file_read(char *file)
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 	{
-		log_msg(ERROR, __FILE__, __LINE__, "unable to open file: ");
+		log_msg(ERROR, __FILE__, __LINE__, "unable to open file '");
 		ft_putstr_fd(file, STDERR_FILENO);
+		ft_putstr_fd("': ", STDERR_FILENO);
 		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 		return (-1);
 	}
