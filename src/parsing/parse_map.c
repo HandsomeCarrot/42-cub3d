@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pars_map.c                                         :+:      :+:    :+:   */
+/*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/16 18:58:22 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/16 19:25:27 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@
  * 
  * @return 1 on error, 0 on success.
  */
-static int	file_readable(char *file)
-{
-	return (0);
-}
+//static int	file_readable(char *file)
+//{
+//	(void)file;
+//	return (0);
+//}
 
 /**
  * @brief checks if the file has 'extension' as extension.
@@ -38,9 +39,9 @@ static int	file_readable(char *file)
  */
 static int	correct_file_extension(char *file, char *extension)
 {
-	int	file_name_len;
-	int	extension_len;
-	int	file_extension;
+	size_t	file_name_len;
+	size_t	extension_len;
+	size_t	file_extension;
 
 	if (!file || !extension)
 	{
@@ -50,9 +51,13 @@ static int	correct_file_extension(char *file, char *extension)
 	file_name_len = ft_strlen(file);
 	extension_len = ft_strlen(extension);
 	file_extension = file_name_len - extension_len;
-	if (ft_strncmp((file + file_extension), extension, extension_len) != 0)
+	if (file_name_len <= extension_len
+		|| file[0] == '.'
+		|| ft_strncmp((file + file_extension), extension, extension_len) != 0)
 	{
-		log_msg(ERROR, __FILE__, __LINE__, "invalid file extension");
+		log_msg(ERROR, __FILE__, __LINE__, "invalid file name '");
+		ft_putstr_fd(file, STDERR_FILENO);
+		ft_putendl_fd("'", STDERR_FILENO);
 		return (1);
 	}
 	return (0);
