@@ -6,18 +6,27 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/16 20:28:49 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/16 20:32:09 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
 /**
- * @brief checks if the file exists and can be read.
- * 
- * @param file the given file
- * 
- * @return -1 on error, >= 0 on success.
+ * @brief Checks if the file exists and can be opened for reading.
+ *
+ * This function attempts to open the specified file in read-only mode.
+ * It validates the input parameter to ensure it is not NULL or empty.
+ * If the file cannot be opened, an error message is logged with details.
+ *
+ * @param file A pointer to a null-terminated string representing the path
+ *             to the file to be opened.
+ * @return An integer representing the file descriptor on success (>= 0),
+ *         or -1 if the file is invalid or cannot be opened.
+ * @note The caller is responsible for closing the file descriptor returned
+ *       on success to avoid resource leaks.
+ * @warning Passing a NULL pointer or an empty string as the file parameter
+ *          will result in an error and a return value of -1.
  */
 static int	open_file_read(char *file)
 {
@@ -48,8 +57,8 @@ static int	open_file_read(char *file)
  * parsing operations.
  *
  * @param file A null-terminated string representing the filename to check.
- * @param extension A null-terminated string representing the expected file extension
- *                  (e.g., ".cub" for Cub3D map files).
+ * @param extension A null-terminated string representing the expected file
+ *                  extension (e.g., ".cub" for Cub3D map files).
  * @return 0 if the file extension matches, 1 on any error.
  */
 static int	correct_file_extension(char *file, char *extension)
