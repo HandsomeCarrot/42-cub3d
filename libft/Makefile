@@ -6,24 +6,27 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/14 12:43:39 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/15 15:41:14 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/17 20:44:59 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #-----VARIABLES-----#
 
-NAME = libft.a
+NAME := libft.a
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -MD -MP
+CC := cc
+CFLAGS := -Wall -Wextra -Werror -MD -MP
 
-INC = -Iinclude
-COMP = $(CC) $(CFLAGS) $(INC)
+INC := -Iinclude
+COMP := $(CC) $(CFLAGS) $(INC)
 
-ARNAME = ar rcs $(NAME)
+ARNAME := ar rcs $(NAME)
 
-S = src
-SRCS =	$(addprefix $(S)/, \
+S := src
+LIBFT := libft
+GNL := getNextLine
+SRCS :=	$(addprefix $(S)/, \
+		$(addprefix $(LIBFT)/, \
 		ft_atoi.c \
 		ft_bzero.c \
 		ft_calloc.c \
@@ -66,7 +69,10 @@ SRCS =	$(addprefix $(S)/, \
 		ft_lstiter_bonus.c \
 		ft_lstlast_bonus.c \
 		ft_lstmap_bonus.c \
-		ft_lstsize_bonus.c)
+		ft_lstsize_bonus.c) \
+		$(addprefix $(GNL)/, \
+		get_next_line.c \
+		get_next_line_utils.c))
 
 B = build
 OBJS = $(SRCS:$(S)/%.c=$(B)/%.o)
@@ -108,6 +114,8 @@ $(B):
 
 $(B)/%.o: $(S)/%.c | $(B)
 	$(call log,DEBUG,Compiling $<)
+	@ mkdir -p $(@D)
+	$(call log,DEBUG,Created directory $(@D))
 	@ $(COMP) -c $< -o $@
 
 $(NAME): $(OBJS)
