@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:56:01 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/17 07:24:02 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/17 15:15:11 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ typedef struct s_game
 void	draw_gradient(t_game *g);
 void	put_pixel(t_mlx *mlx, int x, int y, int color);
 void	cast_debug_ray(t_game *g, int x);
+void	render_frame(t_game *g);
 
 #endif

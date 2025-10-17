@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 07:13:26 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/17 07:13:48 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/17 14:22:40 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,3 +31,16 @@ void	draw_gradient(t_game *g)
 		x++;
 	}
 }
+
+void	render_frame(t_game *g)
+{
+	int	x;
+
+	x = 0;
+	while (x < g->mlx.win_w)
+	{
+		cast_debug_ray(g, x);
+		x++;
+	}
+}
+

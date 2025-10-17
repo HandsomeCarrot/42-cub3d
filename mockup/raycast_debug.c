@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 07:21:00 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/17 07:21:22 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/17 15:27:40 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ static void	init_dda(t_player *p, double *ray, int *map, double *side,
 		step[1] = 1;
 		side[1] = (map[1] + 1.0 - p->pos_y) * delta[1];
 	}
-	printf("  mapXY=(%d,%d) step=(%d,%d) delta=(%.3f,%.3f) side=(%.3f,%.3f)\n",
-		map[0], map[1], step[0], step[1], delta[0], delta[1], side[0], side[1]);
+/* 	printf("  mapXY=(%d,%d) step=(%d,%d) delta=(%.3f,%.3f) side=(%.3f,%.3f)\n",
+		map[0], map[1], step[0], step[1], delta[0], delta[1], side[0], side[1]); */
 }
 
 static int	run_dda(t_map *m, int *map_xy, double *side,
@@ -80,12 +80,38 @@ static int	run_dda(t_map *m, int *map_xy, double *side,
 			break ;
 		if (m->grid[map_xy[1]][map_xy[0]] == '1')
 		{
-			printf("  HIT at (%d,%d) side=%d\n", map_xy[0], map_xy[1], hit_side);
+			//printf("  HIT at (%d,%d) side=%d\n", map_xy[0], map_xy[1], hit_side);
 			return (hit_side);
 		}
 	}
-	printf("  OUT OF BOUNDS\n");
+	//printf("  OUT OF BOUNDS\n");
 	return (-1);
+}
+
+static void	draw_column(t_mlx *mlx, int x, double perp_dist, int side)
+{
+	int	line_h;
+	int	draw_start;
+	int	draw_end;
+	int	y;
+	int	color;
+	
+	line_h = (int)(mlx->win_h / perp_dist);
+	draw_start = -line_h / 2 + mlx->win_h / 2;
+	if (draw_start < 0)
+	draw_start = 0;
+draw_end = line_h / 2 + mlx->win_h / 2;
+if (draw_end >= mlx->win_h)
+draw_end = mlx->win_h - 1;
+color = 0xFFFFFF;
+if (side == 1)
+color = 0x808080;
+y = draw_start;
+while (y < draw_end)
+{
+	put_pixel(mlx, x, y, color);
+	y++;
+}
 }
 
 void	cast_debug_ray(t_game *g, int x)
@@ -110,5 +136,7 @@ void	cast_debug_ray(t_game *g, int x)
 				+ (1 - step[1]) / 2.0) / ray[1];
 	else
 		perp_dist = 999.0;
-	printf("  perpDist=%.3f\n\n", perp_dist);
+	if (hit_side >= 0)
+		draw_column(&g->mlx, x, perp_dist, hit_side);
+
 }
