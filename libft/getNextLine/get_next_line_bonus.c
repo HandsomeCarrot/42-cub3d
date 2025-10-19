@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 15:08:31 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/17 20:41:07 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/19 10:04:42 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static void	del_str(char **str)
 {
@@ -36,11 +36,11 @@ static char	*fill_content(int fd, char **content)
 	while (read_size > 0)
 	{
 		buffer[read_size] = '\0';
-		temp = gnl_ft_strjoin(*content, buffer);
+		temp = gnl_strjoin(*content, buffer);
 		del_str(content);
 		*content = temp;
-		if (!temp || (i && gnl_ft_strchr(*content, '\n'))
-			|| (!i && gnl_ft_strchr(buffer, '\n')))
+		if (!temp || (i && gnl_strchr(*content, '\n'))
+			|| (!i && gnl_strchr(buffer, '\n')))
 			break ;
 		read_size = read(fd, buffer, BUFFER_SIZE);
 		i = 0;
@@ -57,35 +57,35 @@ static char	*fill_result(char **content)
 	char	*end;
 
 	start = *content;
-	end = gnl_ft_strchr(start, '\n');
+	end = gnl_strchr(start, '\n');
 	if (!end)
 	{
 		trimed = NULL;
 		if (start && *start)
-			trimed = gnl_ft_strdup(start);
+			trimed = gnl_strdup(start);
 		del_str(content);
 		return (trimed);
 	}
-	trimed = gnl_ft_strdup(end + 1);
+	trimed = gnl_strdup(end + 1);
 	if (!trimed)
 		return (NULL);
 	*content = trimed;
-	trimed = gnl_ft_substr(start, 0, (end - start + 1));
+	trimed = gnl_substr(start, 0, (end - start + 1));
 	del_str(&start);
 	return (trimed);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*content;
+	static char	*content[MAX_FD];
 	char		*result;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd > MAX_FD || BUFFER_SIZE <= 0 || MAX_FD <= 0)
 		return (NULL);
-	if (!fill_content(fd, &content))
-		return (del_str(&content), NULL);
-	result = fill_result(&content);
+	if (!fill_content(fd, &content[fd]))
+		return (del_str(&content[fd]), NULL);
+	result = fill_result(&content[fd]);
 	if (!result || !(*result))
-		return (del_str(&content), NULL);
+		return (del_str(&content[fd]), NULL);
 	return (result);
 }

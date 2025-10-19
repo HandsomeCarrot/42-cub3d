@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 15:09:01 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/17 20:41:07 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/19 10:05:52 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
-size_t	gnl_ft_strlen(const char *s)
+size_t	gnl_strlen(const char *s)
 {
 	size_t	len;
 
@@ -22,13 +22,13 @@ size_t	gnl_ft_strlen(const char *s)
 	return (len);
 }
 
-char	*gnl_ft_strdup(const char *s)
+char	*gnl_strdup(const char *s)
 {
 	int		s_len;
 	char	*str;
 	int		pos;
 
-	s_len = gnl_ft_strlen(s);
+	s_len = gnl_strlen(s);
 	str = malloc(s_len * sizeof(char) + 1);
 	if (!str || !s)
 		return (NULL);
@@ -41,15 +41,15 @@ char	*gnl_ft_strdup(const char *s)
 	return (str);
 }
 
-char	*gnl_ft_strjoin(char const *s1, char const *s2)
+char	*gnl_strjoin(char const *s1, char const *s2)
 {
 	char	*result;
 	size_t	result_len;
 	size_t	pos;
 
-	result_len = gnl_ft_strlen(s1) + gnl_ft_strlen(s2);
+	result_len = gnl_strlen(s1) + gnl_strlen(s2);
 	if (result_len == 0)
-		return (gnl_ft_strdup(""));
+		return (gnl_strdup(""));
 	result = malloc((result_len + 1) * sizeof(char));
 	if (!result)
 		return (NULL);
@@ -69,7 +69,7 @@ char	*gnl_ft_strjoin(char const *s1, char const *s2)
 	return (result);
 }
 
-char	*gnl_ft_strchr(const char *s, int c)
+char	*gnl_strchr(const char *s, int c)
 {
 	char	*result;
 
@@ -85,7 +85,7 @@ char	*gnl_ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-char	*gnl_ft_substr(char const *s, unsigned int start, size_t len)
+char	*gnl_substr(char const *s, unsigned int start, size_t len)
 {
 	char			*res;
 	size_t			pos;
@@ -94,9 +94,9 @@ char	*gnl_ft_substr(char const *s, unsigned int start, size_t len)
 
 	if (!s)
 		return (NULL);
-	s_len = gnl_ft_strlen(s);
+	s_len = gnl_strlen(s);
 	if (start >= s_len)
-		return (gnl_ft_strdup(""));
+		return (gnl_strdup(""));
 	res_len = len;
 	if (len > s_len - start)
 		res_len = s_len - start;
