@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/10/14 12:43:39 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/17 20:44:59 by vpoka            ###   ########.fr        #
+#    Created: 2025/10/19 10:07:29 by vpoka             #+#    #+#              #
+#    Updated: 2025/10/19 10:44:02 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,18 +15,15 @@
 NAME := libft.a
 
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -MD -MP
-
-INC := -Iinclude
-COMP := $(CC) $(CFLAGS) $(INC)
+CFLAGS := -Wall -Wextra -Werror
+DPFLAGS := -MP -MD
 
 ARNAME := ar rcs $(NAME)
+RM := rm -f
 
-S := src
 LIBFT := libft
-GNL := getNextLine
-SRCS :=	$(addprefix $(S)/, \
-		$(addprefix $(LIBFT)/, \
+INCLUDE += $(LIBFT)
+LIBFT_SRCS :=	$(addprefix $(LIBFT)/, \
 		ft_atoi.c \
 		ft_bzero.c \
 		ft_calloc.c \
@@ -69,14 +66,19 @@ SRCS :=	$(addprefix $(S)/, \
 		ft_lstiter_bonus.c \
 		ft_lstlast_bonus.c \
 		ft_lstmap_bonus.c \
-		ft_lstsize_bonus.c) \
-		$(addprefix $(GNL)/, \
-		get_next_line.c \
-		get_next_line_utils.c))
+		ft_lstnew_bonus.c \
+		ft_lstsize_bonus.c)
 
+GNL := getNextLine
+INCLUDE += $(GNL)
+GNL_SRCS :=	$(addprefix $(GNL)/, \
+				get_next_line_bonus.c \
+				get_next_line_utils_bonus.c)
+
+SRCS := $(LIBFT_SRCS) $(GNL_SRCS)
 B = build
-OBJS = $(SRCS:$(S)/%.c=$(B)/%.o)
-DEPS = $(OBJS:.o=.d)
+OBJS := $(SRCS:%.c=$(B)/%.o)
+DEPS := $(OBJS:%.o=%.d)
 
 #-----COLORS-----#
 
@@ -108,31 +110,27 @@ endef
 
 all: $(NAME)
 
-$(B):
-	@ mkdir -p $(B)
-	$(call log,INFO,Created $(B) directory for $(NAME))
+$(NAME): $(OBJS)
+	$(call log,INFO,Linking $(NAME) (standard functions))
+	@ $(ARNAME) $^
+	@ $(call log,SUCCESS,$(NAME) linked successfully!)\
 
-$(B)/%.o: $(S)/%.c | $(B)
+$(B)/%.o: %.c
 	$(call log,DEBUG,Compiling $<)
 	@ mkdir -p $(@D)
 	$(call log,DEBUG,Created directory $(@D))
-	@ $(COMP) -c $< -o $@
-
-$(NAME): $(OBJS)
-	$(call log,INFO,Linking $(NAME) (standard functions))
-	@ $(ARNAME) $(OBJS)
-	$(call log,SUCCESS,$(NAME) linked successfully!)
+	$(CC) $(CFLAGS) $(DPFLAGS) $(INCLUDE) -c $< -o $@
 
 clean:
-	@ rm -rf $(B)
+	@ $(RM) -r $(B)
 	$(call log,WARNING,deleted $(B) directory for $(NAME)!)
 
 fclean: clean
-	@ rm -f $(NAME)
+	$(RM) $(NAME)
 	$(call log,WARNING,deleted $(NAME)!)
 
 re: fclean $(NAME)
 
-.PHONY: all clean fclean re
+.PHONY: all bonus clean fclean re
 
 -include $(DEPS)
