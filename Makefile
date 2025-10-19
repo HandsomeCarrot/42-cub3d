@@ -6,26 +6,28 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/19 10:46:43 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/19 10:56:25 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #-----VARIABLES-----#
 
-NAME = cub3d
+NAME := cub3d
+LIBFT := libft/libft.a
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
-DPFLAGS = -MP -MD
-MLXFLAGS = -lmlx -lXext -lX11
+CC := cc
 
-INCLUDE = -Iinclude -Ilibft/libft -Ilibft/getNextLine
-COMP = $(CC) $(CFLAGS) $(INCLUDE)
+CFLAGS := -Wall -Wextra -Werror
+DPFLAGS := -MP -MD
+MLXFLAGS := -lmlx -lXext -lX11
 
-LIBFT = libft/libft.a
+INCLUDE := -Iinclude -Ilibft/libft -Ilibft/getNextLine
+COMP := $(CC) $(CFLAGS) $(MLXFLAGS) $(INCLUDE)
 
-S = src
-SRCS =	$(addprefix $(S)/, \
+RM := rm -f
+
+S := src
+SRCS :=	$(addprefix $(S)/, \
 		main.c \
 		$(addprefix logging/, \
 		logging.c) \
@@ -37,9 +39,9 @@ SRCS =	$(addprefix $(S)/, \
 		parse.c \
 		parse_map.c))
 
-B = build
-OBJS = $(SRCS:$(S)/%.c=$(B)/%.o)
-DEPS = $(OBJS:.o=.d)
+B := build
+OBJS := $(SRCS:$(S)/%.c=$(B)/%.o)
+DEPS := $(OBJS:%.o=%.d)
 
 #-----COLORS-----#
 
@@ -83,29 +85,25 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
 	$(call log,INFO,building $(NAME))
-	@ $(COMP) $(MLXFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	@ $(COMP) $(OBJS) $(LIBFT) -o $(NAME)
 	$(call log,SUCCESS,$(NAME) built successfully!)
 
 $(LIBFT):
 	$(call run_in_dir,libft)
 
-$(B):
-	@ mkdir -p $(B)
-	$(call log,DEBUG,Created $(B) directory for $(NAME))
-
-$(B)/%.o: $(S)/%.c | $(B)
+$(B)/%.o: $(S)/%.c
 	$(call log,DEBUG,Compiling $<)
 	@ mkdir -p $(@D)
 	$(call log,DEBUG,Created directory $(@D))
 	@ $(COMP) $(DPFLAGS) -c $< -o $@
 
 clean:
-	@ rm -rf $(B)
+	@ $(RM) -r $(B)
 	$(call log,WARNING,deleted $(B) directory for $(NAME)!)
 	$(call run_in_dir,libft,clean)
 
 fclean: clean
-	@ rm -f $(NAME)
+	@ $(RM) $(NAME)
 	$(call log,WARNING,deleted $(NAME)!)
 	$(call run_in_dir,libft,fclean)
 

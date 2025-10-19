@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/19 10:07:29 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/19 10:44:02 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/19 10:51:52 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ ARNAME := ar rcs $(NAME)
 RM := rm -f
 
 LIBFT := libft
-INCLUDE += $(LIBFT)
+INCLUDE += -I$(LIBFT)
 LIBFT_SRCS :=	$(addprefix $(LIBFT)/, \
 		ft_atoi.c \
 		ft_bzero.c \
@@ -70,7 +70,7 @@ LIBFT_SRCS :=	$(addprefix $(LIBFT)/, \
 		ft_lstsize_bonus.c)
 
 GNL := getNextLine
-INCLUDE += $(GNL)
+INCLUDE += -I$(GNL)
 GNL_SRCS :=	$(addprefix $(GNL)/, \
 				get_next_line_bonus.c \
 				get_next_line_utils_bonus.c)
@@ -119,7 +119,7 @@ $(B)/%.o: %.c
 	$(call log,DEBUG,Compiling $<)
 	@ mkdir -p $(@D)
 	$(call log,DEBUG,Created directory $(@D))
-	$(CC) $(CFLAGS) $(DPFLAGS) $(INCLUDE) -c $< -o $@
+	@ $(CC) $(CFLAGS) $(DPFLAGS) $(INCLUDE) -c $< -o $@
 
 clean:
 	@ $(RM) -r $(B)
