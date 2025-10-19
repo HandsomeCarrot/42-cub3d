@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/16 19:03:38 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/19 10:46:43 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ CFLAGS = -Wall -Wextra -Werror
 DPFLAGS = -MP -MD
 MLXFLAGS = -lmlx -lXext -lX11
 
-INCLUDE = -Iinclude -Ilibft/include
+INCLUDE = -Iinclude -Ilibft/libft -Ilibft/getNextLine
 COMP = $(CC) $(CFLAGS) $(INCLUDE)
 
 LIBFT = libft/libft.a
