@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 20:31:25 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/16 20:31:26 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/20 22:16:55 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,4 @@ typedef struct s_data
 	t_map_data	map_data;
 }				t_data;
 
-#endif
+#endif /* STRUCTS_H */

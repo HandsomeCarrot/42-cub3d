@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:34:28 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/15 21:17:43 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/20 22:17:49 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 # ifndef LOGGING_LEVEL
 #  define LOGGING_LEVEL 1
-# endif
+# endif /* LOGGING_LEVEL */
 
 typedef enum e_log_level
 {
@@ -31,4 +31,4 @@ typedef enum e_log_level
 
 void	log_msg(t_log_level lvl, char *file, int line, char *msg);
 
-#endif
+#endif /* LOGGING_H */

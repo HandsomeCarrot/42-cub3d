@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 20:31:32 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/16 20:31:33 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/20 22:17:59 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,4 @@
 
 void	main_cleanup(t_data *data);
 
-#endif
+#endif /* CLEANUP_H */
