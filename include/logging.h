@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:34:28 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/21 18:54:40 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/21 19:23:05 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,11 @@
 # include <stdio.h>
 
 # ifndef LOGGING_LEVEL
-#  define LOGGING_LEVEL 4
+#  define LOGGING_LEVEL 3
 # endif /* LOGGING_LEVEL */
 
 typedef enum e_log_level
 {
-	NONE,
 	ERROR,
 	WARNING,
 	INFO,

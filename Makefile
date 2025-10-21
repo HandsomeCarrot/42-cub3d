@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/21 18:56:00 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/21 19:23:37 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -132,10 +132,6 @@ log3: CFLAGS += -DLOGGING_LEVEL=3
 log3: re
 	$(call log,INFO,logging level set to 3)
 
-log4: CFLAGS += -DLOGGING_LEVEL=4
-log4: re
-	$(call log,INFO,logging level set to 4)
-
-.PHONY: all libft clean fclean re run log0 log2 log3 log4
+.PHONY: all libft clean fclean re run log0 log1 log2 log3
 
 -include $(DEPS)
