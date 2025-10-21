@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/20 22:17:04 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/21 17:31:54 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <fcntl.h>
 # include <string.h>
 # include <errno.h>
+
+# define WHITESPACE "\t\n\v\f\r "
 
 //-----parse.c-----//
 
