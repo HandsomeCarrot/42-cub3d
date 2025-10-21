@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/20 10:03:03 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/21 15:51:09 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ DPFLAGS := -MP -MD
 LIBS := -lmlx -lXext -lX11
 
 INCLUDE := -Iinclude -Ilibft/libft -Ilibft/getNextLine
-COMP := $(CC) $(CFLAGS) $(LIBS) $(INCLUDE)
+COMP := $(CC) $(CFLAGS) $(INCLUDE)
 
 RM := rm -f
 
@@ -37,7 +37,8 @@ SRCS :=	$(addprefix $(S)/, \
 		main_cleanup.c) \
 		$(addprefix parsing/, \
 		parse.c \
-		parse_map.c))
+		parse_map.c \
+		file_ops.c))
 
 B := build
 OBJS := $(SRCS:$(S)/%.c=$(B)/%.o)
@@ -85,7 +86,7 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
 	$(call log,INFO,building $(NAME))
-	@ $(COMP) $(OBJS) $(LIBFT) -o $(NAME)
+	@ $(COMP) $(LIBS) $(OBJS) $(LIBFT) -o $(NAME)
 	$(call log,SUCCESS,$(NAME) built successfully!)
 
 $(LIBFT):
