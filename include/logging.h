@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:34:28 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/21 19:23:05 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/21 19:33:08 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,9 @@ typedef enum e_log_level
 }	t_log_level;
 
 void	log_msg(t_log_level lvl, char *file, int line, char *msg);
+
+//-----log_memory.c-----//
+
+void	*log_calloc(size_t nmemb, size_t size, char *file, int line);
 
 #endif /* LOGGING_H */
