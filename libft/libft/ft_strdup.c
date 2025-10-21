@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpoka <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 13:56:34 by vpoka             #+#    #+#             */
-/*   Updated: 2024/09/24 12:44:20 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/21 16:35:36 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,3 @@ char	*ft_strdup(const char *s)
 	}
 	return (str);
 }
-
-/*#include <stdio.h>
-int	main(void)
-{
-	char *str = "Hello";
-	char *cpy = ft_strdup(str);
-	printf("%s\n", cpy);
-}*/

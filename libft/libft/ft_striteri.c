@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpoka <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 18:39:49 by vpoka             #+#    #+#             */
-/*   Updated: 2024/09/30 19:10:38 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/21 16:35:33 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,3 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 		pos++;
 	}
 }
-
-/*void	pluspos(unsigned int n, char *s)
-{
-	*s = '0' + n;
-}
-
-#include <stdio.h>
-
-int	main(void)
-{
-	char str[] = "9876543210";
-	printf("%s\n", str);
-	ft_striteri(str, &pluspos);
-	printf("%s\n", str);
-}*/

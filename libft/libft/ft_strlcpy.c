@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpoka <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 16:42:11 by vpoka             #+#    #+#             */
-/*   Updated: 2024/09/25 19:11:09 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/21 16:35:16 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,3 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 		*(dst + pos) = '\0';
 	return (len);
 }
-/* #include <stdio.h>
-int	main(void)
-{
-	char *src = "Hello,Hello,Hello,Hello,Hello";
-	char dst[30];
-	int size = 30;
-	int res = ft_strlcpy(dst, src, size);
-	printf("%s\n%d\n", dst, res);
-} */

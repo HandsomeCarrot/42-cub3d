@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpoka <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:03:52 by vpoka             #+#    #+#             */
-/*   Updated: 2024/09/25 19:09:48 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/21 16:34:52 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,3 @@ char	*ft_strrchr(const char *s, int c)
 	}
 	return (NULL);
 }
-
-/* #include <stdio.h>
-int	main(void)
-{
-	char str[] = "Hello World!";
-	printf("%s\n", ft_strrchr(str, 'o'));
-} */

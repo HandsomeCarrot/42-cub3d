@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpoka <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:21:33 by vpoka             #+#    #+#             */
-/*   Updated: 2024/09/25 19:12:17 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/21 16:35:20 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,3 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	dst[dst_len + pos] = '\0';
 	return (dst_len + src_len);
 }
-
-/* #include <stdio.h>
-int	main(void)
-{
-	char	src[] = "Yo Bro.";
-	char	dst[20] = "NO!";
-
-	printf("%ld\n%s\n", ft_strlcat(dst, src, 5), dst);
-} */

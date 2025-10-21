@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpoka <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 18:11:35 by vpoka             #+#    #+#             */
-/*   Updated: 2024/09/23 17:10:49 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/21 16:35:01 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,3 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	}
 	return (0);
 }
-
-/* #include <stdio.h>
-int	main(void)
-{
-	char str[] = "test";
-	char str2[] = "testss";
-	printf("%d", ft_strncmp(str, str2, 5));
-} */

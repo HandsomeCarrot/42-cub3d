@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpoka <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:11:41 by vpoka             #+#    #+#             */
-/*   Updated: 2024/10/01 14:46:37 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/21 16:35:49 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,3 @@ void	ft_putendl_fd(char *s, int fd)
 	ft_putstr_fd(s, fd);
 	ft_putchar_fd('\n', fd);
 }
-
-/*#include <fcntl.h>
-int main(void)
-{
-	ft_putendl_fd("Hello World.", 2);
-	ft_putendl_fd("How are you doing?", 2);
-	ft_putendl_fd("Hölle nein!", 2);
-}*/

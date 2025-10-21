@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpoka <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:51:40 by vpoka             #+#    #+#             */
-/*   Updated: 2024/09/25 19:10:45 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/21 16:35:11 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,3 @@ size_t	ft_strlen(const char *s)
 		len++;
 	return (len);
 }
-/* #include <stdio.h>
-int main(void)
-{
-	char *s = "Hello";
-	printf("%zu\n", ft_strlen(s));
-} */

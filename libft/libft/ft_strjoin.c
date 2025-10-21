@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpoka <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 16:41:58 by vpoka             #+#    #+#             */
-/*   Updated: 2024/09/25 14:01:39 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/21 16:35:24 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,3 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	res[pos] = '\0';
 	return (res);
 }
-
-/*#include <stdio.h>
-int	main(void)
-{
-	char *str = "Hello,";
-	char *str2 = " Worlds!";
-	printf("%s\n", ft_strjoin(str, str2));
-}*/

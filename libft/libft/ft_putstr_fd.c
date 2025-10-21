@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpoka <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 13:35:07 by vpoka             #+#    #+#             */
-/*   Updated: 2024/10/01 14:47:02 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/21 16:34:15 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,3 @@ void	ft_putstr_fd(char *s, int fd)
 		s++;
 	}
 }
-
-/*#include <fcntl.h>
-int main(void)
-{
-	ft_putstr_fd("Hello World.\nHow are you!", 2);
-}*/

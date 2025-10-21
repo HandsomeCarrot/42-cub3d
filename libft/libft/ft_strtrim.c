@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpoka <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 16:05:05 by vpoka             #+#    #+#             */
-/*   Updated: 2024/10/02 10:20:27 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/21 16:34:49 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,3 @@ char	*ft_strtrim(char const *s1, char const *set)
 		return (NULL);
 	return (res);
 }
-
-/*#include <stdio.h>
-int	main(void)
-{
-	char *str = "abcHallöliabc";
-	char *set = "abc";
-	printf("%s\n", ft_strtrim(str, set));
-}*/

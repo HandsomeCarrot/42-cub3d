@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpoka <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:50:46 by vpoka             #+#    #+#             */
-/*   Updated: 2024/09/30 13:08:23 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/21 16:34:11 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,23 +143,3 @@ char	**ft_split(char const *s, char c)
 	res[pntr_pos] = NULL;
 	return (res);
 }
-
-/*#include <stdio.h>
-int	main(void)
-{
-	//char *str = "123456789 123456789 hallo";
-	//int str1 = word_length(str, ' ');
-	//int str2 = word_length((str + 10), ' ');
-	//int str3 = word_length((str + 20), ' ');
-	//printf("Str 1: %d\nStr 2: %d\nStr 3: %d\n", str1, str2, str3);
-	
-	char *s = "hello!";
-	char c = ' ';
-	char **res = ft_split(s, c);
-	while (*res)
-	{
-		printf("%s\n", *res);
-		res++;
-	}
-	printf("%s\n", *res);
-}*/

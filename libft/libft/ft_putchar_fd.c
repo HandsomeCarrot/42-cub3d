@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpoka <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 19:25:07 by vpoka             #+#    #+#             */
-/*   Updated: 2024/10/01 14:46:50 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/21 16:35:52 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,3 @@ void	ft_putchar_fd(char c, int fd)
 {
 	write(fd, &c, sizeof(char));
 }
-
-/*#include <fcntl.h>
-int main(void)
-{
-	ft_putchar_fd('a', 2);
-}*/

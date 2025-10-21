@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpoka <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:54:52 by vpoka             #+#    #+#             */
-/*   Updated: 2024/10/02 16:23:20 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/21 16:36:54 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,3 @@ void	ft_lstadd_front(t_list **lst, t_list *new)
 	new->next = *lst;
 	*lst = new;
 }
-
-/*#include <stdio.h>
-int main(void)
-{
-	int i = 21;
-	int j = 42;
-	t_list *head = ft_lstnew(&i);
-	t_list *new = ft_lstnew(&j);
-	ft_lstadd_front(&head, new);
-	int headi = *(int *)(head->content);
-	int nexti = *(int *)head->next->content;
-	printf("first: %d second: %d", headi, nexti);
-}*/

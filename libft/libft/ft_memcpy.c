@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpoka <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 18:42:26 by vpoka             #+#    #+#             */
-/*   Updated: 2024/09/25 19:14:05 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/21 16:36:06 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,3 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	}
 	return (dest);
 }
-
-/* #include <stdio.h>
-int	main(void)
-{
-	char arr[] = "Hello Brudi";
-	char dest[50];
-	ft_memcpy(dest, arr, 11 + 1);
-	printf("%s\n", dest);
-} */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpoka <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 18:00:50 by vpoka             #+#    #+#             */
-/*   Updated: 2024/09/30 19:14:15 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/21 16:35:06 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,3 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	res[pos] = '\0';
 	return (res);
 }
-
-/*char	toupper2(unsigned int n, char c)
-{
-	return (c + n);
-}
-
-#include <stdio.h>
-int main(void)
-{
-	printf("%s\n", ft_strmapi("9876543210", &toupper2));
-}*/

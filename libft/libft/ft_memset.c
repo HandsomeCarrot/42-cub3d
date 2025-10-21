@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpoka <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:42:56 by vpoka             #+#    #+#             */
-/*   Updated: 2024/09/25 19:13:21 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/21 16:35:56 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,3 @@ void	*ft_memset(void *s, int c, size_t n)
 	}
 	return (s);
 }
-
-/* #include <stdio.h>
-int main(void)
-{
-	void *str = malloc(10 * sizeof(char));
-	printf("%s\n", (char *)ft_memset(str, 'a', 5));
-} */

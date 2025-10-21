@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpoka <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 15:13:03 by vpoka             #+#    #+#             */
-/*   Updated: 2024/09/25 19:16:37 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/21 16:37:30 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,3 @@ int	ft_atoi(const char *nptr)
 	}
 	return (sign * res);
 }
-
-/* #include <stdio.h>
-int	main(void)
-{
-	char *n = "   -2147483648";
-	printf("%d\n", ft_atoi(n));
-} */

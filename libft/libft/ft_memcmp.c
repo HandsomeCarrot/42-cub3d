@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpoka <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 10:16:46 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/25 19:14:42 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/21 16:36:09 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,3 @@ int	ft_memcmp(const void *s1, const void *s2, size_t n)
 	}
 	return (0);
 }
-
-/* #include <stdio.h>
-#include <string.h>
-
-int	main(void)
-{
-	char str[] = "Halloli";
-	char str2[] = "";
-	printf("memcmp: %d\nft_memcmp: %d\n", memcmp(str, str2, 5), ft_memcmp(str,
-			str2, 5));
-} */

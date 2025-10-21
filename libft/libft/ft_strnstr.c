@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpoka <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:03:08 by vpoka             #+#    #+#             */
-/*   Updated: 2024/09/25 19:10:26 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/21 16:34:57 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,3 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	}
 	return (NULL);
 }
-
-/* #include <stdio.h>
-#include <bsd/string.h>
-int main(void)
-{
-	char *str = "Hello NO what UP !?!?";
-	char *search = "Hello NO what UP !?!?";
-	int s = 21;
-	printf("%s\n%s\n", strnstr(str, search, s), ft_strnstr(str, search, s));
-} */

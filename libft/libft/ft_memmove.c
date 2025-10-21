@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpoka <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:50:06 by vpoka             #+#    #+#             */
-/*   Updated: 2024/09/25 19:13:44 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/21 16:36:01 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,3 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	}
 	return (dest);
 }
-
-/* #include <stdio.h>
-#include <string.h>
-int	main(void)
-{
-	char s[] = "Hello mate!";
-	char *d = s + 6;
-	printf("%s\n%s\n", s, d);
-	printf("%s\n%s\n", (char *)memmove(d, s, 5), (char *)ft_memmove(d, s, 5));
-} */

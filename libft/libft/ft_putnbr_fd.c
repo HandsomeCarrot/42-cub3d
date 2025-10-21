@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpoka <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:24:25 by vpoka             #+#    #+#             */
-/*   Updated: 2024/10/01 13:41:17 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/21 16:35:45 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,3 @@ void	ft_putnbr_fd(int n, int fd)
 	else
 		ft_putchar_fd('0' + n, fd);
 }
-
-/*#include <fcntl.h>
-int	main(void)
-{
-	ft_putnbr_fd(2142069, 2);
-}*/

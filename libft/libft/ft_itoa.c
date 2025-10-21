@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpoka <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 15:12:36 by vpoka             #+#    #+#             */
-/*   Updated: 2024/09/30 19:13:38 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/21 16:37:08 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,3 @@ char	*ft_itoa(int n)
 	res[nums] = '\0';
 	return (res);
 }
-
-/*#include <stdio.h>
-int	main(void)
-{
-	int n = 0;
-	printf("%d\n", count_nums(n));
-	printf("%d\n", n);
-	printf("%s\n", ft_itoa(n));
-}*/

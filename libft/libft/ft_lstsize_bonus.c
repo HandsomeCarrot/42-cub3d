@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpoka <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:39:05 by vpoka             #+#    #+#             */
-/*   Updated: 2024/10/02 16:23:37 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/21 16:36:16 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,3 @@ int	ft_lstsize(t_list *lst)
 	}
 	return (res);
 }
-
-/*#include <stdio.h>
-int	main(void)
-{
-	int i = 5;
-	t_list *a = ft_lstnew(&i);
-	t_list *b = ft_lstnew(&i);
-	ft_lstadd_front(&a, b);
-	t_list *c = ft_lstnew(&i);
-	ft_lstadd_front(&b, c);
-	t_list *d = ft_lstnew(&i);
-	ft_lstadd_front(&c, d);
-	t_list *e = ft_lstnew(&i);
-	ft_lstadd_front(&d, e);
-	t_list *n = NULL;
-	t_list *o = ft_lstnew(&i);
-	printf("%d", ft_lstsize(o));
-}*/

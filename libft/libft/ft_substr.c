@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpoka <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 13:20:59 by vpoka             #+#    #+#             */
-/*   Updated: 2024/10/02 10:21:19 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/21 16:34:42 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,3 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	res[pos] = '\0';
 	return (res);
 }
-
-/*#include <stdio.h>
-int	main(void)
-{
-	char str[] = "0123456789 12 15 18";
-	char *res = ft_substr(str, 5, 10);
-	printf("%s\n", res);
-}*/
