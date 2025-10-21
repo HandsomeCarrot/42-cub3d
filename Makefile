@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/21 15:51:09 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/21 18:53:00 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,9 +75,9 @@ endef
 # Usage: $(call run_in_dir,directory_path,make_command)
 # Example: $(call run_in_dir,libft,complete)
 define run_in_dir
-	@ printf "\n"
+	$(call log,DEBUG,changing directory to $(1))
 	@ make $(2) -C $(1)
-	@ printf "\n"
+	$(call log,DEBUG,returning from directory $(1))
 endef
 
 #-----RULES-----#
@@ -93,9 +93,8 @@ $(LIBFT):
 	$(call run_in_dir,libft)
 
 $(B)/%.o: $(S)/%.c
-	$(call log,DEBUG,Compiling $<)
+	$(call log,INFO,Compiling $<)
 	@ mkdir -p $(@D)
-	$(call log,DEBUG,Created directory $(@D))
 	@ $(COMP) $(DPFLAGS) -c $< -o $@
 
 clean:

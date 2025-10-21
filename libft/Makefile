@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/19 10:07:29 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/19 10:51:52 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/21 18:50:34 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -116,9 +116,8 @@ $(NAME): $(OBJS)
 	@ $(call log,SUCCESS,$(NAME) linked successfully!)\
 
 $(B)/%.o: %.c
-	$(call log,DEBUG,Compiling $<)
+	$(call log,INFO,Compiling $<)
 	@ mkdir -p $(@D)
-	$(call log,DEBUG,Created directory $(@D))
 	@ $(CC) $(CFLAGS) $(DPFLAGS) $(INCLUDE) -c $< -o $@
 
 clean:
