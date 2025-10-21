@@ -1,0 +1,34 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cleanup.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/21 13:09:50 by hasaliho          #+#    #+#             */
+/*   Updated: 2025/10/21 13:55:57 by hasaliho         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "./include/render.h"
+
+void cleanup_game(t_game *game)
+{
+	//int		i;
+	// need to add more cleanup i think for example texturen
+	if (game->mlx.img)
+		mlx_destroy_image(game->mlx.mlx, game->mlx.img);
+	if (game->mlx.win)
+		mlx_destroy_window(game->mlx.mlx, game->mlx.win);
+	if (game->mlx.mlx)
+		mlx_destroy_display(game->mlx.mlx);
+	if (game->mlx.mlx)
+		free(game->mlx.mlx);
+/* 	i = 0;
+	if (game->map)
+	{
+		while (game->map[i])
+			free(game->map[i++]);
+		free(game->map);
+	} */
+}
