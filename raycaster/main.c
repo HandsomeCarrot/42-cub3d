@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 09:32:42 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/21 15:11:26 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/21 15:22:00 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	main(void)
 	int		x;
 	int		y;
 
+	init_player(&game.player, 4, 3, 'N');
 	if (!init_mlx(&game))
 	{
 		printf("Error\nMLX initialization failed\n");
