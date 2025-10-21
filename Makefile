@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/21 18:53:00 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/21 18:56:00 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -119,6 +119,10 @@ run: re
 log0: CFLAGS += -DLOGGING_LEVEL=0
 log0: re
 	$(call log,INFO,logging level set to 0)
+
+log1: CFLAGS += -DLOGGING_LEVEL=1
+log1: re
+	$(call log,INFO,logging level set to 1)
 
 log2: CFLAGS += -DLOGGING_LEVEL=2
 log2: re
