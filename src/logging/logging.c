@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:34:49 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/22 12:48:42 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/22 16:39:09 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,13 @@ int	log_start(t_log_level lvl, char *file, int line)
 	fd = STDOUT_FILENO;
 	if (!print_log_level(lvl, &fd))
 		return (-1);
-	if (file)
+	if (file && LOGGING_LEVEL == DEBUG)
 	{
-		ft_putstr_fd(": ", fd);
+		ft_putstr_fd(" (", fd);
 		ft_putstr_fd(file, fd);
 		ft_putstr_fd(":", fd);
 		ft_putnbr_fd(line, fd);
+		ft_putstr_fd(")", fd);
 	}
 	ft_putstr_fd(" -> ", fd);
 	return (fd);
