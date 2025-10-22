@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 18:31:51 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/22 19:36:34 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/22 20:48:44 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,22 @@
  */
 static int	parse_input(int argc, char **argv)
 {
+	int	log_fd;
+
 	log_msg(INFO, __FILE__, __LINE__, "validating user input");
-	if (argc != 2 || !argv || !argv[0] || !argv[1])
+	if (!argv)
 	{
-		log_msg(ERROR, __FILE__, __LINE__, "invalid input");
+		log_msg(ERROR, __FILE__, __LINE__, INVALID_PARAMETER);
+		return (1);
+	}
+	if (argc != 2 || !argv[1])
+	{
+		log_fd = log_start(ERROR, __FILE__, __LINE__);
+		if (log_fd >= 0)
+		{
+			ft_putstr_fd("invalid input ", log_fd);
+			ft_putendl_fd("(expected: ./cub3d <path_to_map_file>)", log_fd);
+		}
 		return (1);
 	}
 	return (0);
@@ -49,6 +61,11 @@ static int	parse_input(int argc, char **argv)
 int	parse(int argc, char **argv, t_data *data)
 {
 	log_msg(INFO, __FILE__, __LINE__, "starting parsing of data");
+	if (!argv || !data)
+	{
+		log_msg(ERROR, __FILE__, __LINE__, INVALID_PARAMETER);
+		return (1);
+	}
 	if (parse_input(argc, argv))
 		return (1);
 	if (parse_map_file(argv[1], data))
