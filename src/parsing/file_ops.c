@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 18:15:52 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/22 16:04:55 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/22 16:23:48 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ int	correct_file_extension(char *file, char *extension)
 	size_t	file_name_len;
 	size_t	extension_len;
 	size_t	extension_start_pos;
-	int		log_fd;
 
 	if (!file || !extension)
 	{
