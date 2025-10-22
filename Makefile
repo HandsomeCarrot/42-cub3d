@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/21 19:23:37 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/22 17:04:51 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ DPFLAGS := -MP -MD
 LIBS := -lmlx -lXext -lX11
 
 INCLUDE := -Iinclude -Ilibft/libft -Ilibft/getNextLine
-COMP := $(CC) $(CFLAGS) $(INCLUDE)
+COMP = $(CC) $(CFLAGS) $(INCLUDE)
 
 RM := rm -f
 
@@ -30,7 +30,8 @@ S := src
 SRCS :=	$(addprefix $(S)/, \
 		main.c \
 		$(addprefix logging/, \
-		logging.c) \
+		logging.c \
+		log_memory.c) \
 		$(addprefix inits/, \
 		main_init.c) \
 		$(addprefix cleanup/, \
@@ -38,7 +39,8 @@ SRCS :=	$(addprefix $(S)/, \
 		$(addprefix parsing/, \
 		parse.c \
 		parse_map.c \
-		file_ops.c))
+		file_ops.c \
+		utils/expand_string_array.c))
 
 B := build
 OBJS := $(SRCS:$(S)/%.c=$(B)/%.o)
@@ -116,22 +118,22 @@ run: re
 
 #-----LOG LEVEL RULES-----#
 
-log0: CFLAGS += -DLOGGING_LEVEL=0
-log0: re
-	$(call log,INFO,logging level set to 0)
+error: CFLAGS += -DLOGGING_LEVEL=0
+error: re
+	$(call log,INFO,logging level set to ERROR)
 
-log1: CFLAGS += -DLOGGING_LEVEL=1
-log1: re
-	$(call log,INFO,logging level set to 1)
+warning: CFLAGS += -DLOGGING_LEVEL=1
+warning: re
+	$(call log,INFO,logging level set to WARNING)
 
-log2: CFLAGS += -DLOGGING_LEVEL=2
-log2: re
-	$(call log,INFO,logging level set to 2)
+info: CFLAGS += -DLOGGING_LEVEL=2
+info: re
+	$(call log,INFO,logging level set to INFO)
+                 
+debug: CFLAGS += -DLOGGING_LEVEL=3
+debug: re
+	$(call log,INFO,logging level set to DEBUG)
 
-log3: CFLAGS += -DLOGGING_LEVEL=3
-log3: re
-	$(call log,INFO,logging level set to 3)
-
-.PHONY: all libft clean fclean re run log0 log1 log2 log3
+.PHONY: all libft clean fclean re run error warning info debug
 
 -include $(DEPS)
