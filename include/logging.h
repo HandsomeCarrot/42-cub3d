@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:34:28 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/22 12:51:54 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/22 18:27:42 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,14 @@
 # ifndef LOGGING_LEVEL
 #  define LOGGING_LEVEL 2
 # endif /* LOGGING_LEVEL */
+
+# define NC "\033[0m"
+# define GREEN "\033[1;42;37m"
+# define YELLOW "\033[1;43;37m"
+# define BLUE "\033[1;44;37m"
+# define MAGENTA "\033[1;45;37m"
+# define CYAN "\033[1;36m"
+# define RED "\033[1;41;37m"
 
 typedef enum e_log_level
 {

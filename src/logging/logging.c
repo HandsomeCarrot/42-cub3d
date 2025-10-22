@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:34:49 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/22 16:39:09 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/22 18:26:57 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ static int	print_log_level(t_log_level level, int *fd)
 	if (level <= WARNING)
 		*fd = STDERR_FILENO;
 	if (level == ERROR)
-		ft_putstr_fd("[ERROR]", *fd);
+		ft_putstr_fd(RED"[ERROR]"NC, *fd);
 	else if (level == WARNING)
-		ft_putstr_fd("[WARNING]", *fd);
+		ft_putstr_fd(YELLOW"[WARNING]"NC, *fd);
 	else if (level == INFO)
-		ft_putstr_fd("[INFO]", *fd);
+		ft_putstr_fd(BLUE"[INFO]"NC, *fd);
 	else if (level == DEBUG)
-		ft_putstr_fd("[DEBUG]", *fd);
+		ft_putstr_fd(MAGENTA"[DEBUG]"NC, *fd);
 	return (1);
 }
 
@@ -59,11 +59,11 @@ int	log_start(t_log_level lvl, char *file, int line)
 		return (-1);
 	if (file && LOGGING_LEVEL == DEBUG)
 	{
-		ft_putstr_fd(" (", fd);
+		ft_putstr_fd(" ("CYAN, fd);
 		ft_putstr_fd(file, fd);
 		ft_putstr_fd(":", fd);
 		ft_putnbr_fd(line, fd);
-		ft_putstr_fd(")", fd);
+		ft_putstr_fd(NC")", fd);
 	}
 	ft_putstr_fd(" -> ", fd);
 	return (fd);
