@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 18:15:52 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/22 15:34:50 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/22 16:04:55 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ int	open_file_read(char *file)
 	return (file_fd);
 }
 
+/**
+ * Logs an error message indicating an invalid file extension.
+ * This function is used internally to report parsing errors related to file extensions.
+ * @param file The name of the file that has an invalid extension.
+ * @param line The line number in the source code where the error was detected.
+ */
 static void	log_extension_error(char *file, int line)
 {
 	int	log_fd;
