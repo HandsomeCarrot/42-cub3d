@@ -6,22 +6,24 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:34:49 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/21 19:19:55 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/22 12:48:42 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "logging.h"
 
 /**
- * @brief Prints the logging level tag to standard error output.
+ * @brief Prints the string representation of a log level to a file descriptor.
  *
- * This static helper function checks if the global LOGGING_LEVEL is high
- * enough to allow logging at the requested level. If allowed, it prints
- * the corresponding log level tag (e.g., [ERROR], [WARNING]) to stderr.
+ * This function takes a log level enum value and writes its corresponding
+ * string representation (e.g., "DEBUG", "INFO", "WARN", "ERROR") to the
+ * specified file descriptor. It is used internally for logging purposes.
  *
- * @param level The logging level to print.
+ * @param level The log level to print (e.g., LOG_DEBUG, LOG_INFO, etc.).
+ * @param fd Pointer to the file descriptor where the log level string will be written.
+ *           The file descriptor should be open for writing.
  *
- * @return 1 if the logging level is allowed and printed, 0 otherwise.
+ * @return 0 on success, or a negative value on failure (e.g., write error).
  */
 static int	print_log_level(t_log_level level, int *fd)
 {
@@ -41,35 +43,20 @@ static int	print_log_level(t_log_level level, int *fd)
 }
 
 /**
- * @brief Prints a formatted log message to standard error with context.
- *
- * This function prints a log message to stderr if the specified logging
- * level is enabled. It includes the log level tag, the source file name,
- * and the line number where the log_msg function was called, followed by
- * the user-provided message.
- *
- * The `file` and `line` parameters should be passed using the `__FILE__`
- * and `__LINE__` macros respectively to provide accurate source location.
- * DOES NOT PRINT A NEWLINE CHARACTER!
- *
- * @param lvl The logging level of the message (ERROR, WARNING, INFO, DEBUG).
- * @param file The source file name where log_msg() was called. Typically
- *             passed as the `__FILE__` macro.
- * @param line The line number in the source file where log_msg() was called.
- *             Typically passed as the `__LINE__` macro.
- * @param msg The message string to print.
+ * @brief Starts a log message and returns file descriptor if logging is enabled
  * 
- * @note - use ft_putstr_fd(), ft_putnbr_fd(), ft_putendl_fd() to make
- * message longer
- * @note - only prints to standard error
+ * @param lvl The logging level
+ * @param file Source file name (use __FILE__)
+ * @param line Source line number (use __LINE__)
+ * @return int File descriptor to write to, or -1 if logging is disabled
  */
-void	log_msg(t_log_level lvl, char *file, int line, char *msg)
+int	log_start(t_log_level lvl, char *file, int line)
 {
 	int	fd;
 
 	fd = STDOUT_FILENO;
 	if (!print_log_level(lvl, &fd))
-		return ;
+		return (-1);
 	if (file)
 	{
 		ft_putstr_fd(": ", fd);
@@ -77,9 +64,33 @@ void	log_msg(t_log_level lvl, char *file, int line, char *msg)
 		ft_putstr_fd(":", fd);
 		ft_putnbr_fd(line, fd);
 	}
+	ft_putstr_fd(" -> ", fd);
+	return (fd);
+}
+
+/**
+ * @brief Logs a message with the specified log level, including file and line information.
+ *
+ * This function is used to output log messages at different levels, typically for debugging,
+ * informational purposes, or error reporting. It includes the source file name and line number
+ * where the log call originates.
+ *
+ * @param lvl The log level indicating the severity or type of the message
+ * (e.g., DEBUG, INFO, WARN, ERROR).
+ * 
+ * @param file The name of the source file where the log is being called from.
+ * 
+ * @param line The line number in the source file where the log is being called from.
+ * 
+ * @param msg The message string to be logged.
+ */
+void	log_msg(t_log_level lvl, char *file, int line, char *msg)
+{
+	int	fd;
+
+	fd = log_start(lvl, file, line);
+	if (fd < 0)
+		return ;
 	if (msg)
-	{
-		ft_putstr_fd(" -> ", fd);
-		ft_putstr_fd(msg, fd);
-	}
+		ft_putendl_fd(msg, fd);
 }

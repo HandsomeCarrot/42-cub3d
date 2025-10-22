@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 17:55:19 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/21 19:39:26 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/22 12:49:07 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@ t_data	*init_data(void)
 {
 	t_data	*data;
 
+	log_msg(INFO, __FILE__, __LINE__, "initializing main data struct");
 	data = log_calloc(1, sizeof(t_data), __FILE__, __LINE__);
 	if (!data)
 		return (NULL);
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
 	{
-		log_msg(ERROR, __FILE__, __LINE__, "failed to initialize mlx\n");
+		log_msg(ERROR, __FILE__, __LINE__, "failed to initialize mlx");
 		free(data);
 		return (NULL);
 	}
