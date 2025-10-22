@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/22 20:07:44 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/22 21:01:20 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	free_string_array(char **string_array)
 	if (!string_array)
 		return ;
 	pos = 0;
-	log_msg(DEBUG, __FILE__, __LINE__, "freeing a string array");
+	log_msg(DEBUG, __FILE__, __LINE__, "freeing string array");
 	while (string_array[pos])
 	{
 		free(string_array[pos]);
@@ -31,6 +31,7 @@ static void	free_string_array(char **string_array)
 
 static int	is_eof(char *string, char *file, int line)
 {
+	log_msg(DEBUG, __FILE__, __LINE__, "checking for end of file");
 	if (string && !ft_strchr(string, '\n'))
 	{
 		log_msg(DEBUG, file, line, "reached end of file");
@@ -51,7 +52,7 @@ static char	**read_file(char *file)
 
 	if (!file)
 		return (NULL);
-	log_msg(INFO, __FILE__, __LINE__, "reading from file");
+	log_msg(DEBUG, __FILE__, __LINE__, "reading file content");
 	file_fd = open_file_read(file);
 	if (file_fd < 0)
 		return (NULL);
@@ -83,7 +84,7 @@ int	parse_map_file(char *file, t_data *data)
 	char	**lines;
 
 	(void)data;
-	log_msg(INFO, __FILE__, __LINE__, "parsing map file");
+	log_msg(INFO, __FILE__, __LINE__, "parsing map file data");
 	if (correct_file_extension(file, ".cub"))
 		return (1);
 	lines = read_file(file);

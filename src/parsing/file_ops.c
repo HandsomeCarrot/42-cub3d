@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 18:15:52 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/22 20:48:49 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/22 20:59:08 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	open_file_read(char *file)
 	int	file_fd;
 	int	log_fd;
 
+	log_msg(DEBUG, __FILE__, __LINE__, "opening file for reading");
 	if (!file || !*file)
 	{
 		log_msg(ERROR, __FILE__, __LINE__, INVALID_PARAMETER);
@@ -76,6 +77,7 @@ int	correct_file_extension(char *file, char *extension)
 	size_t	extension_len;
 	size_t	file_extension;
 
+	log_msg(DEBUG, __FILE__, __LINE__, "validating file extension");
 	if (!file || !extension)
 	{
 		log_msg(ERROR, __FILE__, __LINE__, INVALID_PARAMETER);

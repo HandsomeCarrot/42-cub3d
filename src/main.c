@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 17:26:09 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/22 19:37:46 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/22 21:04:32 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	main(int argc, char **argv)
 {
 	t_data	*data;
 
+	log_msg(INFO, __FILE__, __LINE__, "executing cub3d");
 	data = init_data();
 	if (!data)
 		return (1);

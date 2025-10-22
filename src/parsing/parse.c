@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 18:31:51 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/22 20:48:44 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/22 20:58:31 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	parse_input(int argc, char **argv)
 {
 	int	log_fd;
 
-	log_msg(INFO, __FILE__, __LINE__, "validating user input");
+	log_msg(DEBUG, __FILE__, __LINE__, "validating user input");
 	if (!argv)
 	{
 		log_msg(ERROR, __FILE__, __LINE__, INVALID_PARAMETER);
