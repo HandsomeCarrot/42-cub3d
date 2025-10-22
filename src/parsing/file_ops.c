@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 18:15:52 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/22 13:10:03 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/22 15:34:50 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,19 @@ int	open_file_read(char *file)
 	return (file_fd);
 }
 
+static void	log_extension_error(char *file, int line)
+{
+	int	log_fd;
+
+	log_fd = log_start(ERROR, file, line);
+	if (log_fd >= 0)
+	{
+		ft_putstr_fd("invalid file name '", log_fd);
+		ft_putstr_fd(file, log_fd);
+		ft_putendl_fd("'", log_fd);
+	}
+}
+
 /**
  * @brief Checks if the given file has the correct extension.
  *
@@ -81,16 +94,11 @@ int	correct_file_extension(char *file, char *extension)
 	file_name_len = ft_strlen(file);
 	extension_len = ft_strlen(extension);
 	extension_start_pos = file_name_len - extension_len;
-	if (file_name_len <= extension_len || file[0] == '.'
+	if (file_name_len <= extension_len
+		|| file[0] == '.'
 		|| ft_strncmp((file + extension_start_pos), extension, extension_len) != 0)
 	{
-		log_fd = log_start(ERROR, __FILE__, __LINE__);
-		if (log_fd >= 0)
-		{
-			ft_putstr_fd("invalid file name '", log_fd);
-			ft_putstr_fd(file, log_fd);
-			ft_putendl_fd("'", log_fd);
-		}
+		log_extension_error(__FILE__, __LINE__);
 		return (1);
 	}
 	return (0);
