@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/21 17:31:54 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/22 16:14:45 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,9 @@ int	parse(int argc, char **argv, t_data *data);
 
 int	open_file_read(char *file);
 int	correct_file_extension(char *file, char *extension);
+
+//-----expand_string_array.c-----//
+
+char	**expand_string_array(char **old_array);
 
 #endif /* PARSING_H */

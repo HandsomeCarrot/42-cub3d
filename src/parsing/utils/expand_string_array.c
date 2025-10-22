@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 18:17:00 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/22 16:06:59 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/22 16:13:52 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	count_strings(char **string_array)
 	log_fd = log_start(DEBUG, __FILE__, __LINE__);
 	if (log_fd >= 0)
 	{
-		ft_putstr_fd("count ", log_fd);
+		ft_putstr_fd("counted ", log_fd);
 		ft_putnbr_fd(count, log_fd);
 		ft_putendl_fd(" strings in string array", log_fd);
 	}
@@ -53,5 +53,7 @@ char	**expand_string_array(char **old_array)
 	if (!new_array)
 		return (NULL);
 	copy_array(new_array, old_array, strings);
+	if (old_array)
+		free(old_array);
 	return (new_array);
 }
