@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 18:15:52 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/22 20:09:44 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/22 20:48:49 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	open_file_read(char *file)
 
 	if (!file || !*file)
 	{
-		log_msg(WARNING, __FILE__, __LINE__, "got invalid parameter");
+		log_msg(ERROR, __FILE__, __LINE__, INVALID_PARAMETER);
 		return (-1);
 	}
 	file_fd = open(file, O_RDONLY);
@@ -78,7 +78,7 @@ int	correct_file_extension(char *file, char *extension)
 
 	if (!file || !extension)
 	{
-		log_msg(WARNING, __FILE__, __LINE__, "got invalid parameter");
+		log_msg(ERROR, __FILE__, __LINE__, INVALID_PARAMETER);
 		return (1);
 	}
 	file_len = ft_strlen(file);
