@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 18:31:51 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/22 12:49:47 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/22 19:36:34 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ int	parse(int argc, char **argv, t_data *data)
 	log_msg(INFO, __FILE__, __LINE__, "starting parsing of data");
 	if (parse_input(argc, argv))
 		return (1);
-	(void)data;
+	if (parse_map_file(argv[1], data))
+		return (1);
 	//parse map
 	//parse img files
 	return (0);
