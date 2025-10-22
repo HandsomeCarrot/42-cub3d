@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:34:28 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/22 18:27:42 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/22 20:10:20 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,9 @@ void	log_msg(t_log_level lvl, char *file, int line, char *msg);
 //-----log_memory.c-----//
 
 void	*log_calloc(size_t nmemb, size_t size, char *file, int line);
+
+//-----log_parsing.c-----//
+
+void	log_extension_error(char *map_file, char *source_file, int line);
 
 #endif /* LOGGING_H */
