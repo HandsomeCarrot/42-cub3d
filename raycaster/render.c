@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 14:32:38 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/22 14:56:20 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/22 17:15:24 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,11 @@ int render(t_game *game)
 void new_pos(t_game *game, double delta_time)
 {
     double speed;
-
+    double rot_speed;
+    double angle;
+    double old_x;
+    
+    rot_speed = 3.0 * delta_time;
     speed = 5.0 * delta_time; //? make maybe a define for 5.0
 	if(game->keys.move_forward)
     {
@@ -134,19 +138,35 @@ void new_pos(t_game *game, double delta_time)
     }
 	if(game->keys.strafe_right)
     {
-
+        game->player.pos.x = game->player.pos.x + game->player.plane.x * speed;
+        game->player.pos.y = game->player.pos.y + game->player.plane.y * speed;
     }
 	if(game->keys.strafe_left)
     {
-
+        game->player.pos.x = game->player.pos.x - game->player.plane.x * speed;
+        game->player.pos.y = game->player.pos.y - game->player.plane.y * speed;
     }
 	if(game->keys.rotate_left)
     {
-        
+        old_x = game->player.look_dir.x;
+        angle = -rot_speed;
+        game->player.look_dir.x = old_x * cos(angle) - game->player.look_dir.y * sin(angle);
+        game->player.look_dir.y = old_x * sin(angle) + game->player.look_dir.y * cos(angle);
+
+        old_x = game->player.plane.x;
+        game->player.plane.x = old_x * cos(angle) - game->player.plane.y * sin(angle);
+        game->player.plane.y = old_x * sin(angle) + game->player.plane.y * cos(angle);
     }
 	if(game->keys.rotate_right)
     {
+        old_x = game->player.look_dir.x;
+        angle = rot_speed;
+        game->player.look_dir.x = old_x * cos(angle) - game->player.look_dir.y * sin(angle);
+        game->player.look_dir.y = old_x * sin(angle) + game->player.look_dir.y * cos(angle);
 
+        old_x = game->player.plane.x;
+        game->player.plane.x = old_x * cos(angle) - game->player.plane.y * sin(angle);
+        game->player.plane.y = old_x * sin(angle) + game->player.plane.y * cos(angle);
     }
 }
 
