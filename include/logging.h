@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:34:28 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/22 20:47:57 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/22 22:01:55 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LOGGING_H
 
 # include "libft.h"
+# include "get_next_line_bonus.h"
 # include <stdio.h>
 
 # ifndef LOGGING_LEVEL
@@ -50,6 +51,7 @@ void	log_msg(t_log_level lvl, const char *file, int line, char *msg);
 //-----log_memory.c-----//
 
 void	*log_calloc(size_t nmemb, size_t size, const char *file, int line);
+char	*log_get_next_line(int file_fd, char *file, int line);
 
 //-----log_parsing.c-----//
 
