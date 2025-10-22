@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 16:57:12 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/21 11:16:48 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/21 15:42:49 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,17 @@ typedef struct s_mlx
 	int		line_length;
 	int		endian;
 }	t_mlx;
+
+typedef struct s_ray
+{
+    t_vector    dir;
+    t_point     map;
+    t_point     step;
+    t_vector    delta_dist;
+    t_vector    side_dist;
+    int         side;
+    double      perp_wall_dist;
+}   t_ray;
 
 typedef struct s_game
 {
