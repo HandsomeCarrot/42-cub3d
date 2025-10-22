@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:34:49 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/22 18:42:56 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/22 20:36:52 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int	print_log_level(t_log_level level, int *fd)
  * @return The file descriptor to use for writing the log message, or -1 if
  *         logging is disabled for this level.
  */
-int	log_start(t_log_level lvl, char *file, int line)
+int	log_start(t_log_level lvl, const char *file, int line)
 {
 	int	fd;
 
@@ -66,7 +66,7 @@ int	log_start(t_log_level lvl, char *file, int line)
 	if (file && LOGGING_LEVEL == DEBUG)
 	{
 		ft_putstr_fd(" ("CYAN, fd);
-		ft_putstr_fd(file, fd);
+		ft_putstr_fd((char *)file, fd);
 		ft_putstr_fd(":", fd);
 		ft_putnbr_fd(line, fd);
 		ft_putstr_fd(NC")", fd);
@@ -88,7 +88,7 @@ int	log_start(t_log_level lvl, char *file, int line)
  * @param msg The message string to be logged (can be NULL, in which case
  *            only the log header is printed).
  */
-void	log_msg(t_log_level lvl, char *file, int line, char *msg)
+void	log_msg(t_log_level lvl, const char *file, int line, char *msg)
 {
 	int	fd;
 

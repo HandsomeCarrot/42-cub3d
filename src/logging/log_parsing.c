@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 20:08:44 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/22 20:10:04 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/22 20:36:20 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 * @param line The line number in the source file where the error was
 *             detected.
 */
-void	log_extension_error(char *map_file, char *source_file, int line)
+void	log_extension_error(char *map_file, const char *source_file, int line)
 {
 	int	log_fd;
 
