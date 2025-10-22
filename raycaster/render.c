@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 14:32:38 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/22 06:15:28 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/22 08:57:58 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void init_ray(t_ray *ray, t_game *game, int x)
 	ray->dir.y = game->player.look_dir.y + camera_x * game->player.plane.y;
 	ray->map.x = (int)game->player.pos.x;
 	ray->map.y = (int)game->player.pos.y;
-	ray->delta_dist.x = fabs(1.0 / ray->dir.x);
-	ray->delta_dist.y = fabs(1.0 / ray->dir.y);
+	ray->delta_dist.x = fabs(1.0 / ray->dir.x); //!: was wenn x = 0
+	ray->delta_dist.y = fabs(1.0 / ray->dir.y); //!: was wenn y = 0
 	if (ray->dir.x < 0)
 	{
 		ray->step.x = -1;
@@ -89,8 +89,10 @@ void draw_column(t_ray *ray, t_game *game, int x)
     draw_end = line_height / 2 + game->mlx.height / 2;
     if (draw_end >= game->mlx.height)
         draw_end = game->mlx.height - 1;
-    color = (ray->side == 0) ? 0xFF0000 : 0x800000;
-
+    if (ray->side == 0)
+        color = 0xFF0000;
+    else
+        color = 0x800000;
     y = draw_start;
     while (y <= draw_end)
     {
