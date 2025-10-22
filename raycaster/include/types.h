@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 16:57:12 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/22 09:14:50 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/22 11:22:04 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <stdbool.h>
+# include <sys/time.h>
 
 typedef struct s_vector
 {

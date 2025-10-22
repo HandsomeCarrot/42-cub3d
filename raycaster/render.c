@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 14:32:38 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/22 08:57:58 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/22 14:56:20 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ void perform_dda(t_ray *ray, t_game *game)
         {
             ray->side_dist.x += ray->delta_dist.x;
             ray->map.x += ray->step.x;
-            ray->side = 0; // Hit vertical wall
+            ray->side = 0;
         }
         else
         {
             ray->side_dist.y += ray->delta_dist.y;
             ray->map.y += ray->step.y;
-            ray->side = 1; // Hit horizontal wall
+            ray->side = 1;
         }
         if (game->map[ray->map.y][ray->map.x] == '1')
             hit = 1;
@@ -82,7 +82,7 @@ void draw_column(t_ray *ray, t_game *game, int x)
     int y;
     int color;
 
-    line_height = (int)(game->mlx.height / ray->perp_wall_dist);
+    line_height = (game->mlx.height / ray->perp_wall_dist);
     draw_start = -line_height / 2 + game->mlx.height / 2;
     if (draw_start < 0)
         draw_start = 0;
@@ -117,10 +117,75 @@ int render(t_game *game)
     return (1);
 }
 
+void new_pos(t_game *game, double delta_time)
+{
+    double speed;
+
+    speed = 5.0 * delta_time; //? make maybe a define for 5.0
+	if(game->keys.move_forward)
+    {
+        game->player.pos.x = game->player.pos.x + game->player.look_dir.x * speed;
+        game->player.pos.y = game->player.pos.y + game->player.look_dir.y * speed;
+    }
+	if(game->keys.move_back)
+    {
+        game->player.pos.x = game->player.pos.x - game->player.look_dir.x * speed;
+        game->player.pos.y = game->player.pos.y - game->player.look_dir.y * speed;
+    }
+	if(game->keys.strafe_right)
+    {
+
+    }
+	if(game->keys.strafe_left)
+    {
+
+    }
+	if(game->keys.rotate_left)
+    {
+        
+    }
+	if(game->keys.rotate_right)
+    {
+
+    }
+}
+
+void clear_image(t_mlx *mlx, int floor_color, int ceiling_color)
+{
+    int x;
+    int y;
+    int half_height;
+
+    half_height = mlx->height / 2;
+    y = 0;
+    while (y < mlx->height)
+    {
+        x = 0;
+        while (x < mlx->width)
+        {
+            if (y < half_height)
+                put_pixel(mlx, x, y, ceiling_color);
+            else
+                put_pixel(mlx, x, y, floor_color);
+            x++;
+        }
+        y++;
+    }
+}
+
 int render_loop(t_game *game)
 {
-    render(game);  // your render function that draws everything to game->mlx.img_ptr
+    static double last_time = 0;
+    double current_time;
+    double delta_time;
 
+    current_time = get_time();
+    delta_time = current_time - last_time;
+    last_time = current_time;
+    
+    clear_image(&game->mlx, 0x000000, 0x000000);
+    new_pos(game, delta_time);
+    render(game);
     mlx_put_image_to_window(game->mlx.mlx, game->mlx.win, game->mlx.img, 0, 0);
     return (0);
 }
