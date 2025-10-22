@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 11:07:26 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/22 06:05:11 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/22 10:23:06 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,52 @@ int close_handler(void *param)
 	return (0);
 }
 
+int key_release_handler(int keycode, void *param)
+{
+	t_game *game;
+
+	game = (t_game*) param;
+	if(keycode == XK_W || keycode == XK_w || keycode == XK_Up)
+		game->keys.move_forward = false;
+	else if(keycode == XK_S || keycode == XK_s || keycode == XK_Down)
+		game->keys.move_back = false;
+	else if(keycode == XK_D || keycode == XK_d)
+		game->keys.strafe_right = false;
+	else if(keycode == XK_A || keycode == XK_a)
+		game->keys.strafe_left = false;
+	else if(keycode == XK_Left)
+		game->keys.rotate_left = false;
+	else if(keycode == XK_Right)
+		game->keys.rotate_right = false;
+	return (0);
+}
+
 int	key_handler(int keycode, void *param)
 {
-	if (keycode == 65307)
-	{
+	t_game *game;
+
+	game = (t_game*) param;
+	if (keycode == XK_Escape)
 		close_handler(param);
-	}
+	else if(keycode == XK_W || keycode == XK_w || keycode == XK_Up)
+		game->keys.move_forward = true;
+	else if(keycode == XK_S || keycode == XK_s || keycode == XK_Down)
+		game->keys.move_back = true;
+	else if(keycode == XK_D || keycode == XK_d)
+		game->keys.strafe_right = true;
+	else if(keycode == XK_A || keycode == XK_a)
+		game->keys.strafe_left = true;
+	else if(keycode == XK_Left)
+		game->keys.rotate_left = true;
+	else if(keycode == XK_Right)
+		game->keys.rotate_right = true;
 	return (0);
 }
 
 void setup_hooks(t_game *game)
 {
 	mlx_hook(game->mlx.win, 2, 1L<<0, key_handler, game);
+	mlx_hook(game->mlx.win, 3, 1L << 1, key_release_handler, game);
 	mlx_hook(game->mlx.win, 17, 0, close_handler, game);
 	mlx_loop_hook(game->mlx.mlx, render_loop, game);
 }

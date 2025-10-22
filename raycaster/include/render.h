@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 16:55:33 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/22 06:05:47 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/22 09:03:25 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "types.h"
 #include "utils.h"
 #include <stdbool.h>
+#include <X11/keysym.h>
 
 //mlx_setup.c
 void	put_pixel(t_mlx *mlx, int x, int y, int color);
