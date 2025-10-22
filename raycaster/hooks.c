@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 11:07:26 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/22 10:23:06 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/22 10:36:34 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ int	key_handler(int keycode, void *param)
 
 void setup_hooks(t_game *game)
 {
-	mlx_hook(game->mlx.win, 2, 1L<<0, key_handler, game);
-	mlx_hook(game->mlx.win, 3, 1L << 1, key_release_handler, game);
-	mlx_hook(game->mlx.win, 17, 0, close_handler, game);
+	mlx_hook(game->mlx.win, KeyPress, KeyPressMask, key_handler, game);
+	mlx_hook(game->mlx.win, KeyRelease, KeyReleaseMask, key_release_handler, game);
+	mlx_hook(game->mlx.win, DestroyNotify, NoEventMask, close_handler, game);
 	mlx_loop_hook(game->mlx.mlx, render_loop, game);
 }
 
