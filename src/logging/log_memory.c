@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 19:29:44 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/22 22:03:47 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/22 22:22:22 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,13 @@ void	*log_calloc(size_t nmemb, size_t size, const char *file, int line)
  * @see get_next_line()
  * @see log_msg()
  */
-char	*log_get_next_line(int file_fd, char *file, int line)
+char	*log_get_next_line(int file_fd, char *src_file, int src_line)
 {
 	char	*line;
 
-	log_msg(DEBUG, file, line, "calling get_next_line()");
+	log_msg(DEBUG, src_file, src_line, "calling get_next_line()");
 	line = get_next_line(file_fd);
 	if (!line)
-		log_msg(WARNING, file, line, "get_next_line() returned NULL");
+		log_msg(WARNING, src_file, src_line, "get_next_line() returned NULL");
 	return (line);
 }
