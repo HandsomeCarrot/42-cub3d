@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 18:15:52 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/22 16:23:48 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/22 18:18:23 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,15 @@ int	open_file_read(char *file)
  * @param file The name of the file that has an invalid extension.
  * @param line The line number in the source code where the error was detected.
  */
-static void	log_extension_error(char *file, int line)
+static void	log_extension_error(char *map_file, char *source_file, int line)
 {
 	int	log_fd;
 
-	log_fd = log_start(ERROR, file, line);
+	log_fd = log_start(ERROR, source_file, line);
 	if (log_fd >= 0)
 	{
 		ft_putstr_fd("invalid file name '", log_fd);
-		ft_putstr_fd(file, log_fd);
+		ft_putstr_fd(map_file, log_fd);
 		ft_putendl_fd("'", log_fd);
 	}
 }
@@ -93,7 +93,7 @@ int	correct_file_extension(char *file, char *extension)
 
 	if (!file || !extension)
 	{
-		log_msg(WARNING, __FILE__, __LINE__, "got invalid parameter\n");
+		log_msg(WARNING, __FILE__, __LINE__, "got invalid parameter");
 		return (1);
 	}
 	file_name_len = ft_strlen(file);
@@ -103,7 +103,7 @@ int	correct_file_extension(char *file, char *extension)
 		|| file[0] == '.'
 		|| ft_strncmp((file + extension_start_pos), extension, extension_len) != 0)
 	{
-		log_extension_error(__FILE__, __LINE__);
+		log_extension_error(file, __FILE__, __LINE__);
 		return (1);
 	}
 	return (0);
