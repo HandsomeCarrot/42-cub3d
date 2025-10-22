@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 18:17:00 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/22 13:23:52 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/22 16:06:59 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,18 @@
 static int	count_strings(char **string_array)
 {
 	int	count;
+	int	log_fd;
 
 	count = 0;
 	while (string_array + count)
 		count++;
-	log_msg(DEBUG, __FILE__, __LINE__, "counted ");
-	ft_putnbr_fd(count, STDOUT_FILENO);
-	ft_putendl_fd(" strings in string array", STDOUT_FILENO);
-	// fix these messages to only print with the previously specified log level
+	log_fd = log_start(DEBUG, __FILE__, __LINE__);
+	if (log_fd >= 0)
+	{
+		ft_putstr_fd("count ", log_fd);
+		ft_putnbr_fd(count, log_fd);
+		ft_putendl_fd(" strings in string array", log_fd);
+	}
 	return (count);
 }
 
