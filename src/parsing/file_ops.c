@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 18:15:52 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/17 18:19:02 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/22 13:10:03 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,28 @@
  */
 int	open_file_read(char *file)
 {
-	int	fd;
+	int	file_fd;
+	int	log_fd;
 
 	if (!file || !*file)
 	{
-		log_msg(WARNING, __FILE__, __LINE__, "got invalid parameter\n");
+		log_msg(WARNING, __FILE__, __LINE__, "got invalid parameter");
 		return (-1);
 	}
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
+	file_fd = open(file, O_RDONLY);
+	if (file_fd < 0)
 	{
-		log_msg(ERROR, __FILE__, __LINE__, "unable to open file '");
-		ft_putstr_fd(file, STDERR_FILENO);
-		ft_putstr_fd("': ", STDERR_FILENO);
-		ft_putendl_fd(strerror(errno), STDERR_FILENO);
+		log_fd = log_start(ERROR, __FILE__, __LINE__);
+		if (log_fd >= 0)
+		{
+			ft_putstr_fd("unable to open file '", log_fd);
+			ft_putstr_fd(file, log_fd);
+			ft_putstr_fd("': ", log_fd);
+			ft_putendl_fd(strerror(errno), log_fd);
+		}
 		return (-1);
 	}
-	return (fd);
+	return (file_fd);
 }
 
 /**
@@ -65,7 +70,8 @@ int	correct_file_extension(char *file, char *extension)
 {
 	size_t	file_name_len;
 	size_t	extension_len;
-	size_t	file_extension;
+	size_t	extension_start_pos;
+	int		log_fd;
 
 	if (!file || !extension)
 	{
@@ -74,14 +80,17 @@ int	correct_file_extension(char *file, char *extension)
 	}
 	file_name_len = ft_strlen(file);
 	extension_len = ft_strlen(extension);
-	file_extension = file_name_len - extension_len;
-	if (file_name_len <= extension_len
-		|| file[0] == '.'
-		|| ft_strncmp((file + file_extension), extension, extension_len) != 0)
+	extension_start_pos = file_name_len - extension_len;
+	if (file_name_len <= extension_len || file[0] == '.'
+		|| ft_strncmp((file + extension_start_pos), extension, extension_len) != 0)
 	{
-		log_msg(ERROR, __FILE__, __LINE__, "invalid file name '");
-		ft_putstr_fd(file, STDERR_FILENO);
-		ft_putendl_fd("'", STDERR_FILENO);
+		log_fd = log_start(ERROR, __FILE__, __LINE__);
+		if (log_fd >= 0)
+		{
+			ft_putstr_fd("invalid file name '", log_fd);
+			ft_putstr_fd(file, log_fd);
+			ft_putendl_fd("'", log_fd);
+		}
 		return (1);
 	}
 	return (0);
