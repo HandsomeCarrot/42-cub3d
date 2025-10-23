@@ -6,12 +6,22 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:41:23 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/23 13:41:01 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/23 18:38:50 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
+/**
+ * @brief Checks if the given line indicates the end of a file.
+ *
+ * This function determines if a line read from a file represents
+ * the end of the file by checking for the absence of a newline
+ * character or if the line is NULL.
+ *
+ * @param line The line read from the file to check.
+ * @return 1 if the line indicates end of file, 0 otherwise.
+ */
 static int	is_eof(char *line)
 {
 	log_msg(DEBUG, __FILE__, __LINE__, "checking for enf of file");
@@ -22,6 +32,17 @@ static int	is_eof(char *line)
 	return (0);
 }
 
+/**
+ * @brief Reads the entire content of a file into a string array.
+ *
+ * This function reads lines from the file descriptor until the end
+ * of the file is reached, storing each line in a dynamically
+ * expanding array. Logs the reading process.
+ *
+ * @param file_fd The file descriptor to read from.
+ * @return An array of strings containing the file content, or NULL
+ *         if an error occurs.
+ */
 static char	**read_file_content(int file_fd)
 {
 	char	**lines;
@@ -47,6 +68,17 @@ static char	**read_file_content(int file_fd)
 	return (lines);
 }
 
+/**
+ * @brief Reads the content of a file into a string array.
+ *
+ * This function opens the specified file, reads its content line
+ * by line, and returns an array of strings. It handles file
+ * opening, reading, and closing, with appropriate logging.
+ *
+ * @param file The path to the file to read.
+ * @return An array of strings containing the file content, or NULL
+ *         if the file cannot be opened or read.
+ */
 char	**read_file(char *file)
 {
 	char	**file_content;
