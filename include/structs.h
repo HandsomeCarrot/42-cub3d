@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 20:31:25 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/20 22:16:55 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/23 19:21:08 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 typedef struct s_mlx_image
 {
+	char		*img_path;
 	void		*img_ptr;
 	int			*ret_value;
 	int			bits_per_pixel;
