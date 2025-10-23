@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/23 18:18:58 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/23 21:29:28 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ DPFLAGS := -MP -MD
 LIBS := -lmlx -lXext -lX11
 
 INCLUDE := -Iinclude -Ilibft/libft -Ilibft/getNextLine
-COMP = $(CC) $(CFLAGS) $(INCLUDE)
+COMP := $(CC) $(CFLAGS) $(INCLUDE)
 
 RM := rm -f
 
@@ -131,19 +131,19 @@ run: re
 
 #-----LOG LEVEL RULES-----#
 
-error: CFLAGS += -DLOGGING_LEVEL=0
+error: COMP += -DLOGGING_LEVEL=0
 error: re
 	$(call log,INFO,logging level set to ERROR)
 
-warning: CFLAGS += -DLOGGING_LEVEL=1
+warning: COMP += -DLOGGING_LEVEL=1
 warning: re
 	$(call log,INFO,logging level set to WARNING)
 
-info: CFLAGS += -DLOGGING_LEVEL=2
+info: COMP += -DLOGGING_LEVEL=2
 info: re
 	$(call log,INFO,logging level set to INFO)
                  
-debug: CFLAGS += -DLOGGING_LEVEL=3
+debug: COMP += -DLOGGING_LEVEL=3
 debug: re
 	$(call log,INFO,logging level set to DEBUG)
 
