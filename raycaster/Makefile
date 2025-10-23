@@ -6,7 +6,7 @@
 #    By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/16 18:57:48 by hasaliho          #+#    #+#              #
-#    Updated: 2025/10/22 11:08:38 by hasaliho         ###   ########.fr        #
+#    Updated: 2025/10/22 17:21:37 by hasaliho         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,4 +31,7 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+run: all clean
+	./$(NAME)
+
+.PHONY: all clean fclean re run

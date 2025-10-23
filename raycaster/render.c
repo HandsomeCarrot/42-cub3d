@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 14:32:38 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/22 17:15:24 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/23 08:11:26 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void new_pos(t_game *game, double delta_time)
     double speed;
     double rot_speed;
     double angle;
-    double old_x;
+    t_vector tmp_vec;
     
     rot_speed = 3.0 * delta_time;
     speed = 5.0 * delta_time; //? make maybe a define for 5.0
@@ -148,25 +148,25 @@ void new_pos(t_game *game, double delta_time)
     }
 	if(game->keys.rotate_left)
     {
-        old_x = game->player.look_dir.x;
+        tmp_vec.x = game->player.look_dir.x;
         angle = -rot_speed;
-        game->player.look_dir.x = old_x * cos(angle) - game->player.look_dir.y * sin(angle);
-        game->player.look_dir.y = old_x * sin(angle) + game->player.look_dir.y * cos(angle);
+        game->player.look_dir.x = tmp_vec.x * cos(angle) - game->player.look_dir.y * sin(angle);
+        game->player.look_dir.y = tmp_vec.x * sin(angle) + game->player.look_dir.y * cos(angle);
 
-        old_x = game->player.plane.x;
-        game->player.plane.x = old_x * cos(angle) - game->player.plane.y * sin(angle);
-        game->player.plane.y = old_x * sin(angle) + game->player.plane.y * cos(angle);
+        tmp_vec.x = game->player.plane.x;
+        game->player.plane.x = tmp_vec.x * cos(angle) - game->player.plane.y * sin(angle);
+        game->player.plane.y = tmp_vec.x * sin(angle) + game->player.plane.y * cos(angle);
     }
 	if(game->keys.rotate_right)
     {
-        old_x = game->player.look_dir.x;
+        tmp_vec.x = game->player.look_dir.x;
         angle = rot_speed;
-        game->player.look_dir.x = old_x * cos(angle) - game->player.look_dir.y * sin(angle);
-        game->player.look_dir.y = old_x * sin(angle) + game->player.look_dir.y * cos(angle);
+        game->player.look_dir.x = tmp_vec.x * cos(angle) - game->player.look_dir.y * sin(angle);
+        game->player.look_dir.y = tmp_vec.x * sin(angle) + game->player.look_dir.y * cos(angle);
 
-        old_x = game->player.plane.x;
-        game->player.plane.x = old_x * cos(angle) - game->player.plane.y * sin(angle);
-        game->player.plane.y = old_x * sin(angle) + game->player.plane.y * cos(angle);
+        tmp_vec.x = game->player.plane.x;
+        game->player.plane.x = tmp_vec.x * cos(angle) - game->player.plane.y * sin(angle);
+        game->player.plane.y = tmp_vec.x * sin(angle) + game->player.plane.y * cos(angle);
     }
 }
 
