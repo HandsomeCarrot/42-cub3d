@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/23 13:18:44 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/23 21:04:53 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,15 @@
 # include <string.h>
 
 # define WHITESPACE "\t\n\v\f\r "
+
+typedef enum e_map_data_type
+{
+	NONE,
+	IMAGE,
+	COLOR,
+	MAP,
+	INVALID
+}	t_map_data_type;
 
 //-----parse.c-----//
 
