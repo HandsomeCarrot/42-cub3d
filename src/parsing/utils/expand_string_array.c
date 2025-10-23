@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 18:17:00 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/22 21:01:38 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/23 13:16:59 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,19 @@ static void	copy_array(char **new_array, char **old_array, int new_array_size)
 	}
 }
 
-char	**expand_string_array(char **old_array)
+char	**expand_string_array(char ***old_array)
 {
 	char	**new_array;
 	int		strings;
 
 	log_msg(DEBUG, __FILE__, __LINE__, "expanding string array size");
+	if (!old_array)
+		return (log_msg(WARNING, __FILE__, __LINE__, INVALID_PARAMETER), NULL);
 	strings = count_strings(old_array);
 	new_array = log_calloc(strings + 2, sizeof(char *), __FILE__, __LINE__);
 	if (!new_array)
-		return (NULL);
-	if (old_array)
+		return (free_string_array(old_array), NULL);
+	if (*old_array)
 	{
 		copy_array(new_array, old_array, strings);
 		free(old_array);

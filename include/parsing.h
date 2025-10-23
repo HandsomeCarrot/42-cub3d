@@ -6,13 +6,14 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/22 21:29:27 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/23 13:18:44 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
+# include "cleanup.h"
 # include "get_next_line_bonus.h"
 # include "logging.h"
 # include "structs.h"
@@ -37,8 +38,12 @@ int		open_file_read(char *file);
 void	log_close(int fd, const char *file, int line);
 int		correct_file_extension(char *file, char *extension);
 
+//-----read_file.c-----//
+
+char	**read_file(char *file);
+
 //-----expand_string_array.c-----//
 
-char	**expand_string_array(char **old_array);
+char	**expand_string_array(char ***old_array);
 
 #endif /* PARSING_H */
