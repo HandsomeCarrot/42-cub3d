@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/23 13:18:53 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/23 13:35:02 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,6 @@ int	parse_map_file(char *file, t_data *data)
 	if (!lines)
 		return (1);
 	// parse file data
+	free_string_array(&lines, __FILE__, __LINE__);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:41:23 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/23 13:18:33 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/23 13:41:01 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static char	**read_file_content(int file_fd)
 			return (NULL);
 		lines[current_line] = log_get_next_line(file_fd, __FILE__, __LINE__);
 		if (!lines[current_line])
-			return (free_string_array(&lines), NULL);
+			return (free_string_array(&lines, __FILE__, __LINE__), NULL);
 		if (is_eof(lines[current_line]))
 			break ;
 		current_line++;
@@ -51,7 +51,6 @@ char	**read_file(char *file)
 {
 	char	**file_content;
 	int		file_fd;
-	int		line;
 
 	log_msg(DEBUG, __FILE__, __LINE__, "preparing to read file");
 	if (!file)

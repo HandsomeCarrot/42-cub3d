@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 13:14:42 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/23 13:15:52 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/23 13:40:01 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,29 @@
  * @note This function is designed to handle NULL inputs gracefully and
  *       logs debug information during the freeing process.
  */
-void	free_string_array(char ***string_array)
+void	free_string_array(char ***string_array, char *src_file, int src_line)
 {
+	int	log_fd;
 	int	pos;
 
-	log_msg(DEBUG, __FILE__, __LINE__, "freeing string array");
+	log_msg(DEBUG, src_file, src_line, "freeing string array");
 	if (!string_array || !*string_array)
 	{
 		log_msg(WARNING, __FILE__, __LINE__, INVALID_PARAMETER);
 		return ;
 	}
 	pos = 0;
-	while (*string_array[pos])
+	while ((*string_array)[pos])
 	{
-		free(*string_array[pos]);
-		*string_array[pos] = NULL;
+		log_fd = log_start(DEBUG, __FILE__, __LINE__);
+		if (log_fd >= 0)
+		{
+			ft_putstr_fd("freeing string at position ", log_fd);
+			ft_putnbr_fd(pos, log_fd);
+			ft_putchar_fd('\n', log_fd);
+		}
+		free((*string_array)[pos]);
+		(*string_array)[pos] = NULL;
 		pos++;
 	}
 	free(*string_array);
