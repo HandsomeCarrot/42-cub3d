@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/23 21:12:01 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/23 21:29:39 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,17 @@
  */
 static int	save_line_data(char *line, t_data *data)
 {
-	t_map_data_type	data_type;
+	//t_map_data_type	data_type;
 
-	data_type = get_map_data_type(line);
-	if (data_type == IMAGE)
-		return (save_image(line, data));
-	else if (data_type == COLOR)
-		return (save_color(line, data));
-	else if (data_type == INVALID)
-		return (1);
+	(void)line;
+	(void)data;
+	//data_type = get_map_data_type(line);
+	//if (data_type == IMAGE)
+	//	return (save_image(line, data));
+	//else if (data_type == COLOR)
+	//	return (save_color(line, data));
+	//else if (data_type == INVALID)
+	//	return (1);
 	return (0);
 }
 
