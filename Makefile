@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/22 20:47:30 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/23 18:18:58 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,21 +27,33 @@ COMP = $(CC) $(CFLAGS) $(INCLUDE)
 RM := rm -f
 
 S := src
+
+INIT_SRCS :=	$(addprefix inits/, \
+				main_init.c)
+
+CLEANUP_SRCS :=	$(addprefix cleanup/, \
+				main_cleanup.c \
+				string_cleanup.c)
+
+LOGGING_SRCS :=	$(addprefix logging/, \
+				logging.c \
+				log_memory.c \
+				log_parsing.c)
+
+PARSING_SRCS :=	$(addprefix parsing/, \
+				parse.c \
+				parse_map.c \
+				$(addprefix utils/, \
+				expand_string_array.c \
+				file_ops.c \
+				read_file.c))
+
 SRCS :=	$(addprefix $(S)/, \
 		main.c \
-		$(addprefix logging/, \
-		logging.c \
-		log_memory.c \
-		log_parsing.c) \
-		$(addprefix inits/, \
-		main_init.c) \
-		$(addprefix cleanup/, \
-		main_cleanup.c) \
-		$(addprefix parsing/, \
-		parse.c \
-		parse_map.c \
-		file_ops.c \
-		utils/expand_string_array.c))
+		$(INIT_SRCS) \
+		$(CLEANUP_SRCS) \
+		$(LOGGING_SRCS) \
+		$(PARSING_SRCS))
 
 B := build
 OBJS := $(SRCS:$(S)/%.c=$(B)/%.o)
