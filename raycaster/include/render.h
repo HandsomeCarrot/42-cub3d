@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 16:55:33 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/24 09:40:56 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/24 17:09:48 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,12 @@ void	put_pixel(t_mlx *mlx, int x, int y, int color);
 int		init_mlx(t_game *game);
 
 //render.c
-int render(t_game *game);
-int render_loop(t_game *game);
+int		render(t_game *game);
+int		render_loop(t_game *game);
+
+//minimap.c
+void	draw_minimap(t_game *game);
+void	draw_player_on_minimap(t_game *game);
 
 
 #endif
