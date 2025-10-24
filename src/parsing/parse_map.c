@@ -6,11 +6,16 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/23 21:29:39 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/24 17:37:27 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+static t_map_data_type	get_map_data_type(char *line, const char **identifiers)
+{
+	
+}
 
 /**
  * saves the data on the current line, if there is some and it is valid
@@ -23,7 +28,7 @@ static int	save_line_data(char *line, t_data *data)
 
 	(void)line;
 	(void)data;
-	//data_type = get_map_data_type(line);
+	//data_type = get_map_data_type(line, get_data_type_identifiers());
 	//if (data_type == IMAGE)
 	//	return (save_image(line, data));
 	//else if (data_type == COLOR)
