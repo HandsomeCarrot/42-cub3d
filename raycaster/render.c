@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 14:32:38 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/24 07:10:16 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/24 17:03:36 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,9 @@ void draw_column(t_ray *ray, t_game *game, int x)
     if (draw_end >= game->mlx.height)
         draw_end = game->mlx.height - 1;
     if (ray->side == 0)
-        color = 0xFF0000;
+        color = COLOR_RED;
     else
-        color = 0x800000;
+        color = COLOR_MAROON;
     y = draw_start;
     while (y <= draw_end)
     {
@@ -234,6 +234,87 @@ void clear_image(t_mlx *mlx, int floor_color, int ceiling_color)
     }
 }
 
+int color_picker(t_game *game, int map_y, int map_x)
+{
+    char c = game->map[map_y][map_x];
+    if(c == '1')
+        return COLOR_GRAY;
+    else
+        return COLOR_WHITE;
+}
+
+void get_map_dimensions(t_game *game, int *width, int *height)
+{
+    int w = 0;
+    int h = 0;
+    int current_row_len;
+
+    while (game->map[h])
+    {
+        current_row_len = 0;
+        while (game->map[h][current_row_len])
+        {
+            current_row_len++;
+        }
+        if (current_row_len > w)
+            w = current_row_len;
+        h++;
+    }
+    *width = w;
+    *height = h;
+}
+
+void draw_minimap(t_game *game)
+{
+int map_y = 0;
+int pixel_x = 0;
+int pixel_y = 0;
+    while (game->map[map_y])
+    {
+        int map_x = 0;
+        while (game->map[map_y][map_x])
+        {
+            pixel_y = 0;
+            while (pixel_y < TILE_SIZE) 
+            {
+                pixel_x = 0;
+                int screen_y = map_y * TILE_SIZE + pixel_y;
+                while (pixel_x < TILE_SIZE)
+                {
+                    int screen_x = map_x * TILE_SIZE + pixel_x;
+                    int color = color_picker(game, map_y, map_x);
+                    put_pixel(&game->mlx, screen_x, screen_y, color);
+                    pixel_x++;
+                }
+                pixel_y++;
+            }
+            map_x++;
+        }
+        map_y++;
+    }
+}
+
+void draw_player_on_minimap(t_game *game)
+{
+    int screen_x = (int)game->player.pos.x * TILE_SIZE;
+    int screen_y = (int)game->player.pos.y * TILE_SIZE;
+    int pixel_x = 0;
+    int pixel_y = 0;
+
+    while (pixel_x < TILE_SIZE)
+    {
+        pixel_y = 0;
+        screen_x = game->player.pos.x * TILE_SIZE + pixel_x;
+        while (pixel_y < TILE_SIZE)
+        {
+            screen_y = game->player.pos.y * TILE_SIZE + pixel_y;
+            put_pixel(&game->mlx, screen_x, screen_y, COLOR_MAGENTA);
+            pixel_y++;
+        }
+        pixel_x++;
+    }    
+}
+
 int render_loop(t_game *game)
 {
     static double last_time = 0;
@@ -244,9 +325,11 @@ int render_loop(t_game *game)
     delta_time = current_time - last_time;
     last_time = current_time;
     
-    clear_image(&game->mlx, 0x000000, 0x000000);
+    clear_image(&game->mlx, COLOR_BLACK, COLOR_BLACK);
     new_pos(game, delta_time);
     render(game);
+    draw_minimap(game);
+    draw_player_on_minimap(game);
     mlx_put_image_to_window(game->mlx.mlx, game->mlx.win, game->mlx.img, 0, 0);
     return (0);
 }
