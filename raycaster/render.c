@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 14:32:38 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/23 08:11:26 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/24 07:10:16 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void perform_dda(t_ray *ray, t_game *game)
             ray->map.y += ray->step.y;
             ray->side = 1;
         }
-        if (game->map[ray->map.y][ray->map.x] == '1')
+        if (game->map[ray->map.y][ray->map.x] == '1') //!without collision this line creates a segfault when out of bounds easy fix
             hit = 1;
     }
 
@@ -117,57 +117,98 @@ int render(t_game *game)
     return (1);
 }
 
+bool	check_wall(t_game *game, double x, double y)
+{
+	int	map_x;
+	int	map_y;
+
+	map_x = (int)x;
+	map_y = (int)y;
+	if (map_y < 0 || map_x < 0)
+		return (true);
+	if (game->map[map_y] == NULL)
+		return (true);
+	if (game->map[map_y][map_x] == '\0')
+		return (true);
+	if (game->map[map_y][map_x] == '1')
+		return (true);
+	return (false);
+}
+
+void    perform_rot(t_game *game, double angle)
+{
+    double tmp_vec;
+
+    tmp_vec = game->player.look_dir.x;
+    game->player.look_dir.x = tmp_vec * cos(angle) - game->player.look_dir.y * sin(angle);
+    game->player.look_dir.y = tmp_vec * sin(angle) + game->player.look_dir.y * cos(angle);
+
+    tmp_vec = game->player.plane.x;
+    game->player.plane.x = tmp_vec * cos(angle) - game->player.plane.y * sin(angle);
+    game->player.plane.y = tmp_vec * sin(angle) + game->player.plane.y * cos(angle);
+}
+
+/* void    perform_move(t_game *game, char op, t_vector pos, t_vector v2)
+{
+    if(op == '+')
+    {
+        
+    }
+} */
+
 void new_pos(t_game *game, double delta_time)
 {
     double speed;
     double rot_speed;
-    double angle;
+
     t_vector tmp_vec;
     
     rot_speed = 3.0 * delta_time;
     speed = 5.0 * delta_time; //? make maybe a define for 5.0
 	if(game->keys.move_forward)
     {
-        game->player.pos.x = game->player.pos.x + game->player.look_dir.x * speed;
-        game->player.pos.y = game->player.pos.y + game->player.look_dir.y * speed;
+         tmp_vec.x = game->player.pos.x + game->player.look_dir.x * speed;
+         tmp_vec.y = game->player.pos.y + game->player.look_dir.y * speed;
+         if(!check_wall(game, tmp_vec.x, tmp_vec.y))
+         {
+             game->player.pos.x = tmp_vec.x;
+             game->player.pos.y = tmp_vec.y;
+         }
     }
 	if(game->keys.move_back)
     {
-        game->player.pos.x = game->player.pos.x - game->player.look_dir.x * speed;
-        game->player.pos.y = game->player.pos.y - game->player.look_dir.y * speed;
+        tmp_vec.x = game->player.pos.x - game->player.look_dir.x * speed;
+        tmp_vec.y = game->player.pos.y - game->player.look_dir.y * speed;
+        if(!check_wall(game, tmp_vec.x, tmp_vec.y))
+         {
+             game->player.pos.x = tmp_vec.x;
+             game->player.pos.y = tmp_vec.y;
+         }
     }
 	if(game->keys.strafe_right)
     {
-        game->player.pos.x = game->player.pos.x + game->player.plane.x * speed;
-        game->player.pos.y = game->player.pos.y + game->player.plane.y * speed;
+        tmp_vec.x = game->player.pos.x + game->player.plane.x * speed;
+        tmp_vec.y = game->player.pos.y + game->player.plane.y * speed;
+        if(!check_wall(game, tmp_vec.x, tmp_vec.y))
+         {
+             game->player.pos.x = tmp_vec.x;
+             game->player.pos.y = tmp_vec.y;
+         }
     }
 	if(game->keys.strafe_left)
     {
-        game->player.pos.x = game->player.pos.x - game->player.plane.x * speed;
-        game->player.pos.y = game->player.pos.y - game->player.plane.y * speed;
+        tmp_vec.x = game->player.pos.x - game->player.plane.x * speed;
+        tmp_vec.y = game->player.pos.y - game->player.plane.y * speed;
+        if(!check_wall(game, tmp_vec.x, tmp_vec.y))
+         {
+             game->player.pos.x = tmp_vec.x;
+             game->player.pos.y = tmp_vec.y;
+         }
     }
 	if(game->keys.rotate_left)
-    {
-        tmp_vec.x = game->player.look_dir.x;
-        angle = -rot_speed;
-        game->player.look_dir.x = tmp_vec.x * cos(angle) - game->player.look_dir.y * sin(angle);
-        game->player.look_dir.y = tmp_vec.x * sin(angle) + game->player.look_dir.y * cos(angle);
-
-        tmp_vec.x = game->player.plane.x;
-        game->player.plane.x = tmp_vec.x * cos(angle) - game->player.plane.y * sin(angle);
-        game->player.plane.y = tmp_vec.x * sin(angle) + game->player.plane.y * cos(angle);
-    }
+        perform_rot(game, -rot_speed);
 	if(game->keys.rotate_right)
-    {
-        tmp_vec.x = game->player.look_dir.x;
-        angle = rot_speed;
-        game->player.look_dir.x = tmp_vec.x * cos(angle) - game->player.look_dir.y * sin(angle);
-        game->player.look_dir.y = tmp_vec.x * sin(angle) + game->player.look_dir.y * cos(angle);
-
-        tmp_vec.x = game->player.plane.x;
-        game->player.plane.x = tmp_vec.x * cos(angle) - game->player.plane.y * sin(angle);
-        game->player.plane.y = tmp_vec.x * sin(angle) + game->player.plane.y * cos(angle);
-    }
+        perform_rot(game, rot_speed);
 }
 
 void clear_image(t_mlx *mlx, int floor_color, int ceiling_color)
