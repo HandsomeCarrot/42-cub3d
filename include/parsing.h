@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/26 13:01:20 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/26 17:13:58 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ typedef enum e_map_data_type
 	COLOR
 }					t_map_data_type;
 
-typedef struct s_map_identifiers
+typedef struct s_map_ids
 {
 	t_map_data_type	type;
 	const char		*id;
 	int				id_len;
 	bool			found;
-}					t_map_identifiers;
+}					t_map_ids;
 
 //-----parse.c-----//
 
