@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 17:06:00 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/24 17:07:53 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/24 17:13:47 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,13 @@ void get_map_dimensions(t_game *game, int *width, int *height)
 
 void draw_minimap(t_game *game)
 {
+int map_x;
 int map_y = 0;
 int pixel_x = 0;
 int pixel_y = 0;
     while (game->map[map_y])
     {
-        int map_x = 0;
+        map_x = 0;
         while (game->map[map_y][map_x])
         {
             pixel_y = 0;

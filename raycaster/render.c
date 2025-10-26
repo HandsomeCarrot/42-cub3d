@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 14:32:38 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/24 17:11:13 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/26 17:08:18 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,63 +148,46 @@ void    perform_rot(t_game *game, double angle)
     game->player.plane.y = tmp_vec * sin(angle) + game->player.plane.y * cos(angle);
 }
 
-/* void    perform_move(t_game *game, char op, t_vector pos, t_vector v2)
+void    perform_move(t_game *game, char op, t_vector v2)
 {
+    t_vector tmp;
+    double speed;
+    speed = 5.0 * game->player.delta_time; //? make maybe a define for 5.0
     if(op == '+')
     {
-        
+        tmp.x = game->player.pos.x + v2.x * speed;
+        tmp.y = game->player.pos.y + v2.y * speed;
+         if(!check_wall(game, tmp.x, tmp.y))
+         {
+             game->player.pos.x = tmp.x;
+             game->player.pos.y = tmp.y;
+         }
     }
-} */
+    else
+    {
+        tmp.x = game->player.pos.x - v2.x * speed;
+        tmp.y = game->player.pos.y - v2.y * speed;
+        if(!check_wall(game, tmp.x, tmp.y))
+         {
+             game->player.pos.x = tmp.x;
+             game->player.pos.y = tmp.y;
+         }
+    }
+}
 
-void new_pos(t_game *game, double delta_time)
+void new_pos(t_game *game)
 {
-    double speed;
     double rot_speed;
-
-    t_vector tmp_vec;
     
-    rot_speed = 3.0 * delta_time;
-    speed = 5.0 * delta_time; //? make maybe a define for 5.0
+    rot_speed = 3.0 * game->player.delta_time;
 	if(game->keys.move_forward)
-    {
-         tmp_vec.x = game->player.pos.x + game->player.look_dir.x * speed;
-         tmp_vec.y = game->player.pos.y + game->player.look_dir.y * speed;
-         if(!check_wall(game, tmp_vec.x, tmp_vec.y))
-         {
-             game->player.pos.x = tmp_vec.x;
-             game->player.pos.y = tmp_vec.y;
-         }
-    }
+        perform_move(game, '+', game->player.look_dir);
 	if(game->keys.move_back)
-    {
-        tmp_vec.x = game->player.pos.x - game->player.look_dir.x * speed;
-        tmp_vec.y = game->player.pos.y - game->player.look_dir.y * speed;
-        if(!check_wall(game, tmp_vec.x, tmp_vec.y))
-         {
-             game->player.pos.x = tmp_vec.x;
-             game->player.pos.y = tmp_vec.y;
-         }
-    }
+        perform_move(game, '-', game->player.look_dir);
 	if(game->keys.strafe_right)
-    {
-        tmp_vec.x = game->player.pos.x + game->player.plane.x * speed;
-        tmp_vec.y = game->player.pos.y + game->player.plane.y * speed;
-        if(!check_wall(game, tmp_vec.x, tmp_vec.y))
-         {
-             game->player.pos.x = tmp_vec.x;
-             game->player.pos.y = tmp_vec.y;
-         }
-    }
+        perform_move(game, '+', game->player.plane);
 	if(game->keys.strafe_left)
-    {
-        tmp_vec.x = game->player.pos.x - game->player.plane.x * speed;
-        tmp_vec.y = game->player.pos.y - game->player.plane.y * speed;
-        if(!check_wall(game, tmp_vec.x, tmp_vec.y))
-         {
-             game->player.pos.x = tmp_vec.x;
-             game->player.pos.y = tmp_vec.y;
-         }
-    }
+        perform_move(game, '-', game->player.plane);
 	if(game->keys.rotate_left)
         perform_rot(game, -rot_speed);
 	if(game->keys.rotate_right)
@@ -238,14 +221,13 @@ int render_loop(t_game *game)
 {
     static double last_time = 0;
     double current_time;
-    double delta_time;
 
     current_time = get_time();
-    delta_time = current_time - last_time;
+    game->player.delta_time = current_time - last_time;
     last_time = current_time;
     
     clear_image(&game->mlx, COLOR_BLACK, COLOR_BLACK);
-    new_pos(game, delta_time);
+    new_pos(game);
     render(game);
     draw_minimap(game);
     draw_player_on_minimap(game);
