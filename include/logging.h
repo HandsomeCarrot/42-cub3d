@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:34:28 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/22 22:22:48 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/26 11:45:14 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@
 
 //-----GENERIC-MESSAGES-----//
 
-# define INVALID_PARAMETER "got invalid parameter"
+# define LOG_INVALID_PARAM "got invalid parameter"
+# define LOG_ALLOC_FAIL "memory allocation failed"
 
 typedef enum e_log_level
 {

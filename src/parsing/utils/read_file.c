@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:41:23 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/23 18:38:50 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/26 11:45:08 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	is_eof(char *line)
 {
 	log_msg(DEBUG, __FILE__, __LINE__, "checking for enf of file");
 	if (!line)
-		return (log_msg(WARNING, __FILE__, __LINE__, INVALID_PARAMETER), 1);
+		return (log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	if (!ft_strchr(line, '\n'))
 		return (1);
 	return (0);
@@ -50,7 +50,7 @@ static char	**read_file_content(int file_fd)
 
 	log_msg(DEBUG, __FILE__, __LINE__, "reading file");
 	if (file_fd < 0)
-		return (log_msg(WARNING, __FILE__, __LINE__, INVALID_PARAMETER), NULL);
+		return (log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM), NULL);
 	lines = NULL;
 	current_line = 0;
 	while (1)
@@ -86,7 +86,7 @@ char	**read_file(char *file)
 
 	log_msg(DEBUG, __FILE__, __LINE__, "preparing to read file");
 	if (!file)
-		return (log_msg(ERROR, __FILE__, __LINE__, INVALID_PARAMETER), NULL);
+		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), NULL);
 	file_fd = open_file_read(file);
 	if (file_fd < 0)
 		return (NULL);

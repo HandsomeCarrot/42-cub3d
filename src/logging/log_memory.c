@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 19:29:44 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/22 22:22:22 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/26 11:43:14 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	*log_calloc(size_t nmemb, size_t size, const char *file, int line)
 
 	ptr = ft_calloc(nmemb, size);
 	if (!ptr)
-		log_msg(ERROR, file, line, "memory allocation failed!");
+		log_msg(ERROR, file, line, LOG_ALLOC_FAIL);
 	return (ptr);
 }
 

@@ -6,15 +6,83 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/24 17:37:27 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/26 13:25:24 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-static t_map_data_type	get_map_data_type(char *line, const char **identifiers)
+static int	is_whitespace(char c)
 {
-	
+	if (c == ' ' || (c >= 9 && c <= 13))
+		return (1);
+	return (0);
+}
+
+static const t_map_identifiers	*get_map_identifiers(void)
+{
+	const t_map_identifiers	ids[] = {
+		{IMAGE, "NO", 2, false},
+		{IMAGE, "EA", 2, false},
+		{IMAGE, "SO", 2, false},
+		{IMAGE, "WE", 2, false},
+		{COLOR, "F", 1, false},
+		{COLOR, "C", 1, false},
+		{NULL, NONE, 0, false}
+	};
+
+	return (ids);
+}
+
+static t_map_data_type	is_empty(char *line, int row)
+{
+	char			*trimmed;
+	int				log_fd;
+	t_map_data_type	return_code;
+
+	if (!line)
+		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), INVALID);
+	if (ft_isprint(*line))
+		return (IMAGE);
+	trimmed = ft_strtrim(line, WHITESPACE);
+	if (!trimmed)
+		return (log_msg(ERROR, __FILE__, __LINE__, LOG_ALLOC_FAIL), INVALID);
+	return_code = NONE;
+	if (*trimmed != '\0')
+	{
+		log_fd = log_start(ERROR, __FILE__, __LINE__);
+		if (log_fd >= 0)
+		{
+			ft_putstr_fd("in line ", log_fd);
+			ft_putnbr_fd(row, log_fd);
+			ft_putendl_fd(": whitespace in front of data ID", log_fd);
+		}
+		return_code = INVALID;
+	}
+	free(trimmed);
+	return (return_code);
+}
+
+static t_map_data_type	get_map_data_type(char *line, int row)
+{
+	const t_map_identifiers	*ids;
+	t_map_data_type			empty;
+	int						id_pos;
+
+	if (!line)
+		return (log_msg(DEBUG, __FILE__, __LINE__, LOG_INVALID_PARAM), NONE);
+	empty = is_empty(line, row);
+	if (empty <= NONE)
+		return (empty);
+	ids = get_map_identifiers();
+	id_pos = 0;
+	while (ids && ids[id_pos].id)
+	{
+		if (ft_strncmp(line, ids[id_pos].id, ids[id_pos].id_len) == 0
+			&& is_whitespace(line[ids[id_pos].id_len]))
+			return (ids[id_pos].type);
+		id_pos++;
+	}
 }
 
 /**
@@ -22,13 +90,14 @@ static t_map_data_type	get_map_data_type(char *line, const char **identifiers)
  * 
  * @return 0 on success, other on error
  */
-static int	save_line_data(char *line, t_data *data)
+static int	save_line_data(char *line, int row, t_data *data)
 {
 	//t_map_data_type	data_type;
 
 	(void)line;
 	(void)data;
-	//data_type = get_map_data_type(line, get_data_type_identifiers());
+	(void)row;
+	//data_type = get_map_data_type(line, row);
 	//if (data_type == IMAGE)
 	//	return (save_image(line, data));
 	//else if (data_type == COLOR)
@@ -56,11 +125,11 @@ static int	extract_texture_data(char **file_data, t_data *data)
 
 	log_msg(DEBUG, __FILE__, __LINE__, "extracting map file information");
 	if (!file_data || !data)
-		return (log_msg(ERROR, __FILE__, __LINE__, INVALID_PARAMETER), 1);
+		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	line = 0;
 	while (file_data[line] /*&& !is_map(file_data[line])*/)
 	{
-		if (save_line_data(file_data[line], data))
+		if (save_line_data(file_data[line], line, data))
 			return (1);
 		//skip lines with no data
 		//loop until first part of map is reached
@@ -79,7 +148,7 @@ static int	parse_file_data(char **file_data, t_data *data)
 {
 	log_msg(DEBUG, __FILE__, __LINE__, "parsing map file data");
 	if (!file_data || !data)
-		return (log_msg(ERROR, __FILE__, __LINE__, INVALID_PARAMETER), 1);
+		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	if (extract_texture_data(file_data, data))
 		return (1);
 	//extract map & player info (posX posY W/N/E/S)

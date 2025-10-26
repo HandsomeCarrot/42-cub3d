@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 13:14:42 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/23 13:40:01 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/26 11:45:08 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	free_string_array(char ***string_array, char *src_file, int src_line)
 	log_msg(DEBUG, src_file, src_line, "freeing string array");
 	if (!string_array || !*string_array)
 	{
-		log_msg(WARNING, __FILE__, __LINE__, INVALID_PARAMETER);
+		log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM);
 		return ;
 	}
 	pos = 0;

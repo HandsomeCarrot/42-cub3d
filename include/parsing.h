@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/24 17:37:03 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/26 13:01:20 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,22 @@
 
 # define WHITESPACE "\t\n\v\f\r "
 
+# define IMAGE_ID_COUNT 4
+# define COLOR_ID_COUNT 2
+
 typedef enum e_map_data_type
 {
+	INVALID,
 	NONE,
 	IMAGE,
-	COLOR,
-	INVALID
+	COLOR
 }					t_map_data_type;
 
 typedef struct s_map_identifiers
 {
-	const char		*id;
 	t_map_data_type	type;
+	const char		*id;
+	int				id_len;
 	bool			found;
 }					t_map_identifiers;
 
