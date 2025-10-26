@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:41:23 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/26 11:45:08 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/26 18:02:14 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
  */
 static int	is_eof(char *line)
 {
-	log_msg(DEBUG, __FILE__, __LINE__, "checking for enf of file");
+	log_msg(DEBUG, __FILE__, __LINE__, "checking for end-of-file");
 	if (!line)
 		return (log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	if (!ft_strchr(line, '\n'))
