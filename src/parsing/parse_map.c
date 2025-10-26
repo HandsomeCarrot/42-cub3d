@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/26 17:13:33 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/26 18:39:21 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,22 @@ static int	is_whitespace(char c)
 	return (0);
 }
 
-static t_map_ids	*get_map_identifiers(void)
+static t_map_id	*get_map_identifiers(void)
 {
-	t_map_ids	ids[IMAGE_ID_COUNT + COLOR_ID_COUNT + 1];
+	t_map_id	*ids;
+	int			id_count;
 
-	ids[0] = (t_map_ids){IMAGE, "NO", 2, false};
-	ids[1] = (t_map_ids){IMAGE, "EA", 2, false};
-	ids[2] = (t_map_ids){IMAGE, "SO", 2, false};
-	ids[3] = (t_map_ids){IMAGE, "WE", 2, false};
-	ids[4] = (t_map_ids){COLOR, "F", 1, false};
-	ids[5] = (t_map_ids){COLOR, "C", 1, false};
-	ids[6] = (t_map_ids){NONE, NULL, 0, false};
+	log_msg(DEBUG, __FILE__, __LINE__, "generating ID table");
+	id_count = 6;
+	ids = log_calloc(id_count + 1, sizeof(t_map_id), __FILE__, __LINE__);
+	if (!ids)
+		return (NULL);
+	ids[0] = (t_map_id){IMAGE, "NO", 2, false};
+	ids[1] = (t_map_id){IMAGE, "EA", 2, false};
+	ids[2] = (t_map_id){IMAGE, "SO", 2, false};
+	ids[3] = (t_map_id){IMAGE, "WE", 2, false};
+	ids[4] = (t_map_id){COLOR, "F", 1, false};
+	ids[5] = (t_map_id){COLOR, "C", 1, false};
 	return (ids);
 }
 
@@ -41,13 +46,14 @@ static t_map_data_type	is_empty(char *line, int row)
 
 	if (!line)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), INVALID);
-	if (ft_isprint(*line))
+	log_msg(DEBUG, __FILE__, __LINE__, "checking for empty line");
+	if (!is_whitespace(*line))
 		return (IMAGE);
 	trimmed = ft_strtrim(line, WHITESPACE);
 	if (!trimmed)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_ALLOC_FAIL), INVALID);
 	return_code = NONE;
-	if (*trimmed != '\0')
+	if (trimmed[0] != 0)
 	{
 		log_fd = log_start(ERROR, __FILE__, __LINE__);
 		if (log_fd >= 0)
@@ -62,17 +68,17 @@ static t_map_data_type	is_empty(char *line, int row)
 	return (return_code);
 }
 
-static t_map_data_type	get_map_data_type(char *line, int row, t_map_ids *ids)
+static t_map_data_type	get_map_data_type(char *line, int row, t_map_id *ids)
 {
 	t_map_data_type	empty;
 	int				id_pos;
 
 	if (!line)
 		return (log_msg(DEBUG, __FILE__, __LINE__, LOG_INVALID_PARAM), NONE);
+	log_msg(DEBUG, __FILE__, __LINE__, "deciding data type");
 	empty = is_empty(line, row);
-	if (empty <= NONE)
+	if (empty == INVALID || empty == NONE)
 		return (empty);
-	ids = get_map_identifiers();
 	id_pos = 0;
 	while (ids && ids[id_pos].id)
 	{
@@ -87,7 +93,7 @@ static t_map_data_type	get_map_data_type(char *line, int row, t_map_ids *ids)
 					ft_putstr_fd("on line ", log_fd);
 					ft_putnbr_fd(row, log_fd);
 					ft_putstr_fd(": second declaration of ", log_fd);
-					ft_putendl_fd(ids[id_pos].id, log_fd);
+					ft_putendl_fd((char *)ids[id_pos].id, log_fd);
 				}
 				return (INVALID);
 			}
@@ -104,16 +110,31 @@ static t_map_data_type	get_map_data_type(char *line, int row, t_map_ids *ids)
  *
  * @return 0 on success, other on error
  */
-static int	save_line_data(char *line, int row, t_map_ids *ids, t_data *data)
+static int	save_line_data(char *line, int row, t_map_id *ids, t_data *data)
 {
 	t_map_data_type	data_type;
+
+	if (!line || !ids || !data)
+		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
+	int log_fd = log_start(DEBUG, __FILE__, __LINE__);
+	if (log_fd >= 0)
+	{
+		ft_putstr_fd("extracting from line ", log_fd);
+		ft_putnbr_fd(row, log_fd);
+		ft_putchar_fd('\n', log_fd);
+	}
 	data_type = get_map_data_type(line, row, ids);
 	if (data_type == IMAGE)
-		return (save_image(line, data));
+		printf("id type: IMAGE\n");
+		//return (save_image(line, data));
 	else if (data_type == COLOR)
-		return (save_color(line, data));
+		printf("id type: COLOR\n");
+		//return (save_color(line, data));
 	else if (data_type == INVALID)
-		return (1);
+		printf("id type: INVALID\n");
+		//return (1);
+	else
+		printf("id type: NONE\n");
 	return (0);
 }
 
@@ -131,24 +152,26 @@ static int	save_line_data(char *line, int row, t_map_ids *ids, t_data *data)
  */
 static int	extract_texture_data(char **file_data, t_data *data)
 {
-	t_map_ids	*ids;
+	t_map_id	*ids;
 	int			line;
 
 	log_msg(DEBUG, __FILE__, __LINE__, "extracting map file information");
 	if (!file_data || !data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
-	line = 0;
 	ids = get_map_identifiers();
+	if (!ids)
+			return (1);
+	line = 0;
 	while (file_data[line] /*&& !is_map(file_data[line])*/)
 	{
 		if (save_line_data(file_data[line], line, ids, data))
-			return (1);
+			return (free(ids), 1);
 		// skip lines with no data
 		// loop until first part of map is reached
 		line++;
 	}
 	// check if all necessary data was extracted and there is no more/less data then needed
-	return (0);
+	return (free(ids), 0);
 }
 
 /**
@@ -191,7 +214,6 @@ int	parse_map_file(char *file, t_data *data)
 	char	**lines;
 	int		ret;
 
-	(void)data;
 	log_msg(INFO, __FILE__, __LINE__, "parsing map file");
 	if (correct_file_extension(file, ".cub"))
 		return (1);
