@@ -6,19 +6,29 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/27 17:52:49 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/27 20:45:48 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-static int	is_whitespace(char c)
+/**
+ * @brief checks if 'c' is a whitespace character
+ *
+ * @param c character to compare whitespace characters to
+ * @return true if a whitespace character, false otherwise
+ */
+static bool	is_whitespace(char c)
 {
+	log_msg(DEBUG, __FILE__, __LINE__, "checking for whitespace");
 	if (c == ' ' || (c >= 9 && c <= 13))
-		return (1);
-	return (0);
+		return (true);
+	return (false);
 }
 
+/**
+ * @return table with defined identifiers accepted in map
+ */
 static t_map_id	*get_map_identifiers(void)
 {
 	t_map_id	*ids;
@@ -30,77 +40,113 @@ static t_map_id	*get_map_identifiers(void)
 	ids = log_calloc(id_count + 1, sizeof(t_map_id), __FILE__, __LINE__);
 	if (!ids)
 		return (NULL);
-	ids[0] = (t_map_id){IMAGE, "NO", 2, false};
-	ids[1] = (t_map_id){IMAGE, "EA", 2, false};
-	ids[2] = (t_map_id){IMAGE, "SO", 2, false};
-	ids[3] = (t_map_id){IMAGE, "WE", 2, false};
-	ids[4] = (t_map_id){COLOR, "F", 1, false};
-	ids[5] = (t_map_id){COLOR, "C", 1, false};
+	ids[0] = (t_map_id){IMAGE, "NO", 2, "North wall", false};
+	ids[1] = (t_map_id){IMAGE, "EA", 2, "East wall", false};
+	ids[2] = (t_map_id){IMAGE, "SO", 2, "South wall", false};
+	ids[3] = (t_map_id){IMAGE, "WE", 2, "West wall", false};
+	ids[4] = (t_map_id){COLOR, "C", 1, "Ceiling", false};
+	ids[5] = (t_map_id){COLOR, "F", 1, "Floor", false};
 	return (ids);
 }
 
-static t_map_data_type	is_empty(char *line, int row)
+/**
+ * @brief checks if the 'line' only consists of whitespace characters
+ *
+ * @param line string to check
+ *
+ * @return true if it is empty, false otherwise
+ */
+static bool	is_empty(char *line)
 {
-	char			*trimmed;
-	t_map_data_type	return_code;
+	char	*trimmed;
+	bool	empty;
 
 	if (!line)
-		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), INVALID);
-	log_msg(DEBUG, __FILE__, __LINE__, "validating line data");
-	if (!is_whitespace(*line))
-		return (IMAGE);
+		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), false);
+	log_msg(DEBUG, __FILE__, __LINE__, "checking for empty line");
 	trimmed = ft_strtrim(line, WHITESPACE);
 	if (!trimmed)
-		return (log_msg(ERROR, __FILE__, __LINE__, LOG_ALLOC_FAIL), INVALID);
-	return_code = NONE;
-	if (trimmed[0] != 0)
+		return (log_msg(ERROR, __FILE__, __LINE__, LOG_ALLOC_FAIL), false);
+	empty = trimmed[0] == 0;
+	free(trimmed);
+	return (empty);
+}
+
+/**
+ * returns true if the first character of 'line' is a whitespace character,
+ * false otherwise
+ */
+static bool	has_leading_whitespace(char *line, int row)
+{
+	if (!line)
+		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), true);
+	log_msg(DEBUG, __FILE__, __LINE__, "checking for leading whitespaces");
+	if (is_whitespace(line[0]))
 	{
 		log_line_error(row + 1, "leading whitespace before map data",
 			__FILE__, __LINE__);
-		return_code = INVALID;
+		return (true);
 	}
-	free(trimmed);
-	return (return_code);
+	return (false);
 }
 
-static t_map_data_type	get_map_data_type(char *line, int row, t_map_id *ids)
+/**
+ * checks if this identifier was already found
+ */
+static bool	is_id_duplicate(t_map_id id, int row)
 {
-	t_map_data_type	empty;
-	int				id_pos;
-	int				log_fd;
+	int	log_fd;
 
+	if (!id.found)
+		return (false);
+	log_fd = log_start(ERROR, __FILE__, __LINE__);
+	if (log_fd >= 0)
+	{
+		ft_putstr_fd("in map on line ", log_fd);
+		ft_putnbr_fd(row, log_fd);
+		ft_putstr_fd(": duplicate declaration of '", log_fd);
+		ft_putstr_fd((char *)id.id, log_fd);
+		ft_putendl_fd("'", log_fd);
+	}
+	return (true);
+}
+
+/**
+ * checks if 'line' starts with the same characters as 'id'
+ */
+static bool has_same_id(char *line, t_map_id id)
+{
 	if (!line)
-		return (log_msg(DEBUG, __FILE__, __LINE__, LOG_INVALID_PARAM), NONE);
+		return (log_msg(WARNING, __FILE__, __LINE__, LOG_ALLOC_FAIL), false);
+	if (!ft_strncmp(line, id.id, id.id_len) && is_whitespace(line[id.id_len]))
+		return (true);
+	return (false);
+}
+
+/**
+ * returns a pointer to id entry that was found, NULL on error
+ */
+static t_map_id	*get_map_data_type(char *line, int row, t_map_id *ids)
+{
+	int	id_pos;
+
+	if (!line || !ids)
+		return (log_msg(DEBUG, __FILE__, __LINE__, LOG_INVALID_PARAM), NULL);
 	log_msg(DEBUG, __FILE__, __LINE__, "determining map data type");
-	empty = is_empty(line, row);
-	if (empty == INVALID || empty == NONE)
-		return (empty);
 	id_pos = 0;
 	while (ids && ids[id_pos].id)
 	{
-		if (ft_strncmp(line, ids[id_pos].id, ids[id_pos].id_len) == 0
-			&& is_whitespace(line[ids[id_pos].id_len]))
+		if (has_same_id(line, ids[id_pos]))
 		{
-			if (ids[id_pos].found)
-			{
-				log_fd = log_start(ERROR, __FILE__, __LINE__);
-				if (log_fd >= 0)
-				{
-					ft_putstr_fd("in map on line ", log_fd);
-					ft_putnbr_fd(row, log_fd);
-					ft_putstr_fd(": duplicate declaration of '", log_fd);
-					ft_putstr_fd((char *)ids[id_pos].id, log_fd);
-					ft_putendl_fd("'", log_fd);
-				}
-				return (INVALID);
-			}
+			if (is_id_duplicate(ids[id_pos], row))
+				return (NULL);
 			ids[id_pos].found = true;
-			return (ids[id_pos].type);
+			return (&ids[id_pos]);
 		}
 		id_pos++;
 	}
 	log_line_error(row + 1, "unknown map data identifier", __FILE__, __LINE__);
-	return (INVALID);
+	return (NULL);
 }
 
 /**
@@ -132,19 +178,24 @@ static int	save_color(char *line, t_data *data)
  */
 static int	save_line_data(char *line, int row, t_map_id *ids, t_data *data)
 {
-	t_map_data_type	data_type;
+	t_map_id	*data_id;
 
 	if (!line || !ids || !data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	log_msg(DEBUG, __FILE__, __LINE__, "processing line");
-	data_type = get_map_data_type(line, row, ids);
-	if (data_type == IMAGE)
-		return (save_image(line, data));
-	else if (data_type == COLOR)
-		return (save_color(line, data));
-	else if (data_type == INVALID)
+	if (is_empty(line))
+		return (NONE);
+	if (has_leading_whitespace(line, row))
+		return (INVALID);
+	data_id = get_map_data_type(line, row, ids);
+	if (!data_id)
 		return (1);
-	return (0);
+	if (data_id->type == IMAGE)
+		return (save_image(line, data));
+	else if (data_id->type == COLOR)
+		return (save_color(line, data));
+	log_msg(ERROR, __FILE__, __LINE__, "data type not recognized");
+	return (1);
 }
 
 /**

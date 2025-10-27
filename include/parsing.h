@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/26 17:41:03 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/27 19:39:37 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_map_id
 	t_map_data_type	type;
 	const char		*id;
 	int				id_len;
+	const char		*description;
 	bool			found;
 }					t_map_id;
 
