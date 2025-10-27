@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:41:23 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/26 18:02:14 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/27 17:41:44 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	**read_file(char *file)
 	char	**file_content;
 	int		file_fd;
 
-	log_msg(DEBUG, __FILE__, __LINE__, "preparing to read file");
+	log_msg(DEBUG, __FILE__, __LINE__, "reading file");
 	if (!file)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), NULL);
 	file_fd = open_file_read(file);
