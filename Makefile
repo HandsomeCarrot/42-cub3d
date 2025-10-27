@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/23 21:29:28 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/27 15:13:17 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -101,7 +101,7 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
 	$(call log,INFO,building $(NAME))
-	@ $(COMP) $(LIBS) $(OBJS) $(LIBFT) -o $(NAME)
+	@ $(COMP) $(OBJS) $(LIBFT) $(LIBS) -o $(NAME)
 	$(call log,SUCCESS,$(NAME) built successfully!)
 
 $(LIBFT):
