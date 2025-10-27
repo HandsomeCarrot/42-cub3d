@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 18:15:52 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/27 22:57:27 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/27 23:48:45 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,54 @@ void	log_close(int fd, const char *file, int line)
 }
 
 /**
+ * @brief Checks if a filename represents a hidden file.
+ *
+ * This function determines if the given filename is a hidden file
+ * by checking if it starts with a dot ('.') character. Hidden files
+ * are typically system files or configuration files that should not
+ * be processed as regular map files.
+ *
+ * @param filename A null-terminated string of the filename to check.
+ * @return 1 if the file is hidden, 0 otherwise.
+ * @note This function assumes the filename has been extracted from
+ *       the full path (after the last '/').
+ */
+static int	is_hidden_file(char *filename)
+{
+	if (filename[0] == '.')
+		return (1);
+	return (0);
+}
+
+/**
+ * @brief Validates that a file has the correct extension.
+ *
+ * This function checks if the given file path ends with the specified
+ * extension. It validates that the file is long enough to contain the
+ * extension and that the extension matches exactly.
+ *
+ * @param file A null-terminated string of the file path to validate.
+ * @param extension A null-terminated string of the expected extension,
+ *                  including the leading dot (e.g., ".cub").
+ * @return 0 if the file has the correct extension, 1 otherwise.
+ */
+static int	has_correct_extension(char *file, char *extension)
+{
+	size_t	file_len;
+	size_t	extension_len;
+	size_t	file_extension;
+
+	file_len = ft_strlen(file);
+	extension_len = ft_strlen(extension);
+	file_extension = file_len - extension_len;
+	if (file_len <= extension_len)
+		return (0);
+	if (ft_strncmp((file + file_extension), extension, extension_len) != 0)
+		return (0);
+	return (1);
+}
+
+/**
 	* @brief Validates that a file has the correct extension.
 	*
 	* This function checks if the given file path ends with the specified
@@ -116,23 +164,26 @@ void	log_close(int fd, const char *file, int line)
 	*/
 int	correct_file_extension(char *file, char *extension)
 {
-	size_t	file_len;
-	size_t	extension_len;
-	size_t	file_extension;
+	char	*filename;
 
 	log_msg(DEBUG, __FILE__, __LINE__, "validating file extension");
 	if (!file || !extension)
+		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
+	filename = ft_strrchr(file, '/');
+	if (filename == NULL)
+		filename = file;
+	else
+		filename++;
+	if (is_hidden_file(filename))
 	{
-		log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM);
+		log_extension_error(file, "hidden files not supported",
+			__FILE__, __LINE__);
 		return (1);
 	}
-	file_len = ft_strlen(file);
-	extension_len = ft_strlen(extension);
-	file_extension = file_len - extension_len;
-	if (file_len <= extension_len || file[0] == '.'
-		|| ft_strncmp((file + file_extension), extension, extension_len) != 0)
+	if (!has_correct_extension(file, extension))
 	{
-		log_extension_error(file, extension, __FILE__, __LINE__);
+		log_extension_error(file, "unsupported file extension",
+			__FILE__, __LINE__);
 		return (1);
 	}
 	return (0);

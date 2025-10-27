@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 20:08:44 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/27 22:59:24 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/27 23:45:01 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,22 @@
  * It uses the logging system to output the error message.
  *
  * @param file The name of the file that is invalid.
- * @param extension the file extension that was not found in 'file'
  * @param src_file The source file name where the error occurred.
  * @param line The line number in the source file where the error was
  *             detected.
  */
-void	log_extension_error(char *file, char *extension,
-	const char *src_file, int line)
+void	log_extension_error(char *file, char *message, const char *src_file,
+		int line)
 {
 	int	log_fd;
 
 	log_fd = log_start(ERROR, src_file, line);
 	if (log_fd >= 0)
 	{
-		ft_putstr_fd("invalid file name: '", log_fd);
+		ft_putstr_fd("invalid file name '", log_fd);
 		ft_putstr_fd(file, log_fd);
-		ft_putstr_fd("': '", log_fd);
-		ft_putstr_fd(extension, log_fd);
-		ft_putendl_fd("' extension needed", log_fd);
+		ft_putstr_fd("': ", log_fd);
+		ft_putendl_fd(message, log_fd);
 	}
 }
 
