@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/27 20:52:43 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/27 21:20:12 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ static t_map_id	*get_map_identifiers(void)
 	ids = log_calloc(id_count + 1, sizeof(t_map_id), __FILE__, __LINE__);
 	if (!ids)
 		return (NULL);
-	ids[0] = (t_map_id){IMAGE, "NO", 2, "North wall", false};
-	ids[1] = (t_map_id){IMAGE, "EA", 2, "East wall", false};
-	ids[2] = (t_map_id){IMAGE, "SO", 2, "South wall", false};
-	ids[3] = (t_map_id){IMAGE, "WE", 2, "West wall", false};
-	ids[4] = (t_map_id){COLOR, "C", 1, "Ceiling", false};
-	ids[5] = (t_map_id){COLOR, "F", 1, "Floor", false};
+	ids[0] = (t_map_id){IMAGE, false, "NO", 2, "North wall"};
+	ids[1] = (t_map_id){IMAGE, false, "EA", 2, "East wall"};
+	ids[2] = (t_map_id){IMAGE, false, "SO", 2, "South wall"};
+	ids[3] = (t_map_id){IMAGE, false, "WE", 2, "West wall"};
+	ids[4] = (t_map_id){COLOR, false, "C", 1, "Ceiling"};
+	ids[5] = (t_map_id){COLOR, false, "F", 1, "Floor"};
 	return (ids);
 }
 
@@ -92,11 +92,11 @@ static bool	has_leading_whitespace(char *line, int row)
 /**
  * checks if this identifier was already found
  */
-static bool	is_id_duplicate(t_map_id id, int row)
+static bool	is_duplicate_id(t_map_id data_id, int row)
 {
 	int	log_fd;
 
-	if (!id.found)
+	if (!data_id.found)
 		return (false);
 	log_fd = log_start(ERROR, __FILE__, __LINE__);
 	if (log_fd >= 0)
@@ -104,26 +104,26 @@ static bool	is_id_duplicate(t_map_id id, int row)
 		ft_putstr_fd("in map on line ", log_fd);
 		ft_putnbr_fd(row, log_fd);
 		ft_putstr_fd(": duplicate declaration of '", log_fd);
-		ft_putstr_fd((char *)id.id, log_fd);
+		ft_putstr_fd((char *)data_id.id, log_fd);
 		ft_putendl_fd("'", log_fd);
 	}
 	return (true);
 }
 
 /**
- * checks if 'line' starts with the same characters as 'id'
+ * checks if 'line' starts with the same characters as 'data_id'
  */
-static bool has_same_id(char *line, t_map_id id)
+static bool has_same_id(char *line, t_map_id data_id)
 {
 	if (!line)
 		return (log_msg(WARNING, __FILE__, __LINE__, LOG_ALLOC_FAIL), false);
-	if (!ft_strncmp(line, id.id, id.id_len) && is_whitespace(line[id.id_len]))
+	if (!ft_strncmp(line, data_id.id, data_id.id_len) && is_whitespace(line[data_id.id_len]))
 		return (true);
 	return (false);
 }
 
 /**
- * returns a pointer to id entry that was found, NULL on error
+ * returns a pointer to data_id entry that was found, NULL on error
  */
 static t_map_id	*get_map_data_type(char *line, int row, t_map_id *ids)
 {
@@ -137,7 +137,7 @@ static t_map_id	*get_map_data_type(char *line, int row, t_map_id *ids)
 	{
 		if (has_same_id(line, ids[id_pos]))
 		{
-			if (is_id_duplicate(ids[id_pos], row))
+			if (is_duplicate_id(ids[id_pos], row))
 				return (NULL);
 			ids[id_pos].found = true;
 			return (&ids[id_pos]);
@@ -149,24 +149,52 @@ static t_map_id	*get_map_data_type(char *line, int row, t_map_id *ids)
 }
 
 /**
+ * prints a log message
+ */
+static void	log_id_processing(t_map_id *data_id, char *src_file, int src_line)
+{
+	int	log_fd;
+
+	if (!data_id || !src_file)
+	{
+		log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM);
+		return ;
+	}
+	log_fd = log_start(INFO, src_file, src_line);
+	if (log_fd < 0)
+		return ;
+	ft_putstr_fd("processing ", log_fd);
+	if (data_id->id_description)
+	{
+		ft_putstr_fd((char *)data_id->id_description, log_fd);
+		ft_putchar_fd(' ', log_fd);
+	}
+	if (data_id->type == IMAGE)
+		ft_putstr_fd("image", log_fd);
+	else if (data_id->type == COLOR)
+		ft_putstr_fd("color", log_fd);
+	ft_putchar_fd('\n', log_fd);
+}
+
+/**
  * @return 0 on success, other on error
  */
-static int	save_image(char *line, t_data *data)
+static int	save_image(char *line, t_map_id *data_id, t_data *data)
 {
-	if (!line || !data)
+	if (!line || !data_id || !data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
-	log_msg(INFO, __FILE__, __LINE__, "processing image data");
+	log_id_processing(data_id, __FILE__, __LINE__);
 	return (0);
 }
 
 /**
  * @return 0 on success, other on error
  */
-static int	save_color(char *line, t_data *data)
+static int	save_color(char *line, t_map_id *data_id, t_data *data)
 {
-	if (!line || !data)
+	if (!line || !data_id || !data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
-	log_msg(INFO, __FILE__, __LINE__, "processing color data");
+	log_id_processing(data_id, __FILE__, __LINE__);
 	return (0);
 }
 
@@ -190,9 +218,9 @@ static int	save_line_data(char *line, int row, t_map_id *ids, t_data *data)
 	if (!data_id)
 		return (1);
 	if (data_id->type == IMAGE)
-		return (save_image(line, data));
+		return (save_image(line, data_id, data));
 	else if (data_id->type == COLOR)
-		return (save_color(line, data));
+		return (save_color(line, data_id, data));
 	log_msg(ERROR, __FILE__, __LINE__, "data type not recognized");
 	return (1);
 }

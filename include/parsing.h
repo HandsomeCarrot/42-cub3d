@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/27 19:39:37 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/27 21:00:10 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ typedef enum e_map_data_type
 typedef struct s_map_id
 {
 	t_map_data_type	type;
+	bool			found;
 	const char		*id;
 	int				id_len;
-	const char		*description;
-	bool			found;
+	const char		*id_description;
 }					t_map_id;
 
 //-----parse.c-----//
