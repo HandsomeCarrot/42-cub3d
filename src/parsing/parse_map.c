@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/27 21:20:12 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/27 22:42:57 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,13 +177,49 @@ static void	log_id_processing(t_map_id *data_id, char *src_file, int src_line)
 }
 
 /**
+ * returns amount of characters it skipped which consists of
+ * - skipped whitespace characters
+ * - characters until next whitespace/null character
+ */
+static size_t	get_next_char_block(char **save, char *str)
+{
+	size_t	spaces;
+	size_t	str_len;
+
+	if (!save || !str)
+		return (log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM), 0);
+	spaces = 0;
+	while (is_whitespace(str[spaces]))
+		spaces++;
+	str_len = 0;
+	while(str[spaces + str_len] && !is_whitespace(str[spaces + str_len]))
+		str_len++;
+	if (str_len == 0)
+		return (0);
+	*save = ft_substr(str, spaces, str_len);
+	if (!*save)
+		return (log_msg(ERROR, __FILE__, __LINE__, LOG_ALLOC_FAIL), 0);
+	return (spaces + str_len);
+}
+
+/**
  * @return 0 on success, other on error
  */
-static int	save_image(char *line, t_map_id *data_id, t_data *data)
+static int	save_image(char *line, int row, t_map_id *data_id, t_data *data)
 {
+	char	*img_path;
+	size_t	skipped;
+
 	if (!line || !data_id || !data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	log_id_processing(data_id, __FILE__, __LINE__);
+	skipped = get_next_char_block(&img_path, line + data_id->id_len);
+	if (skipped == 0 || (!is_whitespace(line[data_id->id_len + skipped])))
+	{
+		log_line_error(row + 1, "no image path given", __FILE__, __LINE__);
+		return (1);
+	}
+	free(img_path);
 	return (0);
 }
 
@@ -218,7 +254,7 @@ static int	save_line_data(char *line, int row, t_map_id *ids, t_data *data)
 	if (!data_id)
 		return (1);
 	if (data_id->type == IMAGE)
-		return (save_image(line, data_id, data));
+		return (save_image(line, row, data_id, data));
 	else if (data_id->type == COLOR)
 		return (save_color(line, data_id, data));
 	log_msg(ERROR, __FILE__, __LINE__, "data type not recognized");
