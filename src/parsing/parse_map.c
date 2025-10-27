@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/27 22:42:57 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/27 22:50:44 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ static bool	is_duplicate_id(t_map_id data_id, int row)
 /**
  * checks if 'line' starts with the same characters as 'data_id'
  */
-static bool has_same_id(char *line, t_map_id data_id)
+static bool	has_same_id(char *line, t_map_id data_id)
 {
 	if (!line)
 		return (log_msg(WARNING, __FILE__, __LINE__, LOG_ALLOC_FAIL), false);
@@ -219,6 +219,8 @@ static int	save_image(char *line, int row, t_map_id *data_id, t_data *data)
 		log_line_error(row + 1, "no image path given", __FILE__, __LINE__);
 		return (1);
 	}
+	if (correct_file_extension(img_path, ".xpm"))
+		return (free(img_path), 1);
 	free(img_path);
 	return (0);
 }
