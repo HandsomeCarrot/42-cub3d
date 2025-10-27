@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/27 20:45:48 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/27 20:52:43 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
  */
 static bool	is_whitespace(char c)
 {
-	log_msg(DEBUG, __FILE__, __LINE__, "checking for whitespace");
 	if (c == ' ' || (c >= 9 && c <= 13))
 		return (true);
 	return (false);
@@ -184,9 +183,9 @@ static int	save_line_data(char *line, int row, t_map_id *ids, t_data *data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	log_msg(DEBUG, __FILE__, __LINE__, "processing line");
 	if (is_empty(line))
-		return (NONE);
+		return (0);
 	if (has_leading_whitespace(line, row))
-		return (INVALID);
+		return (1);
 	data_id = get_map_data_type(line, row, ids);
 	if (!data_id)
 		return (1);
