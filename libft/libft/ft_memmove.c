@@ -6,11 +6,11 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:50:06 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/21 16:36:01 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/28 00:09:07 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "std_libft.h"
 
 /**
  * Copies a block of memory from a source address to a destination address.

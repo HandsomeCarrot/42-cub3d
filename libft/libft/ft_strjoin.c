@@ -6,11 +6,11 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 16:41:58 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/21 16:35:24 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/28 00:09:07 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "std_libft.h"
 
 /**
  * Joins two strings together.

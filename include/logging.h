@@ -6,14 +6,13 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:34:28 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/27 23:43:16 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/28 00:12:59 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LOGGING_H
 # define LOGGING_H
 
-# include "get_next_line_bonus.h"
 # include "libft.h"
 # include <stdio.h>
 

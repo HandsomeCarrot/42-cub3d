@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/27 21:00:10 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/28 00:13:22 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PARSING_H
 
 # include "cleanup.h"
-# include "get_next_line_bonus.h"
+# include "libft.h"
 # include "logging.h"
 # include "structs.h"
 # include <errno.h>

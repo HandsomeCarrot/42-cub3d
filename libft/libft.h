@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isascii.c                                       :+:      :+:    :+:   */
+/*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/03 16:23:54 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/28 00:09:07 by vpoka            ###   ########.fr       */
+/*   Created: 2025/10/27 23:04:00 by vpoka             #+#    #+#             */
+/*   Updated: 2025/10/28 00:09:54 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "std_libft.h"
+#ifndef LIBFT_H
+# define LIBFT_H
 
-/**
- * @brief Checks if the given character is a valid ASCII character.
- *
- * @param c The character to be checked.
- * @return 1 if the character is a valid ASCII character, 0 otherwise.
- */
-int	ft_isascii(int c)
-{
-	if (c >= 0 && c <= 127)
-		return (1);
-	return (0);
-}
+# include "libft/std_libft.h"
+# include "getNextLine/get_next_line_bonus.h"
+
+#endif /* LIBFT_H */

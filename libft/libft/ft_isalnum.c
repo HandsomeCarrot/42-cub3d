@@ -6,11 +6,11 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 14:02:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/21 16:37:20 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/28 00:09:07 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "std_libft.h"
 
 /**
  * @brief Checks if the given character is alphanumeric.

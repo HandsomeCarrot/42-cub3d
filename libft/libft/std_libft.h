@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   std_libft.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 13:27:28 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/19 09:33:52 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/28 00:09:31 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#ifndef STD_LIBFT_H
+# define STD_LIBFT_H
 
 # include <limits.h>
 # include <stdlib.h>
@@ -78,4 +78,4 @@ void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstdelone(t_list *lst, void (*del)(void *));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
 
-#endif
+#endif /* STD_LIBFT_H */

@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/19 10:07:29 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/21 18:50:34 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/28 00:11:43 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,12 +17,12 @@ NAME := libft.a
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
 DPFLAGS := -MP -MD
+INCLUDE := -I.
 
 ARNAME := ar rcs $(NAME)
 RM := rm -f
 
 LIBFT := libft
-INCLUDE += -I$(LIBFT)
 LIBFT_SRCS :=	$(addprefix $(LIBFT)/, \
 		ft_atoi.c \
 		ft_bzero.c \
@@ -70,7 +70,6 @@ LIBFT_SRCS :=	$(addprefix $(LIBFT)/, \
 		ft_lstsize_bonus.c)
 
 GNL := getNextLine
-INCLUDE += -I$(GNL)
 GNL_SRCS :=	$(addprefix $(GNL)/, \
 				get_next_line_bonus.c \
 				get_next_line_utils_bonus.c)
