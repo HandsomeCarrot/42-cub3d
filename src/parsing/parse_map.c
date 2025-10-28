@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/28 17:54:53 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/28 19:11:14 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,7 @@ static size_t	get_next_char_block(char **save, const char *str)
 	while (str[str_len] && !is_whitespace(str[str_len]))
 		str_len++;
 	if (str_len == 0)
-		return (spaces);
+		return (0);
 	*save = ft_substr(str, 0, str_len);
 	if (!*save)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_ALLOC_FAIL), 0);
@@ -246,7 +246,7 @@ static size_t	extract_image_path(char **save, char *line, int row)
  * @param row Line number for error reporting
  * @return true if valid, false if extra content detected
  */
-static bool	validate_trailing_content(char *line, t_map_id *data_id, int row)
+static bool	validate_trailing_content(char *line, int row)
 {
 	size_t	skipped;
 
@@ -279,9 +279,9 @@ static char	*get_xmp_img_path(char *line, int row, t_map_id *data_id)
 	if (!line || !data_id)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), NULL);
 	skipped = extract_image_path(&img_path, line, row);
-	if (!img_path)
+	if (skipped == 0 || !img_path)
 		return (NULL);
-	if (!validate_trailing_content(line + skipped, data_id, row))
+	if (!validate_trailing_content(line + skipped, row))
 	{
 		free(img_path);
 		return (NULL);
@@ -294,12 +294,12 @@ static char	*get_xmp_img_path(char *line, int row, t_map_id *data_id)
 	return (img_path);
 }
 
-static int	decide_location(char *img_path, t_map_id *id, t_data *data)
+static bool	set_wall_texture_path(char *img_path, t_map_id *id, t_data *data)
 {
 	if (!img_path || !id || !data)
 	{
 		log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM);
-		return (1);
+		return (false);
 	}
 	if (ft_strncmp(id->id, "NO", id->id_len) == 0)
 		data->map_data.north_wall_image.img_path = img_path;
@@ -312,9 +312,9 @@ static int	decide_location(char *img_path, t_map_id *id, t_data *data)
 	else
 	{
 		log_msg(ERROR, __FILE__, __LINE__, "unknown image type");
-		return (1);
+		return (false);
 	}
-	return (0);
+	return (true);
 }
 
 /**
@@ -336,10 +336,11 @@ static int	save_image(char *line, int row, t_map_id *data_id, t_data *data)
 		return (1);
 	}
 	log_id_processing(data_id, __FILE__, __LINE__);
-	img_path = get_xmp_img_path(line, row, data_id);
+	img_path = line + data_id->id_len;
+	img_path = get_xmp_img_path(img_path, row, data_id);
 	if (!img_path)
 		return (1);
-	if (decide_location(img_path, data_id, data))
+	if (!set_wall_texture_path(img_path, data_id, data))
 	{
 		free(img_path);
 		return (1);
