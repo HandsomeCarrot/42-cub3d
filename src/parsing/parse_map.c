@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/28 19:11:14 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/28 19:31:29 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -360,6 +360,60 @@ static int	save_color(char *line, t_map_id *data_id, t_data *data)
 }
 
 /**
+ * @brief Validates line data and returns the appropriate data_id
+ *
+ * Checks for NULL parameters, empty lines, leading whitespace,
+ * and determines the map data type.
+ *
+ * @param line The configuration line to validate
+ * @param row Line number for error reporting
+ * @param ids Array of map identifiers
+ * @return t_map_id* Pointer to valid data_id, or NULL on error
+ */
+static t_map_id	*validate_line_data(char *line, int row, t_map_id *ids)
+{
+	if (!line || !ids)
+	{
+		log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM);
+		return (NULL);
+	}
+	log_msg(DEBUG, __FILE__, __LINE__, "validating line data");
+	if (is_empty(line))
+		return (NULL);
+	if (has_leading_whitespace(line, row))
+		return (NULL);
+	return (get_map_data_type(line, row, ids));
+}
+
+/**
+ * @brief Selects and calls the appropriate save function based on data type
+ *
+ * Routes to save_image() for IMAGE type, save_color() for COLOR type,
+ * and handles unrecognized types with error logging.
+ *
+ * @param data_id Map identifier metadata
+ * @param line The configuration line
+ * @param row Line number for error reporting
+ * @param data Main data structure to store parsed data
+ * @return 0 on success, other on error
+ */
+static int	call_save_function(t_map_id *data_id, char *line,
+	int row, t_data *data)
+{
+	if (!data_id || !line || !data)
+	{
+		log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM);
+		return (1);
+	}
+	if (data_id->type == IMAGE)
+		return (save_image(line, row, data_id, data));
+	else if (data_id->type == COLOR)
+		return (save_color(line, data_id, data));
+	log_msg(ERROR, __FILE__, __LINE__, "data type not recognized");
+	return (1);
+}
+
+/**
  * saves the data on the current line, if there is some and it is valid
  *
  * @return 0 on success, other on error
@@ -371,19 +425,10 @@ static int	save_line_data(char *line, int row, t_map_id *ids, t_data *data)
 	if (!line || !ids || !data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	log_msg(DEBUG, __FILE__, __LINE__, "processing line");
-	if (is_empty(line))
-		return (0);
-	if (has_leading_whitespace(line, row))
-		return (1);
-	data_id = get_map_data_type(line, row, ids);
+	data_id = validate_line_data(line, row, ids);
 	if (!data_id)
-		return (1);
-	if (data_id->type == IMAGE)
-		return (save_image(line, row, data_id, data));
-	else if (data_id->type == COLOR)
-		return (save_color(line, data_id, data));
-	log_msg(ERROR, __FILE__, __LINE__, "data type not recognized");
-	return (1);
+		return (0);
+	return (call_save_function(data_id, line, row, data));
 }
 
 /**
@@ -472,3 +517,4 @@ int	parse_map_file(char *file, t_data *data)
 	free_string_array(&lines, __FILE__, __LINE__);
 	return (ret);
 }
+
