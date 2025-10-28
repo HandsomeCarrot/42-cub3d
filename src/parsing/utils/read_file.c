@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:41:23 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/27 17:41:44 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/28 20:20:49 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  * @param line The line read from the file to check.
  * @return 1 if the line indicates end of file, 0 otherwise.
  */
-static int	is_eof(char *line)
+static int	is_eof(const char *line)
 {
 	log_msg(DEBUG, __FILE__, __LINE__, "checking for end-of-file");
 	if (!line)
@@ -79,12 +79,19 @@ static char	**read_file_content(int file_fd)
  * @return An array of strings containing the file content, or NULL
  *         if the file cannot be opened or read.
  */
-char	**read_file(char *file)
+char	**read_file(const char *file)
 {
 	char	**file_content;
 	int		file_fd;
+	int		log_fd;
 
-	log_msg(DEBUG, __FILE__, __LINE__, "reading file");
+	log_fd = log_start(INFO, __FILE__, __LINE__);
+	if (log_fd >= 0)
+	{
+		ft_putstr_fd("reading from file '", log_fd);
+		ft_putstr_fd((char *)file, log_fd);
+		ft_putendl_fd("'", log_fd);
+	}
 	if (!file)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), NULL);
 	file_fd = open_file_read(file);

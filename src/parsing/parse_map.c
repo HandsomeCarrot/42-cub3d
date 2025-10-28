@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/28 19:31:29 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/28 20:08:43 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ static t_map_id	*get_map_identifiers(void)
 	ids = log_calloc(id_count + 1, sizeof(t_map_id), __FILE__, __LINE__);
 	if (!ids)
 		return (NULL);
-	ids[0] = (t_map_id){IMAGE, false, "NO", 2, "North wall"};
-	ids[1] = (t_map_id){IMAGE, false, "EA", 2, "East wall"};
-	ids[2] = (t_map_id){IMAGE, false, "SO", 2, "South wall"};
-	ids[3] = (t_map_id){IMAGE, false, "WE", 2, "West wall"};
-	ids[4] = (t_map_id){COLOR, false, "C", 1, "Ceiling"};
-	ids[5] = (t_map_id){COLOR, false, "F", 1, "Floor"};
+	ids[0] = (t_map_id){IMAGE, false, "NO", 2};
+	ids[1] = (t_map_id){IMAGE, false, "EA", 2};
+	ids[2] = (t_map_id){IMAGE, false, "SO", 2};
+	ids[3] = (t_map_id){IMAGE, false, "WE", 2};
+	ids[4] = (t_map_id){COLOR, false, "C", 1};
+	ids[5] = (t_map_id){COLOR, false, "F", 1};
 	return (ids);
 }
 
@@ -68,6 +68,10 @@ static bool	is_empty(char *line)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_ALLOC_FAIL), false);
 	empty = trimmed[0] == 0;
 	free(trimmed);
+	if (empty)
+		log_msg(DEBUG, __FILE__, __LINE__, "is a empty line");
+	else
+		log_msg(DEBUG, __FILE__, __LINE__, "not a empty line");
 	return (empty);
 }
 
@@ -86,6 +90,7 @@ static bool	has_leading_whitespace(char *line, int row)
 			__LINE__);
 		return (true);
 	}
+	log_msg(DEBUG, __FILE__, __LINE__, "no leading whitespaces");
 	return (false);
 }
 
@@ -164,16 +169,13 @@ static void	log_id_processing(t_map_id *data_id, char *src_file, int src_line)
 	log_fd = log_start(INFO, src_file, src_line);
 	if (log_fd < 0)
 		return ;
-	ft_putstr_fd("processing ", log_fd);
-	if (data_id->id_description)
-	{
-		ft_putstr_fd((char *)data_id->id_description, log_fd);
-		ft_putchar_fd(' ', log_fd);
-	}
+	ft_putstr_fd("extracting data for ", log_fd);
 	if (data_id->type == IMAGE)
-		ft_putstr_fd("image", log_fd);
+		ft_putstr_fd("image ", log_fd);
 	else if (data_id->type == COLOR)
-		ft_putstr_fd("color", log_fd);
+		ft_putstr_fd("color ", log_fd);
+	if (data_id->id)
+		ft_putstr_fd((char *)data_id->id, log_fd);
 	ft_putchar_fd('\n', log_fd);
 }
 
@@ -314,6 +316,7 @@ static bool	set_wall_texture_path(char *img_path, t_map_id *id, t_data *data)
 		log_msg(ERROR, __FILE__, __LINE__, "unknown image type");
 		return (false);
 	}
+	log_msg(DEBUG, __FILE__, __LINE__, "texture path assigned successfully");
 	return (true);
 }
 
@@ -356,33 +359,8 @@ static int	save_color(char *line, t_map_id *data_id, t_data *data)
 	if (!line || !data_id || !data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	log_id_processing(data_id, __FILE__, __LINE__);
+	log_msg(DEBUG, __FILE__, __LINE__, "color processing completed");
 	return (0);
-}
-
-/**
- * @brief Validates line data and returns the appropriate data_id
- *
- * Checks for NULL parameters, empty lines, leading whitespace,
- * and determines the map data type.
- *
- * @param line The configuration line to validate
- * @param row Line number for error reporting
- * @param ids Array of map identifiers
- * @return t_map_id* Pointer to valid data_id, or NULL on error
- */
-static t_map_id	*validate_line_data(char *line, int row, t_map_id *ids)
-{
-	if (!line || !ids)
-	{
-		log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM);
-		return (NULL);
-	}
-	log_msg(DEBUG, __FILE__, __LINE__, "validating line data");
-	if (is_empty(line))
-		return (NULL);
-	if (has_leading_whitespace(line, row))
-		return (NULL);
-	return (get_map_data_type(line, row, ids));
 }
 
 /**
@@ -425,9 +403,13 @@ static int	save_line_data(char *line, int row, t_map_id *ids, t_data *data)
 	if (!line || !ids || !data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	log_msg(DEBUG, __FILE__, __LINE__, "processing line");
-	data_id = validate_line_data(line, row, ids);
-	if (!data_id)
+	if (is_empty(line))
 		return (0);
+	if (has_leading_whitespace(line, row))
+		return (1);
+	data_id = get_map_data_type(line, row, ids);
+	if (!data_id)
+		return (1);
 	return (call_save_function(data_id, line, row, data));
 }
 
@@ -464,6 +446,7 @@ static int	extract_texture_data(char **file_data, t_data *data)
 		line++;
 	}
 	// check if all necessary data was extracted and there is no more/less data then needed
+	log_msg(DEBUG, __FILE__, __LINE__, "texture data extraction completed");
 	return (free(ids), 0);
 }
 
@@ -482,6 +465,7 @@ static int	parse_file_data(char **file_data, t_data *data)
 	// extract map & player info (posX posY W/N/E/S)
 	// check for invalid hanging data
 	// convert xpm's to mlx images and extract data
+	log_msg(DEBUG, __FILE__, __LINE__, "parsed map file data successfully");
 	return (0);
 }
 

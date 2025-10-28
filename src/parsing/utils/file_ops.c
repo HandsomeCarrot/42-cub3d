@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 18:15:52 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/27 23:48:45 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/28 20:14:28 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
  * @note This function logs warnings for invalid parameters and errors
  *       for file opening failures using the logging system.
  */
-int	open_file_read(char *file)
+int	open_file_read(const char *file)
 {
 	int	file_fd;
 	int	log_fd;
@@ -46,7 +46,7 @@ int	open_file_read(char *file)
 		if (log_fd >= 0)
 		{
 			ft_putstr_fd("unable to open file '", log_fd);
-			ft_putstr_fd(file, log_fd);
+			ft_putstr_fd((char *)file, log_fd);
 			ft_putstr_fd("': ", log_fd);
 			ft_putendl_fd(strerror(errno), log_fd);
 		}
@@ -111,7 +111,7 @@ void	log_close(int fd, const char *file, int line)
  * @note This function assumes the filename has been extracted from
  *       the full path (after the last '/').
  */
-static int	is_hidden_file(char *filename)
+static int	is_hidden_file(const char *filename)
 {
 	if (filename[0] == '.')
 		return (1);
@@ -130,7 +130,7 @@ static int	is_hidden_file(char *filename)
  *                  including the leading dot (e.g., ".cub").
  * @return 0 if the file has the correct extension, 1 otherwise.
  */
-static int	has_correct_extension(char *file, char *extension)
+static int	has_correct_extension(const char *file, const char *extension)
 {
 	size_t	file_len;
 	size_t	extension_len;
@@ -162,7 +162,7 @@ static int	has_correct_extension(char *file, char *extension)
 	* @note This function logs a warning for invalid parameters and an
 	*       error for incorrect file extensions.
 	*/
-int	correct_file_extension(char *file, char *extension)
+int	correct_file_extension(const char *file, const char *extension)
 {
 	char	*filename;
 
@@ -171,7 +171,7 @@ int	correct_file_extension(char *file, char *extension)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	filename = ft_strrchr(file, '/');
 	if (filename == NULL)
-		filename = file;
+		filename = (char *)file;
 	else
 		filename++;
 	if (is_hidden_file(filename))
@@ -186,5 +186,6 @@ int	correct_file_extension(char *file, char *extension)
 			__FILE__, __LINE__);
 		return (1);
 	}
+	log_msg(DEBUG, __FILE__, __LINE__, "file has valid extension");
 	return (0);
 }

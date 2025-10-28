@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 20:08:44 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/27 23:45:01 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/28 20:17:39 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
  * @param line The line number in the source file where the error was
  *             detected.
  */
-void	log_extension_error(char *file, char *message, const char *src_file,
-		int line)
+void	log_extension_error(const char *file, const char *message,
+		const char *src_file, int line)
 {
 	int	log_fd;
 
@@ -33,9 +33,9 @@ void	log_extension_error(char *file, char *message, const char *src_file,
 	if (log_fd >= 0)
 	{
 		ft_putstr_fd("invalid file name '", log_fd);
-		ft_putstr_fd(file, log_fd);
+		ft_putstr_fd((char *)file, log_fd);
 		ft_putstr_fd("': ", log_fd);
-		ft_putendl_fd(message, log_fd);
+		ft_putendl_fd((char *)message, log_fd);
 	}
 }
 
@@ -50,7 +50,7 @@ void	log_extension_error(char *file, char *message, const char *src_file,
  * @param src_file The source file name where the error occurred.
  * @param line The line number in the source file.
  */
-void	log_line_error(int line_num, char *message, const char *src_file,
+void	log_line_error(int line_num, const char *message, const char *src_file,
 		int line)
 {
 	int	log_fd;
@@ -61,6 +61,6 @@ void	log_line_error(int line_num, char *message, const char *src_file,
 		ft_putstr_fd("in map on line ", log_fd);
 		ft_putnbr_fd(line_num, log_fd);
 		ft_putstr_fd(": ", log_fd);
-		ft_putendl_fd(message, log_fd);
+		ft_putendl_fd((char *)message, log_fd);
 	}
 }

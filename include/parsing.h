@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/28 00:13:22 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/28 20:11:59 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ typedef struct s_map_id
 	bool			found;
 	const char		*id;
 	int				id_len;
-	const char		*id_description;
 }					t_map_id;
 
 //-----parse.c-----//
@@ -52,13 +51,14 @@ int					parse_map_file(char *file, t_data *data);
 
 //-----file_ops.c-----//
 
-int					open_file_read(char *file);
+int					open_file_read(const char *file);
 void				log_close(int fd, const char *file, int line);
-int					correct_file_extension(char *file, char *extension);
+int					correct_file_extension(const char *file,
+						const char *extension);
 
 //-----read_file.c-----//
 
-char				**read_file(char *file);
+char				**read_file(const char *file);
 
 //-----expand_string_array.c-----//
 

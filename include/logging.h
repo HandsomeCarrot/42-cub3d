@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:34:28 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/28 00:12:59 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/28 20:17:11 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ char	*log_get_next_line(int file_fd, char *src_file, int src_line);
 
 //-----log_parsing.c-----//
 
-void	log_extension_error(char *file, char *message, const char *src_file,
-			int line);
-void	log_line_error(int line_num, char *message, const char *src_file,
+void	log_extension_error(const char *file, const char *message,
+			const char *src_file, int line);
+void	log_line_error(int line_num, const char *message, const char *src_file,
 			int line);
 
 #endif /* LOGGING_H */
