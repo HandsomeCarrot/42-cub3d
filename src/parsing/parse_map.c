@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/28 15:24:09 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/28 17:05:02 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ static bool	has_leading_whitespace(char *line, int row)
 	log_msg(DEBUG, __FILE__, __LINE__, "checking for leading whitespaces");
 	if (is_whitespace(line[0]))
 	{
-		log_line_error(row, "leading whitespace before map data",
-			__FILE__, __LINE__);
+		log_line_error(row, "leading whitespace before map data", __FILE__,
+			__LINE__);
 		return (true);
 	}
 	return (false);
@@ -177,18 +177,15 @@ static void	log_id_processing(t_map_id *data_id, char *src_file, int src_line)
 	ft_putchar_fd('\n', log_fd);
 }
 
-static size_t	skip_whitespace(char **str_ptr)
+static size_t	skip_whitespace(const char *str)
 {
 	size_t	skipped;
 
-	if (!str_ptr || !*str_ptr)
+	if (!str)
 		return (log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM), 0);
 	skipped = 0;
-	while (is_whitespace(**str_ptr))
-	{
-		(*str_ptr)++;
+	while (is_whitespace(str[skipped]))
 		skipped++;
-	}
 	return (skipped);
 }
 
@@ -197,25 +194,86 @@ static size_t	skip_whitespace(char **str_ptr)
  * - skipped whitespace characters
  * - characters until next whitespace/null character
  */
-static size_t	get_next_char_block(char **save, char *str)
+static size_t	get_next_char_block(char **save, const char *str)
 {
 	size_t	spaces;
 	size_t	str_len;
 
 	if (!save || !str)
 		return (log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM), 0);
-	spaces = skip_whitespace(&str);
+	spaces = skip_whitespace(str);
+	str += spaces;
 	str_len = 0;
-	while(str[str_len] && !is_whitespace(str[str_len]))
+	while (str[str_len] && !is_whitespace(str[str_len]))
 		str_len++;
 	if (str_len == 0)
-		return (0);
+		return (spaces);
 	*save = ft_substr(str, 0, str_len);
 	if (!*save)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_ALLOC_FAIL), 0);
 	return (spaces + str_len);
 }
 
+/**
+ * @brief Extracts image path from configuration line after identifier
+ *
+ * @param line The configuration line containing the image path
+ * @param data_id Map identifier metadata
+ * @param row Line number for error reporting
+ * @return char* Allocated image path string, or NULL on error
+ */
+static size_t	extract_image_path(char **save, char *line,
+		t_map_id *data_id, int row)
+{
+	size_t	skipped;
+
+	if (!save || !line || !data_id)
+		return (log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM), 0);
+	skipped = get_next_char_block(save, line + data_id->id_len);
+	if (!*save || skipped == 0)
+	{
+		log_line_error(row, "no image path given", __FILE__, __LINE__);
+		return (0);
+	}
+	return (skipped);
+}
+
+/**
+ * @brief Validates that no extra content follows the image path
+ *
+ * @param line The configuration line
+ * @param data_id Map identifier metadata
+ * @param skipped Number of characters already processed
+ * @param row Line number for error reporting
+ * @return true if valid, false if extra content detected
+ */
+static bool	validate_trailing_content(char *line, t_map_id *data_id,
+		size_t skipped, int row)
+{
+	char	*remaining;
+
+	remaining = line + data_id->id_len + skipped;
+	skipped += skip_whitespace(remaining);
+	if (line[data_id->id_len + skipped] != 0)
+	{
+		log_line_error(row, "multiple strings detected", __FILE__, __LINE__);
+		return (false);
+	}
+	return (true);
+}
+
+/**
+ * @brief Extracts and validates XPM image path from configuration line
+ *
+ * Parses the line after the identifier to extract the image path,
+ * validates that no extra content follows, and checks file extension.
+ *
+ * @param line The configuration line containing the image path
+ * @param row Line number for error reporting
+ * @param data_id Map identifier metadata
+ * @return char* Allocated image path string, or NULL on error
+ * @note Caller is responsible for freeing the returned string
+ */
 static char	*get_xmp_img_path(char *line, int row, t_map_id *data_id)
 {
 	char	*img_path;
@@ -224,28 +282,29 @@ static char	*get_xmp_img_path(char *line, int row, t_map_id *data_id)
 	if (!line || !data_id)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), NULL);
 	img_path = NULL;
-	skipped = get_next_char_block(&img_path, line + data_id->id_len);
-	if (!img_path || skipped == 0)
-	{
-		log_line_error(row, "no image path given", __FILE__, __LINE__);
-		if (img_path)
-			free(img_path);
+	skipped = extract_image_path(&img_path, line, data_id, row);
+	if (!img_path)
 		return (NULL);
-	}
-	skipped += skip_whitespace(&line + data_id->id_len + skipped);
-	printf("char '%c'\n", line[data_id->id_len + skipped]);
-	if (line[data_id->id_len + skipped] != 0)
+	if (!validate_trailing_content(line, data_id, skipped, row))
 	{
-		log_line_error(row, "multiple strings detected", __FILE__, __LINE__);
 		free(img_path);
 		return (NULL);
 	}
 	if (correct_file_extension(img_path, ".xpm"))
-		return (free(img_path), NULL);
+	{
+		free(img_path);
+		return (NULL);
+	}
 	return (img_path);
 }
 
 /**
+ * @brief Saves extracted image path to appropriate data structure field
+ *
+ * @param line The configuration line
+ * @param row Line number for error reporting
+ * @param data_id Map identifier metadata
+ * @param data Main data structure to store image path
  * @return 0 on success, other on error
  */
 static int	save_image(char *line, int row, t_map_id *data_id, t_data *data)
@@ -259,15 +318,18 @@ static int	save_image(char *line, int row, t_map_id *data_id, t_data *data)
 	if (!img_path)
 		return (1);
 	if (ft_strncmp(data_id->id, "NO", data_id->id_len) == 0)
-		img_path = data->map_data.north_wall_image.img_path;
+		data->map_data.north_wall_image.img_path = img_path;
 	else if (ft_strncmp(data_id->id, "EA", data_id->id_len) == 0)
-		img_path = data->map_data.east_wall_image.img_path;
+		data->map_data.east_wall_image.img_path = img_path;
 	else if (ft_strncmp(data_id->id, "SO", data_id->id_len) == 0)
-		img_path = data->map_data.south_wall_image.img_path;
+		data->map_data.south_wall_image.img_path = img_path;
 	else if (ft_strncmp(data_id->id, "WE", data_id->id_len) == 0)
-		img_path = data->map_data.west_wall_image.img_path;
+		data->map_data.west_wall_image.img_path = img_path;
 	else
+	{
+		free(img_path);
 		return (log_msg(ERROR, __FILE__, __LINE__, "unknown image type"), 1);
+	}
 	return (0);
 }
 
@@ -276,7 +338,6 @@ static int	save_image(char *line, int row, t_map_id *data_id, t_data *data)
  */
 static int	save_color(char *line, t_map_id *data_id, t_data *data)
 {
-	
 	if (!line || !data_id || !data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	log_id_processing(data_id, __FILE__, __LINE__);
