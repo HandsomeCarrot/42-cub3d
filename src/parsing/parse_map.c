@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/28 17:05:02 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/28 17:54:53 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,14 +222,13 @@ static size_t	get_next_char_block(char **save, const char *str)
  * @param row Line number for error reporting
  * @return char* Allocated image path string, or NULL on error
  */
-static size_t	extract_image_path(char **save, char *line,
-		t_map_id *data_id, int row)
+static size_t	extract_image_path(char **save, char *line, int row)
 {
 	size_t	skipped;
 
-	if (!save || !line || !data_id)
+	if (!save || !line)
 		return (log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM), 0);
-	skipped = get_next_char_block(save, line + data_id->id_len);
+	skipped = get_next_char_block(save, line);
 	if (!*save || skipped == 0)
 	{
 		log_line_error(row, "no image path given", __FILE__, __LINE__);
@@ -247,14 +246,12 @@ static size_t	extract_image_path(char **save, char *line,
  * @param row Line number for error reporting
  * @return true if valid, false if extra content detected
  */
-static bool	validate_trailing_content(char *line, t_map_id *data_id,
-		size_t skipped, int row)
+static bool	validate_trailing_content(char *line, t_map_id *data_id, int row)
 {
-	char	*remaining;
+	size_t	skipped;
 
-	remaining = line + data_id->id_len + skipped;
-	skipped += skip_whitespace(remaining);
-	if (line[data_id->id_len + skipped] != 0)
+	skipped = skip_whitespace(line);
+	if (line[skipped] != 0)
 	{
 		log_line_error(row, "multiple strings detected", __FILE__, __LINE__);
 		return (false);
@@ -281,11 +278,10 @@ static char	*get_xmp_img_path(char *line, int row, t_map_id *data_id)
 
 	if (!line || !data_id)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), NULL);
-	img_path = NULL;
-	skipped = extract_image_path(&img_path, line, data_id, row);
+	skipped = extract_image_path(&img_path, line, row);
 	if (!img_path)
 		return (NULL);
-	if (!validate_trailing_content(line, data_id, skipped, row))
+	if (!validate_trailing_content(line + skipped, data_id, row))
 	{
 		free(img_path);
 		return (NULL);
@@ -296,6 +292,29 @@ static char	*get_xmp_img_path(char *line, int row, t_map_id *data_id)
 		return (NULL);
 	}
 	return (img_path);
+}
+
+static int	decide_location(char *img_path, t_map_id *id, t_data *data)
+{
+	if (!img_path || !id || !data)
+	{
+		log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM);
+		return (1);
+	}
+	if (ft_strncmp(id->id, "NO", id->id_len) == 0)
+		data->map_data.north_wall_image.img_path = img_path;
+	else if (ft_strncmp(id->id, "EA", id->id_len) == 0)
+		data->map_data.east_wall_image.img_path = img_path;
+	else if (ft_strncmp(id->id, "SO", id->id_len) == 0)
+		data->map_data.south_wall_image.img_path = img_path;
+	else if (ft_strncmp(id->id, "WE", id->id_len) == 0)
+		data->map_data.west_wall_image.img_path = img_path;
+	else
+	{
+		log_msg(ERROR, __FILE__, __LINE__, "unknown image type");
+		return (1);
+	}
+	return (0);
 }
 
 /**
@@ -312,23 +331,18 @@ static int	save_image(char *line, int row, t_map_id *data_id, t_data *data)
 	char	*img_path;
 
 	if (!line || !data_id || !data)
-		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
+	{
+		log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM);
+		return (1);
+	}
 	log_id_processing(data_id, __FILE__, __LINE__);
 	img_path = get_xmp_img_path(line, row, data_id);
 	if (!img_path)
 		return (1);
-	if (ft_strncmp(data_id->id, "NO", data_id->id_len) == 0)
-		data->map_data.north_wall_image.img_path = img_path;
-	else if (ft_strncmp(data_id->id, "EA", data_id->id_len) == 0)
-		data->map_data.east_wall_image.img_path = img_path;
-	else if (ft_strncmp(data_id->id, "SO", data_id->id_len) == 0)
-		data->map_data.south_wall_image.img_path = img_path;
-	else if (ft_strncmp(data_id->id, "WE", data_id->id_len) == 0)
-		data->map_data.west_wall_image.img_path = img_path;
-	else
+	if (decide_location(img_path, data_id, data))
 	{
 		free(img_path);
-		return (log_msg(ERROR, __FILE__, __LINE__, "unknown image type"), 1);
+		return (1);
 	}
 	return (0);
 }
