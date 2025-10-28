@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 14:32:38 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/26 17:08:18 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/28 16:54:11 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,6 +223,7 @@ int render_loop(t_game *game)
     double current_time;
 
     current_time = get_time();
+    double tile_size = get_tile_size(game);
     game->player.delta_time = current_time - last_time;
     last_time = current_time;
     
@@ -230,7 +231,8 @@ int render_loop(t_game *game)
     new_pos(game);
     render(game);
     draw_minimap(game);
-    draw_player_on_minimap(game);
+    draw_minimap_rays(game, tile_size);
+    draw_player_triangle(game, tile_size);
     mlx_put_image_to_window(game->mlx.mlx, game->mlx.win, game->mlx.img, 0, 0);
     return (0);
 }

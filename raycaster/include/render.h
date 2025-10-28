@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 16:55:33 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/24 17:09:48 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/28 16:17:34 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,6 @@
 #define COLOR_PINK    0xFFC0CB
 #define COLOR_BROWN   0xA52A2A
 
-//tile_size
-#define TILE_SIZE 20
-
 //mlx_setup.c
 void	put_pixel(t_mlx *mlx, int x, int y, int color);
 int		init_mlx(t_game *game);
@@ -58,10 +55,13 @@ int		init_mlx(t_game *game);
 //render.c
 int		render(t_game *game);
 int		render_loop(t_game *game);
+void	init_ray(t_ray *ray, t_game *game, int x);
+void perform_dda(t_ray *ray, t_game *game);
 
 //minimap.c
 void	draw_minimap(t_game *game);
-void	draw_player_on_minimap(t_game *game);
-
+void	draw_player_triangle(t_game *game, double tile_size);
+void 	draw_minimap_rays(t_game *game, double tile_size);
+double	get_tile_size(t_game *game);
 
 #endif
