@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/28 20:08:43 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/28 21:11:10 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,7 +327,7 @@ static bool	set_wall_texture_path(char *img_path, t_map_id *id, t_data *data)
  * @param row Line number for error reporting
  * @param data_id Map identifier metadata
  * @param data Main data structure to store image path
- * @return 0 on success, other on error
+ * @return 0 on error, other on success
  */
 static int	save_image(char *line, int row, t_map_id *data_id, t_data *data)
 {
@@ -336,31 +336,61 @@ static int	save_image(char *line, int row, t_map_id *data_id, t_data *data)
 	if (!line || !data_id || !data)
 	{
 		log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM);
-		return (1);
+		return (0);
 	}
 	log_id_processing(data_id, __FILE__, __LINE__);
 	img_path = line + data_id->id_len;
 	img_path = get_xmp_img_path(img_path, row, data_id);
 	if (!img_path)
-		return (1);
+		return (0);
 	if (!set_wall_texture_path(img_path, data_id, data))
 	{
 		free(img_path);
-		return (1);
+		return (0);
 	}
-	return (0);
+	return (1);
 }
 
 /**
- * @return 0 on success, other on error
+ * @return 0 on failure, other on success
+ */
+static int	save_color_value(char *colors, int *save)
+{
+	int	num;
+
+	if (!colors || !save)
+		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 0);
+	log_msg(DEBUG, __FILE__, __LINE__, "extracting a color value");
+	colors += skip_whitespace(colors);
+	if (!ft_isdigit(colors[0]))
+		return (log_msg(ERROR, __FILE__, __LINE__, "invalid char detected"), 0);
+	num = ft_atoi(colors);
+	if (num < 0 || num > 255)
+		return (log_msg(ERROR, __FILE__, __LINE__, "color value has to be in range [0,255]"), 0);
+	*save = num;
+	log_msg(DEBUG, __FILE__, __LINE__, "extracted a color value successfully");
+	return (1);
+}
+
+/**
+ * @return 0 on error, other on success
  */
 static int	save_color(char *line, t_map_id *data_id, t_data *data)
 {
+	char	*colors;
+	int		red;
+	//int		green;
+	//int		blue;
+
 	if (!line || !data_id || !data)
-		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
+		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 0);
 	log_id_processing(data_id, __FILE__, __LINE__);
+	colors = line + data_id->id_len;
+	colors += skip_whitespace(colors);
+	if (!save_color_value(colors, &red))
+		return (0);
 	log_msg(DEBUG, __FILE__, __LINE__, "color processing completed");
-	return (0);
+	return (1);
 }
 
 /**
@@ -373,7 +403,7 @@ static int	save_color(char *line, t_map_id *data_id, t_data *data)
  * @param line The configuration line
  * @param row Line number for error reporting
  * @param data Main data structure to store parsed data
- * @return 0 on success, other on error
+ * @return 0 on error, other on success
  */
 static int	call_save_function(t_map_id *data_id, char *line,
 	int row, t_data *data)
@@ -381,20 +411,20 @@ static int	call_save_function(t_map_id *data_id, char *line,
 	if (!data_id || !line || !data)
 	{
 		log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM);
-		return (1);
+		return (0);
 	}
 	if (data_id->type == IMAGE)
 		return (save_image(line, row, data_id, data));
 	else if (data_id->type == COLOR)
 		return (save_color(line, data_id, data));
 	log_msg(ERROR, __FILE__, __LINE__, "data type not recognized");
-	return (1);
+	return (0);
 }
 
 /**
  * saves the data on the current line, if there is some and it is valid
  *
- * @return 0 on success, other on error
+ * @return 0 on error, other on success
  */
 static int	save_line_data(char *line, int row, t_map_id *ids, t_data *data)
 {
@@ -404,12 +434,12 @@ static int	save_line_data(char *line, int row, t_map_id *ids, t_data *data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	log_msg(DEBUG, __FILE__, __LINE__, "processing line");
 	if (is_empty(line))
-		return (0);
-	if (has_leading_whitespace(line, row))
 		return (1);
+	if (has_leading_whitespace(line, row))
+		return (0);
 	data_id = get_map_data_type(line, row, ids);
 	if (!data_id)
-		return (1);
+		return (0);
 	return (call_save_function(data_id, line, row, data));
 }
 
@@ -439,7 +469,7 @@ static int	extract_texture_data(char **file_data, t_data *data)
 	line = 0;
 	while (file_data[line] /*&& !is_map(file_data[line])*/)
 	{
-		if (save_line_data(file_data[line], line + 1, ids, data))
+		if (!save_line_data(file_data[line], line + 1, ids, data))
 			return (free(ids), 1);
 		// skip lines with no data
 		// loop until first part of map is reached
