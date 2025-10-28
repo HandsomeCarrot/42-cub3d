@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 17:06:00 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/24 17:13:47 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/28 08:22:40 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,48 @@ void get_map_dimensions(t_game *game, int *width, int *height)
     *height = h;
 }
 
+double	get_tile_size(t_game *game)
+{
+	t_point map_grid;
+	t_point ratio;
+	t_point minimap_max;
+
+
+	get_map_dimensions(game, &map_grid.x, &map_grid.y);
+
+	minimap_max.x = game->mlx.width / 4;
+	minimap_max.y = game->mlx.height / 4;
+
+	ratio.x = (double)minimap_max.x / (double)map_grid.x;
+	ratio.y = (double)minimap_max.y / (double)map_grid.y;
+
+	double tile_size = fmin(ratio.x, ratio.y);
+	return tile_size;
+}
+
 void draw_minimap(t_game *game)
 {
+
 int map_x;
 int map_y = 0;
 int pixel_x = 0;
 int pixel_y = 0;
+int screen_y;
+int screen_x;
+double tile_size = get_tile_size(game);
     while (game->map[map_y])
     {
         map_x = 0;
         while (game->map[map_y][map_x])
         {
             pixel_y = 0;
-            while (pixel_y < TILE_SIZE) 
+            while (pixel_y < (int)tile_size) 
             {
                 pixel_x = 0;
-                int screen_y = map_y * TILE_SIZE + pixel_y;
-                while (pixel_x < TILE_SIZE)
+                screen_y = map_y * tile_size + pixel_y;
+                while (pixel_x < (int)tile_size)
                 {
-                    int screen_x = map_x * TILE_SIZE + pixel_x;
+                    screen_x = map_x * tile_size + pixel_x;
                     int color = color_picker(game, map_y, map_x);
                     put_pixel(&game->mlx, screen_x, screen_y, color);
                     pixel_x++;
@@ -75,18 +98,18 @@ int pixel_y = 0;
 
 void draw_player_on_minimap(t_game *game)
 {
-    int screen_x = (int)game->player.pos.x * TILE_SIZE;
-    int screen_y = (int)game->player.pos.y * TILE_SIZE;
+	double tile_size = get_tile_size(game);
+    int screen_x = (int)game->player.pos.x * tile_size;
+    int screen_y = (int)game->player.pos.y * tile_size;
     int pixel_x = 0;
     int pixel_y = 0;
-
-    while (pixel_x < TILE_SIZE)
+    while (pixel_x < tile_size)
     {
         pixel_y = 0;
-        screen_x = game->player.pos.x * TILE_SIZE + pixel_x;
-        while (pixel_y < TILE_SIZE)
+        screen_x = game->player.pos.x * tile_size + pixel_x;
+        while (pixel_y < tile_size)
         {
-            screen_y = game->player.pos.y * TILE_SIZE + pixel_y;
+            screen_y = game->player.pos.y * tile_size + pixel_y;
             put_pixel(&game->mlx, screen_x, screen_y, COLOR_MAGENTA);
             pixel_y++;
         }
