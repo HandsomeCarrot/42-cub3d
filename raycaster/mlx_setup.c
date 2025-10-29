@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 07:31:49 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/29 19:19:00 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/29 19:43:58 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	get_pixel_color(t_texture *tex, int x, int y)
 	if(x < 0 || y < 0 || x >= tex->width || y >= tex->height)
 		return (COLOR_MAGENTA);
 	offset = y * tex->line_length + x * (tex->bits_per_pixel / 8);
-	color = *(int *)tex->img_data + offset;
+	color = *(int *)(tex->img_data + offset);
 	return (color);
 }
 

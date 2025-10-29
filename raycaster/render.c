@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 14:32:38 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/29 19:22:17 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/29 19:45:13 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,12 @@ void draw_column(t_ray *ray, t_game *game, int x)
     if (draw_end >= game->mlx.height)
         draw_end = game->mlx.height - 1;
     y = draw_start;
-    if (ray->side == 0)
-        color = get_pixel_color(&game->north_texture, x, y);
-    else
-        color = get_pixel_color(&game->south_texture, x, y);
     while (y <= draw_end)
     {
+        if (ray->side == 0)
+            color = get_pixel_color(&game->north_texture, x, y);
+        else
+            color = get_pixel_color(&game->south_texture, x, y);
         put_pixel(&game->mlx, x, y, color);
         y++;
     }
