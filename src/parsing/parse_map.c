@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/28 21:11:10 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/29 15:47:08 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,13 +304,13 @@ static bool	set_wall_texture_path(char *img_path, t_map_id *id, t_data *data)
 		return (false);
 	}
 	if (ft_strncmp(id->id, "NO", id->id_len) == 0)
-		data->map_data.north_wall_image.img_path = img_path;
+		data->map_data.north_wall_image = img_path;
 	else if (ft_strncmp(id->id, "EA", id->id_len) == 0)
-		data->map_data.east_wall_image.img_path = img_path;
+		data->map_data.east_wall_image = img_path;
 	else if (ft_strncmp(id->id, "SO", id->id_len) == 0)
-		data->map_data.south_wall_image.img_path = img_path;
+		data->map_data.south_wall_image = img_path;
 	else if (ft_strncmp(id->id, "WE", id->id_len) == 0)
-		data->map_data.west_wall_image.img_path = img_path;
+		data->map_data.west_wall_image = img_path;
 	else
 	{
 		log_msg(ERROR, __FILE__, __LINE__, "unknown image type");
