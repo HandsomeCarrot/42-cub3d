@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/29 18:18:03 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/29 19:17:08 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,7 +255,8 @@ static bool	validate_trailing_content(char *line, int row)
 	skipped = skip_whitespace(line);
 	if (line[skipped] != 0)
 	{
-		log_line_error(row, "multiple strings detected", __FILE__, __LINE__);
+		log_line_error(row, "extra content found after map configuration data",
+			__FILE__, __LINE__);
 		return (false);
 	}
 	return (true);
@@ -377,6 +378,7 @@ static int	get_color_value(char *colors)
 static int	save_color(char *line, t_map_id *data_id, t_data *data)
 {
 	char	*colors;
+	int		final_color;
 	int		red;
 	int		green;
 	int		blue;
@@ -389,6 +391,7 @@ static int	save_color(char *line, t_map_id *data_id, t_data *data)
 	red = get_color_value(colors);
 	if (red < 0)
 		return (0);
+	final_color = red << (2 * BYTE);
 	while (ft_isdigit(colors[0]))
 		colors++;
 	colors += skip_whitespace(colors);
@@ -399,6 +402,7 @@ static int	save_color(char *line, t_map_id *data_id, t_data *data)
 	green = get_color_value(colors);
 	if (green < 0)
 		return (0);
+	final_color |= green << BYTE;
 	while (ft_isdigit(colors[0]))
 		colors++;
 	colors += skip_whitespace(colors);
@@ -409,10 +413,15 @@ static int	save_color(char *line, t_map_id *data_id, t_data *data)
 	blue = get_color_value(colors);
 	if (blue < 0)
 		return (0);
+	final_color |= blue;
 	while (ft_isdigit(colors[0]))
 		colors++;
 	if (!validate_trailing_content(colors, 0))
 		return (0);
+	if (ft_strncmp(data_id->id, "C", data_id->id_len) == 0)
+		data->map_data.ceiling_color = final_color;
+	else if (ft_strncmp(data_id->id, "F", data_id->id_len) == 0)
+		data->map_data.floor_color = final_color;
 	log_msg(DEBUG, __FILE__, __LINE__, "color processing completed");
 	return (1);
 }
@@ -515,7 +524,10 @@ static int	parse_file_data(char **file_data, t_data *data)
 	if (!file_data || !data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	if (extract_texture_data(file_data, data))
+	{
+		printf("C = %X | F = %X | NO = %s | EA = %s | SO = %s | WE = %s\n", data->map_data.ceiling_color, data->map_data.floor_color, data->map_data.north_wall_image, data->map_data.east_wall_image, data->map_data.south_wall_image, data->map_data.west_wall_image);
 		return (1);
+	}
 	// extract map & player info (posX posY W/N/E/S)
 	// check for invalid hanging data
 	// convert xpm's to mlx images and extract data

@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/28 20:11:59 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/29 19:07:42 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 
 # define WHITESPACE "\t\n\v\f\r "
 
+# define BYTE 8
 typedef enum e_map_data_type
 {
 	INVALID,
