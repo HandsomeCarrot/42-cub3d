@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 14:32:38 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/29 19:45:13 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/29 21:20:39 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,30 +76,53 @@ void perform_dda(t_ray *ray, t_game *game)
 
 void draw_column(t_ray *ray, t_game *game, int x)
 {
-    int line_height;
-    int draw_start;
-    int draw_end;
-    int y;
-    int color;
+    int         line_height;
+    int         draw_start;
+    int         draw_end;
+    int         y;
+    double      wallX;
+    int         texX;
+    int         texY;
+    t_texture   *tex;
 
-    line_height = (game->mlx.height / ray->perp_wall_dist);
+    line_height = (int)(game->mlx.height / ray->perp_wall_dist);
     draw_start = -line_height / 2 + game->mlx.height / 2;
     if (draw_start < 0)
         draw_start = 0;
     draw_end = line_height / 2 + game->mlx.height / 2;
     if (draw_end >= game->mlx.height)
         draw_end = game->mlx.height - 1;
+    if (ray->side == 0)  // ! vertical wall (hit x-grid line)
+        wallX = game->player.pos.y + ray->perp_wall_dist * ray->dir.y;
+    else  // ! horizontal wall (hit y-grid line)
+        wallX = game->player.pos.x + ray->perp_wall_dist * ray->dir.x;
+
+    wallX = wallX - (int)wallX;
+
+    if (ray->side == 0)
+    {
+        if (ray->dir.x > 0)
+            tex = &game->west_texture;
+        else
+            tex = &game->east_texture;
+    }
+    else
+    {
+        if (ray->dir.y > 0)
+            tex = &game->north_texture;
+        else
+            tex = &game->south_texture;
+    }
+    texX = (int)(wallX * (tex->width));
     y = draw_start;
     while (y <= draw_end)
     {
-        if (ray->side == 0)
-            color = get_pixel_color(&game->north_texture, x, y);
-        else
-            color = get_pixel_color(&game->south_texture, x, y);
-        put_pixel(&game->mlx, x, y, color);
+        texY = (int)((y - draw_start) * tex->height / line_height);
+        put_pixel(&game->mlx, x, y, get_pixel_color(tex, texX, texY));
         y++;
     }
 }
+
 
 int render(t_game *game)
 {
