@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/29 21:22:20 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/29 21:25:36 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -350,7 +350,7 @@ static int	save_image(char *line, int row, t_map_id *data_id, t_data *data)
 		free(img_path);
 		return (0);
 	}
-	log_fd = log_start(INFO, __FILE__, __LINE__);
+	log_fd = log_start(INFO, __FILE__, __LINE__); //? maybe move it to set_wall_texture_path() instead of the debug message at the end
 	if (log_fd >= 0)
 	{
 		ft_putstr_fd("FOUND: '", log_fd);
@@ -363,7 +363,7 @@ static int	save_image(char *line, int row, t_map_id *data_id, t_data *data)
 /**
  * @return -1 on failure, other on success
  */
-static int	get_color_value(char *colors)
+static int	get_color_value(char *colors) //TODO make the logging better
 {
 	int	num;
 
@@ -382,7 +382,7 @@ static int	get_color_value(char *colors)
 /**
  * @return 0 on error, other on success
  */
-static int	save_color(char *line, t_map_id *data_id, t_data *data)
+static int	save_color(char *line, t_map_id *data_id, t_data *data) //TODO need to split up this function and make the logging better
 {
 	char	*colors;
 	int		final_color;
