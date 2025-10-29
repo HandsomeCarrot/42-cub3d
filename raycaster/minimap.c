@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 17:06:00 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/28 14:26:46 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/29 08:12:06 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ double tile_size = get_tile_size(game);
         map_x = 0;
         while (game->map[map_y][map_x])
         {
+            int color = color_picker(game, map_y, map_x);
             pixel_y = 0;
             while (pixel_y < (int)tile_size) 
             {
@@ -84,7 +85,6 @@ double tile_size = get_tile_size(game);
                 while (pixel_x < (int)tile_size)
                 {
                     screen_x = map_x * tile_size + pixel_x;
-                    int color = color_picker(game, map_y, map_x);
                     put_pixel(&game->mlx, screen_x, screen_y, color);
                     pixel_x++;
                 }
