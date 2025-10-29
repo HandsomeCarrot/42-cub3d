@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 07:31:49 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/29 13:48:16 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/29 19:19:00 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,19 @@ static void	init_texture_list(t_game *game)
 
 int	get_pixel_color(t_texture *tex, int x, int y)
 {
-	//todo: need to implement
-	(void)tex;
-	(void)x;
-	(void)y;
-	return (1);
+	int offset;
+	int color;
+
+	if(x < 0 || y < 0 || x >= tex->width || y >= tex->height)
+		return (COLOR_MAGENTA);
+	offset = y * tex->line_length + x * (tex->bits_per_pixel / 8);
+	color = *(int *)tex->img_data + offset;
+	return (color);
 }
 
 static int	load_texture(t_game *g, t_texture *dest, const char *path)
 {
+	printf("loading\n"); //?need to remove
 	dest->img = mlx_xpm_file_to_image(g->mlx.mlx, (char *)path,
 			&dest->width, &dest->height);
 	if (!dest->img)
@@ -67,6 +71,7 @@ static int	load_texture(t_game *g, t_texture *dest, const char *path)
 		return (0);
 	}
 	dest->is_img_created = true;
+	printf("img is loaded\n"); //?need to remove
 	dest->img_data = mlx_get_data_addr(dest->img, &dest->bits_per_pixel,
 			&dest->line_length, &dest->endian);
 	if (!dest->img_data)
@@ -105,16 +110,18 @@ int	init_mlx(t_game *game)
 
 	init_texture_list(game);
 
-	char *north_path = "./textures/north.xpm"; // Placeholder
-	char *south_path = "./textures/south.xpm"; // Placeholder
-	char *east_path = "./textures/east.xpm";   // Placeholder
-	char *west_path = "./textures/west.xpm";   // Placeholder
+	char *north_path = "./textures/xpm/Brick.xpm"; // Placeholder
+	char *south_path = "./textures/xpm/Metal.xpm"; // Placeholder
+	char *east_path = "./textures/xpm/Wood.xpm";   // Placeholder
+	char *west_path = "./textures/xpm/Stone.xpm";   // Placeholder
 
 	if (!load_texture(game, &game->north_texture, north_path)
 		|| !load_texture(game, &game->south_texture, south_path)
 		|| !load_texture(game, &game->east_texture, east_path)
 		|| !load_texture(game, &game->west_texture, west_path))
-		return (0);
+		{
+			return (0);
+		}
 	return (1);
 }
 
