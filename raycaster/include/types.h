@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 16:57:12 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/26 16:57:33 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/28 17:57:45 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_player
 	t_vector	look_dir;
 	t_vector	plane;
 	double		delta_time;
+	double		speed;
 }				t_player;
 
 typedef struct s_mlx
@@ -70,6 +71,7 @@ typedef struct s_keys
 	bool	strafe_right;
 	bool	rotate_left;
 	bool	rotate_right;
+	bool	shift;
 }	t_keys;
 
 typedef struct s_game

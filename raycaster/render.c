@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 14:32:38 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/28 16:54:11 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/28 18:02:43 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,12 +151,12 @@ void    perform_rot(t_game *game, double angle)
 void    perform_move(t_game *game, char op, t_vector v2)
 {
     t_vector tmp;
-    double speed;
-    speed = 5.0 * game->player.delta_time; //? make maybe a define for 5.0
+    double move_speed = game->player.speed;
+    move_speed = move_speed * game->player.delta_time; //? make maybe a define for 5.0
     if(op == '+')
     {
-        tmp.x = game->player.pos.x + v2.x * speed;
-        tmp.y = game->player.pos.y + v2.y * speed;
+        tmp.x = game->player.pos.x + v2.x * move_speed;
+        tmp.y = game->player.pos.y + v2.y * move_speed;
          if(!check_wall(game, tmp.x, tmp.y))
          {
              game->player.pos.x = tmp.x;
@@ -165,8 +165,8 @@ void    perform_move(t_game *game, char op, t_vector v2)
     }
     else
     {
-        tmp.x = game->player.pos.x - v2.x * speed;
-        tmp.y = game->player.pos.y - v2.y * speed;
+        tmp.x = game->player.pos.x - v2.x * move_speed;
+        tmp.y = game->player.pos.y - v2.y * move_speed;
         if(!check_wall(game, tmp.x, tmp.y))
          {
              game->player.pos.x = tmp.x;
@@ -179,6 +179,10 @@ void new_pos(t_game *game)
 {
     double rot_speed;
     
+    if(game->keys.shift)
+        game->player.speed = 12.0;
+    else
+        game->player.speed = 5.0;
     rot_speed = 3.0 * game->player.delta_time;
 	if(game->keys.move_forward)
         perform_move(game, '+', game->player.look_dir);

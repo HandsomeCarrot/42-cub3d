@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 11:07:26 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/22 10:36:34 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/10/28 17:52:50 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int key_release_handler(int keycode, void *param)
 		game->keys.rotate_left = false;
 	else if(keycode == XK_Right)
 		game->keys.rotate_right = false;
+	else if (keycode == XK_Shift_L || keycode == XK_Shift_R)
+	 	game->keys.shift = false;
 	return (0);
 }
 
@@ -58,6 +60,8 @@ int	key_handler(int keycode, void *param)
 		game->keys.rotate_left = true;
 	else if(keycode == XK_Right)
 		game->keys.rotate_right = true;
+	else if (keycode == XK_Shift_L || keycode == XK_Shift_R)
+	 	game->keys.shift = true;
 	return (0);
 }
 
