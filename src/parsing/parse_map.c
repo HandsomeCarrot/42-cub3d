@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/29 19:17:08 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/29 21:22:20 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,6 +333,7 @@ static bool	set_wall_texture_path(char *img_path, t_map_id *id, t_data *data)
 static int	save_image(char *line, int row, t_map_id *data_id, t_data *data)
 {
 	char	*img_path;
+	int		log_fd;
 
 	if (!line || !data_id || !data)
 	{
@@ -348,6 +349,13 @@ static int	save_image(char *line, int row, t_map_id *data_id, t_data *data)
 	{
 		free(img_path);
 		return (0);
+	}
+	log_fd = log_start(INFO, __FILE__, __LINE__);
+	if (log_fd >= 0)
+	{
+		ft_putstr_fd("FOUND: '", log_fd);
+		ft_putstr_fd(img_path, log_fd);
+		ft_putendl_fd("'", log_fd);
 	}
 	return (1);
 }
@@ -367,7 +375,6 @@ static int	get_color_value(char *colors)
 	num = ft_atoi(colors);
 	if (num < 0 || num > 255)
 		return (log_msg(ERROR, __FILE__, __LINE__, "color value has to be in range [0,255]"), -1);
-	printf("found: %d\n", num);
 	log_msg(DEBUG, __FILE__, __LINE__, "extracted a color value successfully");
 	return (num);
 }
@@ -382,6 +389,7 @@ static int	save_color(char *line, t_map_id *data_id, t_data *data)
 	int		red;
 	int		green;
 	int		blue;
+	int		log_fd;
 
 	if (!line || !data_id || !data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 0);
@@ -422,6 +430,17 @@ static int	save_color(char *line, t_map_id *data_id, t_data *data)
 		data->map_data.ceiling_color = final_color;
 	else if (ft_strncmp(data_id->id, "F", data_id->id_len) == 0)
 		data->map_data.floor_color = final_color;
+	log_fd = log_start(INFO, __FILE__, __LINE__);
+	if (log_fd >= 0)
+	{
+		ft_putstr_fd("FOUND: r:", log_fd);
+		ft_putnbr_fd(red, log_fd);
+		ft_putstr_fd(", g:", log_fd);
+		ft_putnbr_fd(green, log_fd);
+		ft_putstr_fd(", b:", log_fd);
+		ft_putnbr_fd(blue, log_fd);
+		ft_putendl_fd("", log_fd);
+	}
 	log_msg(DEBUG, __FILE__, __LINE__, "color processing completed");
 	return (1);
 }
@@ -524,10 +543,7 @@ static int	parse_file_data(char **file_data, t_data *data)
 	if (!file_data || !data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	if (extract_texture_data(file_data, data))
-	{
-		printf("C = %X | F = %X | NO = %s | EA = %s | SO = %s | WE = %s\n", data->map_data.ceiling_color, data->map_data.floor_color, data->map_data.north_wall_image, data->map_data.east_wall_image, data->map_data.south_wall_image, data->map_data.west_wall_image);
 		return (1);
-	}
 	// extract map & player info (posX posY W/N/E/S)
 	// check for invalid hanging data
 	// convert xpm's to mlx images and extract data
