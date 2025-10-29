@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/29 15:47:08 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/29 18:18:03 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -352,24 +352,23 @@ static int	save_image(char *line, int row, t_map_id *data_id, t_data *data)
 }
 
 /**
- * @return 0 on failure, other on success
+ * @return -1 on failure, other on success
  */
-static int	save_color_value(char *colors, int *save)
+static int	get_color_value(char *colors)
 {
 	int	num;
 
-	if (!colors || !save)
-		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 0);
+	if (!colors)
+		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), -1);
 	log_msg(DEBUG, __FILE__, __LINE__, "extracting a color value");
-	colors += skip_whitespace(colors);
 	if (!ft_isdigit(colors[0]))
-		return (log_msg(ERROR, __FILE__, __LINE__, "invalid char detected"), 0);
+		return (log_msg(ERROR, __FILE__, __LINE__, "invalid char detected"), -1);
 	num = ft_atoi(colors);
 	if (num < 0 || num > 255)
-		return (log_msg(ERROR, __FILE__, __LINE__, "color value has to be in range [0,255]"), 0);
-	*save = num;
+		return (log_msg(ERROR, __FILE__, __LINE__, "color value has to be in range [0,255]"), -1);
+	printf("found: %d\n", num);
 	log_msg(DEBUG, __FILE__, __LINE__, "extracted a color value successfully");
-	return (1);
+	return (num);
 }
 
 /**
@@ -379,15 +378,40 @@ static int	save_color(char *line, t_map_id *data_id, t_data *data)
 {
 	char	*colors;
 	int		red;
-	//int		green;
-	//int		blue;
+	int		green;
+	int		blue;
 
 	if (!line || !data_id || !data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 0);
 	log_id_processing(data_id, __FILE__, __LINE__);
 	colors = line + data_id->id_len;
 	colors += skip_whitespace(colors);
-	if (!save_color_value(colors, &red))
+	red = get_color_value(colors);
+	if (red < 0)
+		return (0);
+	while (ft_isdigit(colors[0]))
+		colors++;
+	colors += skip_whitespace(colors);
+	if (colors[0] != ',')
+		return (log_msg(ERROR, __FILE__, __LINE__, "invalid char detected"), 0);
+	colors++;
+	colors += skip_whitespace(colors);
+	green = get_color_value(colors);
+	if (green < 0)
+		return (0);
+	while (ft_isdigit(colors[0]))
+		colors++;
+	colors += skip_whitespace(colors);
+	if (colors[0] != ',')
+		return (log_msg(ERROR, __FILE__, __LINE__, "invalid char detected"), 0);
+	colors++;
+	colors += skip_whitespace(colors);
+	blue = get_color_value(colors);
+	if (blue < 0)
+		return (0);
+	while (ft_isdigit(colors[0]))
+		colors++;
+	if (!validate_trailing_content(colors, 0))
 		return (0);
 	log_msg(DEBUG, __FILE__, __LINE__, "color processing completed");
 	return (1);
