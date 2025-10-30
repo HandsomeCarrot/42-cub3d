@@ -363,7 +363,7 @@ static int	save_image(char *line, int row, t_map_id *data_id, t_data *data)
 /**
  * @return -1 on failure, other on success
  */
-static int	get_color_value(char *colors) //TODO make the logging better
+static int	get_color_value(char *colors) //TODO: make the logging better
 {
 	int	num;
 
@@ -382,7 +382,7 @@ static int	get_color_value(char *colors) //TODO make the logging better
 /**
  * @return 0 on error, other on success
  */
-static int	save_color(char *line, t_map_id *data_id, t_data *data) //TODO need to split up this function and make the logging better
+static int	save_color(char *line, t_map_id *data_id, t_data *data) //TODO: need to split up this function and make the logging better
 {
 	char	*colors;
 	int		final_color;
@@ -519,7 +519,7 @@ static int	extract_texture_data(char **file_data, t_data *data)
 	if (!ids)
 		return (1);
 	line = 0;
-	while (file_data[line] /*&& !is_map(file_data[line])*/)
+	while (file_data[line] /*TODO: && !is_map(file_data[line])*/)
 	{
 		if (!save_line_data(file_data[line], line + 1, ids, data))
 			return (free(ids), 1);
@@ -583,4 +583,3 @@ int	parse_map_file(char *file, t_data *data)
 	free_string_array(&lines, __FILE__, __LINE__);
 	return (ret);
 }
-
