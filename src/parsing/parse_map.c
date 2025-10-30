@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/30 18:38:13 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/30 18:41:18 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -392,9 +392,10 @@ static int	save_image(char *line, int row, t_map_id *data_id, t_data *data)
 }
 
 /**
+ * TODO: make the logging better
  * @return -1 on failure, other on success
  */
-static int	get_color_value(char *colors) //TODO: make the logging better
+static int	get_color_value(char *colors)
 {
 	int	num;
 
@@ -411,9 +412,10 @@ static int	get_color_value(char *colors) //TODO: make the logging better
 }
 
 /**
+ * TODO: need to split up this function and make the logging better
  * @return 0 on error, other on success
  */
-static int	save_color(char *line, t_map_id *data_id, t_data *data) //TODO: need to split up this function and make the logging better
+static int	save_color(char *line, t_map_id *data_id, t_data *data)
 {
 	char	*colors;
 	int		final_color;
