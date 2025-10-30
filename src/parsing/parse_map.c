@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/29 21:25:36 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/30 18:15:35 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -297,6 +297,51 @@ static char	*get_xmp_img_path(char *line, int row, t_map_id *data_id)
 	return (img_path);
 }
 
+static void	log_found_img(char *img_path, char *src_file, int src_line)
+{
+	int	log_fd;
+
+	if (!img_path || !src_file)
+	{
+		log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM);
+		return ;
+	}
+	log_fd = log_start(INFO, src_file, src_line);
+	if (log_fd >= 0)
+	{
+		ft_putstr_fd("FOUND: '", log_fd);
+		ft_putstr_fd(img_path, log_fd);
+		ft_putendl_fd("'", log_fd);
+	}
+}
+
+static void	log_found_color(int color, char *src_file, int src_line)
+{
+	int	log_fd;
+	int	red;
+	int	green;
+	int	blue;
+
+	if (!src_file)
+	{
+		log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM);
+		return ;
+	}
+	log_fd = log_start(INFO, src_file, src_line);
+	if (log_fd < 0)
+		return ;
+	red = color >> (2 * BYTE) & 255;
+	green = color >> (BYTE) & 255;
+	blue = color & 255;
+	ft_putstr_fd("FOUND: r:", log_fd);
+	ft_putnbr_fd(red, log_fd);
+	ft_putstr_fd(", g:", log_fd);
+	ft_putnbr_fd(green, log_fd);
+	ft_putstr_fd(", b:", log_fd);
+	ft_putnbr_fd(blue, log_fd);
+	ft_putendl_fd("", log_fd);
+}
+
 static bool	set_wall_texture_path(char *img_path, t_map_id *id, t_data *data)
 {
 	if (!img_path || !id || !data)
@@ -317,7 +362,7 @@ static bool	set_wall_texture_path(char *img_path, t_map_id *id, t_data *data)
 		log_msg(ERROR, __FILE__, __LINE__, "unknown image type");
 		return (false);
 	}
-	log_msg(DEBUG, __FILE__, __LINE__, "texture path assigned successfully");
+	log_found_img(img_path, __FILE__, __LINE__);
 	return (true);
 }
 
@@ -333,7 +378,6 @@ static bool	set_wall_texture_path(char *img_path, t_map_id *id, t_data *data)
 static int	save_image(char *line, int row, t_map_id *data_id, t_data *data)
 {
 	char	*img_path;
-	int		log_fd;
 
 	if (!line || !data_id || !data)
 	{
@@ -349,13 +393,6 @@ static int	save_image(char *line, int row, t_map_id *data_id, t_data *data)
 	{
 		free(img_path);
 		return (0);
-	}
-	log_fd = log_start(INFO, __FILE__, __LINE__); //? maybe move it to set_wall_texture_path() instead of the debug message at the end
-	if (log_fd >= 0)
-	{
-		ft_putstr_fd("FOUND: '", log_fd);
-		ft_putstr_fd(img_path, log_fd);
-		ft_putendl_fd("'", log_fd);
 	}
 	return (1);
 }
@@ -386,20 +423,17 @@ static int	save_color(char *line, t_map_id *data_id, t_data *data) //TODO: need 
 {
 	char	*colors;
 	int		final_color;
-	int		red;
-	int		green;
-	int		blue;
-	int		log_fd;
+	int		color_channel;
 
 	if (!line || !data_id || !data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 0);
 	log_id_processing(data_id, __FILE__, __LINE__);
 	colors = line + data_id->id_len;
 	colors += skip_whitespace(colors);
-	red = get_color_value(colors);
-	if (red < 0)
+	color_channel = get_color_value(colors);
+	if (color_channel < 0)
 		return (0);
-	final_color = red << (2 * BYTE);
+	final_color = color_channel << (2 * BYTE);
 	while (ft_isdigit(colors[0]))
 		colors++;
 	colors += skip_whitespace(colors);
@@ -407,10 +441,10 @@ static int	save_color(char *line, t_map_id *data_id, t_data *data) //TODO: need 
 		return (log_msg(ERROR, __FILE__, __LINE__, "invalid char detected"), 0);
 	colors++;
 	colors += skip_whitespace(colors);
-	green = get_color_value(colors);
-	if (green < 0)
+	color_channel = get_color_value(colors);
+	if (color_channel < 0)
 		return (0);
-	final_color |= green << BYTE;
+	final_color |= color_channel << BYTE;
 	while (ft_isdigit(colors[0]))
 		colors++;
 	colors += skip_whitespace(colors);
@@ -418,10 +452,10 @@ static int	save_color(char *line, t_map_id *data_id, t_data *data) //TODO: need 
 		return (log_msg(ERROR, __FILE__, __LINE__, "invalid char detected"), 0);
 	colors++;
 	colors += skip_whitespace(colors);
-	blue = get_color_value(colors);
-	if (blue < 0)
+	color_channel = get_color_value(colors);
+	if (color_channel < 0)
 		return (0);
-	final_color |= blue;
+	final_color |= color_channel;
 	while (ft_isdigit(colors[0]))
 		colors++;
 	if (!validate_trailing_content(colors, 0))
@@ -430,18 +464,7 @@ static int	save_color(char *line, t_map_id *data_id, t_data *data) //TODO: need 
 		data->map_data.ceiling_color = final_color;
 	else if (ft_strncmp(data_id->id, "F", data_id->id_len) == 0)
 		data->map_data.floor_color = final_color;
-	log_fd = log_start(INFO, __FILE__, __LINE__);
-	if (log_fd >= 0)
-	{
-		ft_putstr_fd("FOUND: r:", log_fd);
-		ft_putnbr_fd(red, log_fd);
-		ft_putstr_fd(", g:", log_fd);
-		ft_putnbr_fd(green, log_fd);
-		ft_putstr_fd(", b:", log_fd);
-		ft_putnbr_fd(blue, log_fd);
-		ft_putendl_fd("", log_fd);
-	}
-	log_msg(DEBUG, __FILE__, __LINE__, "color processing completed");
+	log_found_color(final_color, __FILE__, __LINE__);
 	return (1);
 }
 
