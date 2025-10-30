@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/30 18:15:35 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/30 18:38:13 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,9 +318,6 @@ static void	log_found_img(char *img_path, char *src_file, int src_line)
 static void	log_found_color(int color, char *src_file, int src_line)
 {
 	int	log_fd;
-	int	red;
-	int	green;
-	int	blue;
 
 	if (!src_file)
 	{
@@ -330,15 +327,12 @@ static void	log_found_color(int color, char *src_file, int src_line)
 	log_fd = log_start(INFO, src_file, src_line);
 	if (log_fd < 0)
 		return ;
-	red = color >> (2 * BYTE) & 255;
-	green = color >> (BYTE) & 255;
-	blue = color & 255;
 	ft_putstr_fd("FOUND: r:", log_fd);
-	ft_putnbr_fd(red, log_fd);
+	ft_putnbr_fd(get_color_channel(color, RED_CHANNEL), log_fd);
 	ft_putstr_fd(", g:", log_fd);
-	ft_putnbr_fd(green, log_fd);
+	ft_putnbr_fd(get_color_channel(color, GREEN_CHANNEL), log_fd);
 	ft_putstr_fd(", b:", log_fd);
-	ft_putnbr_fd(blue, log_fd);
+	ft_putnbr_fd(get_color_channel(color, BLUE_CHANNEL), log_fd);
 	ft_putendl_fd("", log_fd);
 }
 
@@ -433,7 +427,7 @@ static int	save_color(char *line, t_map_id *data_id, t_data *data) //TODO: need 
 	color_channel = get_color_value(colors);
 	if (color_channel < 0)
 		return (0);
-	final_color = color_channel << (2 * BYTE);
+	final_color = set_color_channel(0, RED_CHANNEL, color_channel);
 	while (ft_isdigit(colors[0]))
 		colors++;
 	colors += skip_whitespace(colors);
@@ -444,7 +438,7 @@ static int	save_color(char *line, t_map_id *data_id, t_data *data) //TODO: need 
 	color_channel = get_color_value(colors);
 	if (color_channel < 0)
 		return (0);
-	final_color |= color_channel << BYTE;
+	final_color = set_color_channel(final_color, GREEN_CHANNEL, color_channel);
 	while (ft_isdigit(colors[0]))
 		colors++;
 	colors += skip_whitespace(colors);
@@ -455,7 +449,7 @@ static int	save_color(char *line, t_map_id *data_id, t_data *data) //TODO: need 
 	color_channel = get_color_value(colors);
 	if (color_channel < 0)
 		return (0);
-	final_color |= color_channel;
+	final_color = set_color_channel(final_color, BLUE_CHANNEL, color_channel);
 	while (ft_isdigit(colors[0]))
 		colors++;
 	if (!validate_trailing_content(colors, 0))
