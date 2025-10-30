@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/29 19:07:42 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/10/30 18:31:41 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,15 @@
 # define WHITESPACE "\t\n\v\f\r "
 
 # define BYTE 8
+
+typedef enum e_color_channel
+{
+	RED_CHANNEL,
+	GREEN_CHANNEL,
+	BLUE_CHANNEL,
+	ALPHA_CHANNEL
+}	t_color_channel;
+
 typedef enum e_map_data_type
 {
 	INVALID,
@@ -64,5 +73,10 @@ char				**read_file(const char *file);
 //-----expand_string_array.c-----//
 
 char				**expand_string_array(char ***old_array);
+
+//-----color_utils.c-----//
+
+int	set_color_channel(int color, t_color_channel channel, int value);
+int	get_color_channel(int color, t_color_channel channel);
 
 #endif /* PARSING_H */

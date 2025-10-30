@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/28 20:22:40 by vpoka            ###   ########.fr        #
+#    Updated: 2025/10/30 18:23:13 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ LOGGING_SRCS :=	$(addprefix logging/, \
 PARSING_SRCS :=	$(addprefix parsing/, \
 				parse.c \
 				parse_map.c \
+				color_utils.c \
 				$(addprefix utils/, \
 				expand_string_array.c \
 				file_ops.c \
