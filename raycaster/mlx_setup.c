@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 07:31:49 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/29 19:43:58 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/01 10:56:36 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,10 @@ int	init_mlx(t_game *game)
 
 	init_texture_list(game);
 
-	char *north_path = "./textures/xpm/Brick.xpm"; // Placeholder
-	char *south_path = "./textures/xpm/Metal.xpm"; // Placeholder
-	char *east_path = "./textures/xpm/Wood.xpm";   // Placeholder
-	char *west_path = "./textures/xpm/Stone.xpm";   // Placeholder
+	char *north_path = "./textures/xpm/Futuristic_1024.xpm"; // Placeholder
+	char *south_path = "./textures/xpm/Metal_1024.xpm"; // Placeholder
+	char *east_path = "./textures/xpm/Wood_1024.xpm";   // Placeholder
+	char *west_path = "./textures/xpm/Stone_1024.xpm";   // Placeholder
 
 	if (!load_texture(game, &game->north_texture, north_path)
 		|| !load_texture(game, &game->south_texture, south_path)

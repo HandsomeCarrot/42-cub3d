@@ -57,3 +57,5 @@ cub3d
 
 # Hamza container
 .devcontainer
+.DS_Store
+raycaster/sandbox
