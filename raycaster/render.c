@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 14:32:38 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/29 21:20:39 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/01 14:02:11 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,26 @@ void perform_dda(t_ray *ray, t_game *game)
         ray->perp_wall_dist = (ray->map.y - game->player.pos.y + (1 - ray->step.y) / 2.0) / ray->dir.y;
 }
 
+t_texture *get_texture(t_game *game, t_ray *ray)
+{
+    t_texture *tex;
+    if (ray->side == 0)
+    {
+        if (ray->dir.x > 0)
+            tex = &game->west_texture;
+        else
+            tex = &game->east_texture;
+    }
+    else
+    {
+        if (ray->dir.y > 0)
+            tex = &game->north_texture;
+        else
+            tex = &game->south_texture;
+    }
+    return tex;
+}
+
 void draw_column(t_ray *ray, t_game *game, int x)
 {
     int         line_height;
@@ -99,20 +119,7 @@ void draw_column(t_ray *ray, t_game *game, int x)
 
     wallX = wallX - (int)wallX;
 
-    if (ray->side == 0)
-    {
-        if (ray->dir.x > 0)
-            tex = &game->west_texture;
-        else
-            tex = &game->east_texture;
-    }
-    else
-    {
-        if (ray->dir.y > 0)
-            tex = &game->north_texture;
-        else
-            tex = &game->south_texture;
-    }
+    tex = get_texture(game, ray);
     texX = (int)(wallX * (tex->width));
     y = draw_start;
     while (y <= draw_end)
