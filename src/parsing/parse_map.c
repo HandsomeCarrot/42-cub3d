@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/04 17:42:25 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/04 20:21:39 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -568,6 +568,22 @@ static int	extract_texture_data(char **file_data, t_data *data)
 	return (free(ids), 0);
 }
 
+static t_map_data_type	*identify_map_line_types(char **file_data)
+{
+	t_map_data_type	*data_types;
+	int				line;
+
+	if (!file_data)
+		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), NULL);
+	data_types = NULL;
+	line = 0;
+	while (file_data[line])
+	{
+		
+	}
+	return (data_types);
+}
+
 /**
  * @brief parse and save the data from the file data
  *
@@ -575,14 +591,17 @@ static int	extract_texture_data(char **file_data, t_data *data)
  */
 static int	parse_file_data(char **file_data, t_data *data)
 {
+	t_map_data_type	*map_data;
+
 	log_msg(DEBUG, __FILE__, __LINE__, "parsing map file data");
 	if (!file_data || !data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
-	if (extract_texture_data(file_data, data))
+	//TODO: add complete line checking / generating line identification array (line 1 -> TEXTURE/COLOR/IMAGE, line 2 -> EMPTY, line 3 -> MAP, ...)
+	if (extract_texture_data(file_data, data)) //TODO: extract the texture data with this new type array
 		return (1);
-	// extract map & player info (posX posY W/N/E/S)
-	// check for invalid hanging data
-	// convert xpm's to mlx images and extract data
+	//TODO: extract map & player info (posX posY W/N/E/S)
+	//? check for invalid hanging data (either here, or in line checking already)
+	//? is done by hamza (convert xpm's to mlx images and extract data)
 	log_msg(DEBUG, __FILE__, __LINE__, "parsed map file data successfully");
 	return (0);
 }
