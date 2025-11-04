@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 16:55:33 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/04 09:17:25 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/04 16:03:52 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@
 #define COLOR_ORANGE  0xFFA500
 #define COLOR_PINK    0xFFC0CB
 #define COLOR_BROWN   0xA52A2A
+
+// --- Collision Value for wall_check ---
+#define RADIUS 0.25
 
 //mlx_setup.c
 void	put_pixel(t_mlx *mlx, int x, int y, int color);
