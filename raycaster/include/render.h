@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 16:55:33 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/29 19:19:54 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/04 09:17:25 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@
 void	put_pixel(t_mlx *mlx, int x, int y, int color);
 int		get_pixel_color(t_texture *tex, int x, int y);
 int		init_mlx(t_game *game);
+
+//movement.c
+void new_pos(t_game *game);
 
 //render.c
 int		render(t_game *game);
