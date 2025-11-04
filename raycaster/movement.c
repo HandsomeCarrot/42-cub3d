@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 09:13:56 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/04 12:31:35 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/04 13:10:15 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ bool	check_wall(t_game *game, double x, double y)
 	int	map_y;
 	t_point player_box;
 
-	player_box.x = game->player.pos.x;
-	player_box.y = game->player.pos.y;
+	player_box.x = (int)game->player.pos.x;
+	player_box.y = (int)game->player.pos.y;
 
 	map_x = (int)x;
 	map_y = (int)y;
