@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 09:13:56 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/04 09:16:49 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/04 12:31:35 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@ bool	check_wall(t_game *game, double x, double y)
 {
 	int	map_x;
 	int	map_y;
+	t_point player_box;
+
+	player_box.x = game->player.pos.x;
+	player_box.y = game->player.pos.y;
 
 	map_x = (int)x;
 	map_y = (int)y;
@@ -26,6 +30,8 @@ bool	check_wall(t_game *game, double x, double y)
 	if (game->map[map_y][map_x] == '\0')
 		return (true);
 	if (game->map[map_y][map_x] == '1')
+		return (true);
+	if(game->map[map_y][player_box.x] == '1' || game->map[player_box.y][map_x] == '1') // i look before if the sides touch 1
 		return (true);
 	return (false);
 }
