@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 09:13:56 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/04 16:21:32 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/04 18:03:54 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,16 @@ bool	check_wall(t_game *game, double x, double y)
 
 bool	check_wall_collision(t_game *game, double x, double y)
 {
-	if(!check_wall(game, x - RADIUS, y - RADIUS) &&
-	!check_wall(game, x + RADIUS, y + RADIUS) &&
-	!check_wall(game, x + RADIUS, y - RADIUS) &&
-	!check_wall(game, x - RADIUS, y + RADIUS))
-		return (false);
-
-	return (true);
+	if (check_wall(game, x - RADIUS, y - RADIUS))
+		return (true);
+	if (check_wall(game, x + RADIUS, y + RADIUS))
+		return (true);
+	if (check_wall(game, x + RADIUS, y - RADIUS))
+		return (true);
+	if (check_wall(game, x - RADIUS, y + RADIUS))
+		return (true);
+	
+	return (false);
 }
 
 void    perform_rot(t_game *game, double angle)
