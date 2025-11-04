@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 14:32:38 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/04 08:39:18 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/04 08:42:32 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,10 @@ void draw_column(t_ray *ray, t_game *game, int x)
     while (y <= draw_end)
     {
         texY = (int)((y - original_draw_start) * tex->height / line_height); //using now the unclamped value for the calculation works good but needs more testing
+    if (texY < 0)
+        texY = 0;
+    if (texY >= tex->height)
+        texY = tex->height - 1;
 /*
         if (x == game->mlx.width / 2 && y % 100 == 0)
             printf("y=%d, draw_start=%d, line_height=%d, texY=%d\n", y, draw_start, line_height, texY);
