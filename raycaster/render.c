@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 14:32:38 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/01 14:02:11 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/04 08:39:18 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ t_texture *get_texture(t_game *game, t_ray *ray)
 void draw_column(t_ray *ray, t_game *game, int x)
 {
     int         line_height;
+    int         original_draw_start; //! the calculation works now without warping but need to test more to see if it is stable
     int         draw_start;
     int         draw_end;
     int         y;
@@ -106,8 +107,9 @@ void draw_column(t_ray *ray, t_game *game, int x)
     t_texture   *tex;
 
     line_height = (int)(game->mlx.height / ray->perp_wall_dist);
-    draw_start = -line_height / 2 + game->mlx.height / 2;
-    if (draw_start < 0)
+    original_draw_start = -line_height / 2 + game->mlx.height / 2;
+    draw_start = original_draw_start;
+     if (draw_start < 0)
         draw_start = 0;
     draw_end = line_height / 2 + game->mlx.height / 2;
     if (draw_end >= game->mlx.height)
@@ -124,7 +126,11 @@ void draw_column(t_ray *ray, t_game *game, int x)
     y = draw_start;
     while (y <= draw_end)
     {
-        texY = (int)((y - draw_start) * tex->height / line_height);
+        texY = (int)((y - original_draw_start) * tex->height / line_height); //using now the unclamped value for the calculation works good but needs more testing
+/*
+        if (x == game->mlx.width / 2 && y % 100 == 0)
+            printf("y=%d, draw_start=%d, line_height=%d, texY=%d\n", y, draw_start, line_height, texY);
+*/
         put_pixel(&game->mlx, x, y, get_pixel_color(tex, texX, texY));
         y++;
     }
