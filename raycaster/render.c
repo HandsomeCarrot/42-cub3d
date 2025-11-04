@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 14:32:38 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/04 08:42:32 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/04 09:11:42 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void draw_column(t_ray *ray, t_game *game, int x)
         if (x == game->mlx.width / 2 && y % 100 == 0)
             printf("y=%d, draw_start=%d, line_height=%d, texY=%d\n", y, draw_start, line_height, texY);
 */
-        put_pixel(&game->mlx, x, y, get_pixel_color(tex, texX, texY));
+    put_pixel(&game->mlx, x, y, get_pixel_color(tex, texX, texY));
         y++;
     }
 }
