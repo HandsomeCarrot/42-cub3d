@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/04 17:35:18 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/04 17:42:25 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -504,7 +504,7 @@ static t_char_group	*init_map_char_rules(void)
 			__LINE__);
 	if (!rules)
 		return (NULL);
-	rules[0] = (t_char_group){" 01", -1, 0, 0, "terrain"};
+	rules[0] = (t_char_group){" 01", 0, 0, 0, "terrain"};
 	rules[1] = (t_char_group){"NSWE", 1, 1, 0, "player spawn"};
 	return (rules);
 }

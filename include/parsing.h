@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/04 17:26:28 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/04 17:39:24 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ typedef struct s_char_group
 {
 	//* Characters in this group
 	const char		*valid_chars;
-	//* -1 = unlimited, 0+ = specific limit
-	int 			max_count;
+	//* 0 = unlimited, 1+ = specific limit
+	unsigned int 		max_count;
 	//* Minimum required (0 = optional)
-	int 			min_count;
+	unsigned int 			min_count;
 	//* Tracked during validation
-	int 			current_count;
+	unsigned int 		current_count;
 	//* For error messages
 	const char		*group_name;
 }					t_char_group;
