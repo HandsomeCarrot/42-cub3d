@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 09:13:56 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/04 16:09:18 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/04 16:21:32 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,17 @@ bool	check_wall(t_game *game, double x, double y)
 	if (game->map[map_y][map_x] == '1')
 		return (true);
 	return (false);
+}
+
+bool	check_wall_collision(t_game *game, double x, double y)
+{
+	if(!check_wall(game, x - RADIUS, y - RADIUS) &&
+	!check_wall(game, x + RADIUS, y + RADIUS) &&
+	!check_wall(game, x + RADIUS, y - RADIUS) &&
+	!check_wall(game, x - RADIUS, y + RADIUS))
+		return (false);
+
+	return (true);
 }
 
 void    perform_rot(t_game *game, double angle)
@@ -52,30 +63,18 @@ void    perform_move(t_game *game, char op, t_vector v2)
     {
         tmp.x = game->player.pos.x + v2.x * move_speed;
         tmp.y = game->player.pos.y + v2.y * move_speed;
-		if(!check_wall(game, tmp.x - RADIUS, game->player.pos.y - RADIUS) &&
-			!check_wall(game, tmp.x + RADIUS, game->player.pos.y + RADIUS) &&
-			!check_wall(game, tmp.x + RADIUS, game->player.pos.y - RADIUS) &&
-			!check_wall(game, tmp.x - RADIUS, game->player.pos.y + RADIUS))
+		if(!check_wall_collision(game, tmp.x, game->player.pos.y))
 			game->player.pos.x = tmp.x;
-		if(!check_wall(game, game->player.pos.x + RADIUS, tmp.y + RADIUS) &&
-			!check_wall(game, game->player.pos.x - RADIUS, tmp.y + RADIUS) &&
-			!check_wall(game, game->player.pos.x + RADIUS, tmp.y - RADIUS) &&
-			!check_wall(game, game->player.pos.x - RADIUS, tmp.y - RADIUS))
+		if(!check_wall_collision(game, game->player.pos.x, tmp.y))
 			game->player.pos.y = tmp.y;
 	}
     else
     {
         tmp.x = game->player.pos.x - v2.x * move_speed;
         tmp.y = game->player.pos.y - v2.y * move_speed;
-		if(!check_wall(game, tmp.x - RADIUS, game->player.pos.y - RADIUS) &&
-			!check_wall(game, tmp.x + RADIUS, game->player.pos.y + RADIUS) &&
-			!check_wall(game, tmp.x + RADIUS, game->player.pos.y - RADIUS) &&
-			!check_wall(game, tmp.x - RADIUS, game->player.pos.y + RADIUS))
+		if(!check_wall_collision(game, tmp.x, game->player.pos.y))
 			game->player.pos.x = tmp.x;
-		if(!check_wall(game, game->player.pos.x + RADIUS, tmp.y + RADIUS) &&
-			!check_wall(game, game->player.pos.x - RADIUS, tmp.y + RADIUS) &&
-			!check_wall(game, game->player.pos.x + RADIUS, tmp.y - RADIUS) &&
-			!check_wall(game, game->player.pos.x - RADIUS, tmp.y - RADIUS))
+		if(!check_wall_collision(game, game->player.pos.x, tmp.y))
 			game->player.pos.y = tmp.y;
     }
 }
