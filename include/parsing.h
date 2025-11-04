@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/30 18:31:41 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/04 17:26:28 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,15 @@ typedef enum e_color_channel
 	GREEN_CHANNEL,
 	BLUE_CHANNEL,
 	ALPHA_CHANNEL
-}	t_color_channel;
+}					t_color_channel;
 
 typedef enum e_map_data_type
 {
 	INVALID,
 	NONE,
 	IMAGE,
-	COLOR
+	COLOR,
+	MAP
 }					t_map_data_type;
 
 typedef struct s_map_id
@@ -50,6 +51,20 @@ typedef struct s_map_id
 	const char		*id;
 	int				id_len;
 }					t_map_id;
+
+typedef struct s_char_group
+{
+	//* Characters in this group
+	const char		*valid_chars;
+	//* -1 = unlimited, 0+ = specific limit
+	int 			max_count;
+	//* Minimum required (0 = optional)
+	int 			min_count;
+	//* Tracked during validation
+	int 			current_count;
+	//* For error messages
+	const char		*group_name;
+}					t_char_group;
 
 //-----parse.c-----//
 
@@ -76,7 +91,8 @@ char				**expand_string_array(char ***old_array);
 
 //-----color_utils.c-----//
 
-int	set_color_channel(int color, t_color_channel channel, int value);
-int	get_color_channel(int color, t_color_channel channel);
+int					set_color_channel(int color, t_color_channel channel,
+						int value);
+int					get_color_channel(int color, t_color_channel channel);
 
 #endif /* PARSING_H */

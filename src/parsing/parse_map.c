@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/30 18:41:18 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/04 17:35:18 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ static bool	is_whitespace(char c)
 /**
  * @return table with defined identifiers accepted in map
  */
-static t_map_id	*get_map_identifiers(void)
+static t_map_id	*get_map_texture_identifiers(void)
 {
 	t_map_id	*ids;
 	int			id_count;
 
 	log_msg(DEBUG, __FILE__, __LINE__,
-		"creating map identifier table (NO, EA, SO, WE, F, C)");
+		"creating map texture identifier table (NO, EA, SO, WE, F, C)");
 	id_count = 6;
 	ids = log_calloc(id_count + 1, sizeof(t_map_id), __FILE__, __LINE__);
 	if (!ids)
@@ -403,10 +403,12 @@ static int	get_color_value(char *colors)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), -1);
 	log_msg(DEBUG, __FILE__, __LINE__, "extracting a color value");
 	if (!ft_isdigit(colors[0]))
-		return (log_msg(ERROR, __FILE__, __LINE__, "invalid char detected"), -1);
+		return (log_msg(ERROR, __FILE__, __LINE__, "invalid char detected"),
+			-1);
 	num = ft_atoi(colors);
 	if (num < 0 || num > 255)
-		return (log_msg(ERROR, __FILE__, __LINE__, "color value has to be in range [0,255]"), -1);
+		return (log_msg(ERROR, __FILE__, __LINE__,
+				"color value has to be in range [0,255]"), -1);
 	log_msg(DEBUG, __FILE__, __LINE__, "extracted a color value successfully");
 	return (num);
 }
@@ -476,8 +478,8 @@ static int	save_color(char *line, t_map_id *data_id, t_data *data)
  * @param data Main data structure to store parsed data
  * @return 0 on error, other on success
  */
-static int	call_save_function(t_map_id *data_id, char *line,
-	int row, t_data *data)
+static int	call_save_function(t_map_id *data_id, char *line, int row,
+		t_data *data)
 {
 	if (!data_id || !line || !data)
 	{
@@ -490,6 +492,21 @@ static int	call_save_function(t_map_id *data_id, char *line,
 		return (save_color(line, data_id, data));
 	log_msg(ERROR, __FILE__, __LINE__, "data type not recognized");
 	return (0);
+}
+
+static t_char_group	*init_map_char_rules(void)
+{
+	t_char_group	*rules;
+	int				rule_count;
+
+	rule_count = 2;
+	rules = log_calloc(rule_count + 1, sizeof(t_char_group), __FILE__,
+			__LINE__);
+	if (!rules)
+		return (NULL);
+	rules[0] = (t_char_group){" 01", -1, 0, 0, "terrain"};
+	rules[1] = (t_char_group){"NSWE", 1, 1, 0, "player spawn"};
+	return (rules);
 }
 
 /**
@@ -534,7 +551,7 @@ static int	extract_texture_data(char **file_data, t_data *data)
 	log_msg(DEBUG, __FILE__, __LINE__, "extracting texture data from map file");
 	if (!file_data || !data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
-	ids = get_map_identifiers();
+	ids = get_map_texture_identifiers();
 	if (!ids)
 		return (1);
 	line = 0;
