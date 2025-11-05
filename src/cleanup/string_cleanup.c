@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 13:14:42 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/26 11:45:08 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/05 12:38:27 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@
  * @note This function is designed to handle NULL inputs gracefully and
  *       logs debug information during the freeing process.
  */
-void	free_string_array(char ***string_array, char *src_file, int src_line)
+void	free_string_array(char ***string_array)
 {
 	int	log_fd;
 	int	pos;
 
-	log_msg(DEBUG, src_file, src_line, "freeing string array");
+	log_msg(DEBUG, __FILE__, __LINE__, "freeing string array");
 	if (!string_array || !*string_array)
 	{
 		log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM);

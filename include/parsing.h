@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/05 11:28:52 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/05 12:41:42 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,12 @@ char				**read_file(const char *file);
 //-----expand_string_array.c-----//
 
 char				**expand_string_array(char ***old_array);
+
+//-----arrays.c-----//
+
+int	new_array(size_t member_size, size_t capacity, t_array *array);
+int	expand_array(t_array *array);
+int	append_to_array(void *src, t_array *array);
 
 //-----color_utils.c-----//
 

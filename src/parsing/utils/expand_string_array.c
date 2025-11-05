@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 18:17:00 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/26 11:45:08 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/05 12:38:55 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	**expand_string_array(char ***old_array)
 	strings = count_strings(*old_array);
 	new_array = log_calloc(strings + 2, sizeof(char *), __FILE__, __LINE__);
 	if (!new_array)
-		return (free_string_array(old_array, __FILE__, __LINE__), NULL);
+		return (free_string_array(old_array), NULL);
 	if (*old_array)
 	{
 		copy_array(new_array, *old_array, strings);
