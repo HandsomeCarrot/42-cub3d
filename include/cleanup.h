@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 20:31:32 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/23 13:34:48 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/05 12:38:36 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ void	main_cleanup(t_data *data);
 
 //-----string-cleanup.c-----//
 
-void	free_string_array(char ***string_array, char *src_file, int src_line);
+void	free_string_array(char ***string_array);
 
 #endif /* CLEANUP_H */
