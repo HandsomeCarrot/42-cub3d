@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/05 18:05:51 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/05 19:32:58 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,36 @@ static bool	is_empty(char *line)
 	else
 		log_msg(DEBUG, __FILE__, __LINE__, "not a empty line");
 	return (empty);
+}
+
+static bool	is_early_map(char *line, int row)
+{
+	t_char_group	*rules;
+	int				line_pos;
+	int				rule_pos;
+
+	if (!line)
+		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), false);
+	log_msg(DEBUG, __FILE__, __LINE__, "checking if line is a map line");
+	rules = get_map_char_rules();
+	if (!rules)
+		return (false); //TODO: make returns better (true, false, error)
+	line_pos = 0;
+	while (line[line_pos] == ' ')
+		line_pos++;
+	rule_pos = 0;
+	while (rules[rule_pos].valid_chars) //TODO
+	{
+		if (ft_strchr(rules[rule_pos].valid_chars, line[line_pos]))
+		{
+			free(rules);
+			return (true);
+		}
+		rule_pos++;
+	}
+	free(rules);
+	log_msg(DEBUG, __FILE__, __LINE__, "line is a valid map line");
+	return (true);
 }
 
 /**
@@ -494,7 +524,7 @@ static int	call_save_function(t_map_id *data_id, char *line, int row,
 	return (0);
 }
 
-static t_char_group	*init_map_char_rules(void)
+static t_char_group	*get_map_char_rules(void)
 {
 	t_char_group	*rules;
 	int				rule_count;
@@ -504,8 +534,8 @@ static t_char_group	*init_map_char_rules(void)
 			__LINE__);
 	if (!rules)
 		return (NULL);
-	rules[0] = (t_char_group){" 01", 0, 0, 0, "terrain"};
-	rules[1] = (t_char_group){"NSWE", 1, 1, 0, "player spawn"};
+	rules[0] = (t_char_group){MAP_TERRAIN, 0, 0, 0, "terrain"};
+	rules[1] = (t_char_group){PLAYER_SPAWN, 1, 1, 0, "player spawn"};
 	return (rules);
 }
 
@@ -582,7 +612,7 @@ static int	extract_texture_data(char **file_data, t_data *data)
 		if (!save_line_data(file_data[line], line + 1, ids, data))
 			return (free(ids), 1);
 	}
-	log_msg(DEBUG, __FILE__, __LINE__, "texture data extraction completed");
+	log_msg(INFO, __FILE__, __LINE__, "extracted all necessary texture data");
 	return (free(ids), line);
 }
 

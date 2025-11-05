@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/05 14:50:12 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/05 19:21:54 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include <string.h>
 
 # define WHITESPACE "\t\n\v\f\r "
+# define MAP_TERRAIN " 01"
+# define PLAYER_SPAWN "NESWc"
 
 # define BYTE 8
 
