@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/05 14:52:29 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/05 17:37:38 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -566,15 +566,40 @@ static int	extract_texture_data(char **file_data, t_data *data)
 	return (free(ids), 0);
 }
 
+static bool	is_map_layout(char *line, t_char_group *map_chars)
+{
+	char	*trimmed;
+	int		pos;
+
+	if (!line)
+		return (log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM), false);
+	pos = 0;
+	while (line[pos] && line[pos] != '\n')
+	{
+		trimmed = ft_strtrim(line, map_chars[0].valid_chars);
+		if (!trimmed)
+			return (false);
+		line = trimmed;
+		trimmed = ft_strtrim(line, map_chars[1].valid_chars);
+		if (!trimmed)
+			return (false);
+		
+	}
+}
+
 static t_map_data_type	*get_map_line_types(char **file_data)
 {
 	t_array			data_types;
 	t_map_data_type	type;
 	int				line;
+	t_char_group	*map_chars;
 
 	if (!file_data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), NULL);
 	if (new_array(sizeof(t_map_data_type), 1, &data_types))
+		return (NULL);
+	map_chars = init_map_char_rules();
+	if (!map_chars)
 		return (NULL);
 	line = 0;
 	while (file_data[line])
@@ -585,12 +610,14 @@ static t_map_data_type	*get_map_line_types(char **file_data)
 		//	type = MAP;
 		else
 			type = TEXTURE;
-		if (type == INVALID || append_to_array(&type, &data_types))
+		if (append_to_array(&type, &data_types))
 		{
 			free(data_types.ptr);
+			free(map_chars);
 			return (NULL);
 		}
 	}
+	free(map_chars);
 	return (data_types.ptr);
 }
 
