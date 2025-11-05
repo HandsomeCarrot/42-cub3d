@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/05 12:41:01 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/05 14:52:29 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ static t_map_id	*get_map_texture_identifiers(void)
 	ids = log_calloc(id_count + 1, sizeof(t_map_id), __FILE__, __LINE__);
 	if (!ids)
 		return (NULL);
-	ids[0] = (t_map_id){IMAGE, false, "NO", 2};
-	ids[1] = (t_map_id){IMAGE, false, "EA", 2};
-	ids[2] = (t_map_id){IMAGE, false, "SO", 2};
-	ids[3] = (t_map_id){IMAGE, false, "WE", 2};
-	ids[4] = (t_map_id){COLOR, false, "C", 1};
-	ids[5] = (t_map_id){COLOR, false, "F", 1};
+	ids[0] = (t_map_id){T_IMAGE, false, "NO", 2};
+	ids[1] = (t_map_id){T_IMAGE, false, "EA", 2};
+	ids[2] = (t_map_id){T_IMAGE, false, "SO", 2};
+	ids[3] = (t_map_id){T_IMAGE, false, "WE", 2};
+	ids[4] = (t_map_id){T_COLOR, false, "C", 1};
+	ids[5] = (t_map_id){T_COLOR, false, "F", 1};
 	return (ids);
 }
 
@@ -170,9 +170,9 @@ static void	log_id_processing(t_map_id *data_id, char *src_file, int src_line)
 	if (log_fd < 0)
 		return ;
 	ft_putstr_fd("extracting data for ", log_fd);
-	if (data_id->type == IMAGE)
+	if (data_id->type == T_IMAGE)
 		ft_putstr_fd("image ", log_fd);
-	else if (data_id->type == COLOR)
+	else if (data_id->type == T_COLOR)
 		ft_putstr_fd("color ", log_fd);
 	if (data_id->id)
 		ft_putstr_fd((char *)data_id->id, log_fd);
@@ -486,9 +486,9 @@ static int	call_save_function(t_map_id *data_id, char *line, int row,
 		log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM);
 		return (0);
 	}
-	if (data_id->type == IMAGE)
+	if (data_id->type == T_IMAGE)
 		return (save_image(line, row, data_id, data));
-	else if (data_id->type == COLOR)
+	else if (data_id->type == T_COLOR)
 		return (save_color(line, data_id, data));
 	log_msg(ERROR, __FILE__, __LINE__, "data type not recognized");
 	return (0);
@@ -521,8 +521,6 @@ static int	save_line_data(char *line, int row, t_map_id *ids, t_data *data)
 	if (!line || !ids || !data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	log_msg(DEBUG, __FILE__, __LINE__, "processing line");
-	if (is_empty(line))
-		return (1);
 	if (has_leading_whitespace(line, row))
 		return (0);
 	data_id = get_map_data_type(line, row, ids);
@@ -568,20 +566,32 @@ static int	extract_texture_data(char **file_data, t_data *data)
 	return (free(ids), 0);
 }
 
-static t_map_data_type	*identify_map_line_types(char **file_data)
+static t_map_data_type	*get_map_line_types(char **file_data)
 {
-	t_map_data_type	*data_types;
+	t_array			data_types;
+	t_map_data_type	type;
 	int				line;
 
 	if (!file_data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), NULL);
-	data_types = NULL;
+	if (new_array(sizeof(t_map_data_type), 1, &data_types))
+		return (NULL);
 	line = 0;
 	while (file_data[line])
 	{
-		
+		if (is_empty(file_data[line]))
+			type = NONE;
+		//else if: line map?
+		//	type = MAP;
+		else
+			type = TEXTURE;
+		if (type == INVALID || append_to_array(&type, &data_types))
+		{
+			free(data_types.ptr);
+			return (NULL);
+		}
 	}
-	return (data_types);
+	return (data_types.ptr);
 }
 
 /**
