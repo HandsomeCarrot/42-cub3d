@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/05 17:37:38 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/05 18:05:51 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -367,7 +367,7 @@ static bool	set_wall_texture_path(char *img_path, t_map_id *id, t_data *data)
  * @param row Line number for error reporting
  * @param data_id Map identifier metadata
  * @param data Main data structure to store image path
- * @return 0 on error, other on success
+ * @return 0 on error, 1 on success
  */
 static int	save_image(char *line, int row, t_map_id *data_id, t_data *data)
 {
@@ -415,7 +415,7 @@ static int	get_color_value(char *colors)
 
 /**
  * TODO: need to split up this function and make the logging better
- * @return 0 on error, other on success
+ * @return 0 on error, 1 on success
  */
 static int	save_color(char *line, t_map_id *data_id, t_data *data)
 {
@@ -530,6 +530,28 @@ static int	save_line_data(char *line, int row, t_map_id *ids, t_data *data)
 }
 
 /**
+ * @brief Checks if all required texture identifiers have been found
+ *
+ * @param ids Array of texture identifiers to check
+ * @return true if all identifiers have been found, false otherwise
+ */
+static bool	all_ids_found(t_map_id *ids)
+{
+	int	id_pos;
+
+	if (!ids)
+		return (log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM), false);
+	id_pos = 0;
+	while (ids[id_pos].id)
+	{
+		if (!ids[id_pos].found)
+			return (false);
+		id_pos++;
+	}
+	return (true);
+}
+
+/**
  * Iterates over the file data and checks each line for info.
  * If the line is empty it gets skipped.
  * If there is some info (NO, EA, SO, WE, F, C)
@@ -552,73 +574,16 @@ static int	extract_texture_data(char **file_data, t_data *data)
 	ids = get_map_texture_identifiers();
 	if (!ids)
 		return (1);
-	line = 0;
-	while (file_data[line] /*TODO: && !is_map(file_data[line])*/)
-	{
-		if (!save_line_data(file_data[line], line + 1, ids, data))
-			return (free(ids), 1);
-		// skip lines with no data
-		// loop until first part of map is reached
-		line++;
-	}
-	// check if all necessary data was extracted and there is no more/less data then needed
-	log_msg(DEBUG, __FILE__, __LINE__, "texture data extraction completed");
-	return (free(ids), 0);
-}
-
-static bool	is_map_layout(char *line, t_char_group *map_chars)
-{
-	char	*trimmed;
-	int		pos;
-
-	if (!line)
-		return (log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM), false);
-	pos = 0;
-	while (line[pos] && line[pos] != '\n')
-	{
-		trimmed = ft_strtrim(line, map_chars[0].valid_chars);
-		if (!trimmed)
-			return (false);
-		line = trimmed;
-		trimmed = ft_strtrim(line, map_chars[1].valid_chars);
-		if (!trimmed)
-			return (false);
-		
-	}
-}
-
-static t_map_data_type	*get_map_line_types(char **file_data)
-{
-	t_array			data_types;
-	t_map_data_type	type;
-	int				line;
-	t_char_group	*map_chars;
-
-	if (!file_data)
-		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), NULL);
-	if (new_array(sizeof(t_map_data_type), 1, &data_types))
-		return (NULL);
-	map_chars = init_map_char_rules();
-	if (!map_chars)
-		return (NULL);
-	line = 0;
-	while (file_data[line])
+	line = -1;
+	while (file_data[++line] && !all_ids_found(ids))
 	{
 		if (is_empty(file_data[line]))
-			type = NONE;
-		//else if: line map?
-		//	type = MAP;
-		else
-			type = TEXTURE;
-		if (append_to_array(&type, &data_types))
-		{
-			free(data_types.ptr);
-			free(map_chars);
-			return (NULL);
-		}
+			continue ;
+		if (!save_line_data(file_data[line], line + 1, ids, data))
+			return (free(ids), 1);
 	}
-	free(map_chars);
-	return (data_types.ptr);
+	log_msg(DEBUG, __FILE__, __LINE__, "texture data extraction completed");
+	return (free(ids), line);
 }
 
 /**
@@ -628,13 +593,13 @@ static t_map_data_type	*get_map_line_types(char **file_data)
  */
 static int	parse_file_data(char **file_data, t_data *data)
 {
-	t_map_data_type	*map_data;
+	int	row;
 
 	log_msg(DEBUG, __FILE__, __LINE__, "parsing map file data");
 	if (!file_data || !data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
-	//TODO: add complete line checking / generating line identification array (line 1 -> TEXTURE/COLOR/IMAGE, line 2 -> EMPTY, line 3 -> MAP, ...)
-	if (extract_texture_data(file_data, data)) //TODO: extract the texture data with this new type array
+	row = extract_texture_data(file_data, data);//TODO: extract the texture data with this new type array
+	if (row <= 0)
 		return (1);
 	//TODO: extract map & player info (posX posY W/N/E/S)
 	//? check for invalid hanging data (either here, or in line checking already)
