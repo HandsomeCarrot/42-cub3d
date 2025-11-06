@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 14:32:38 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/06 08:27:10 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/06 08:32:28 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,27 +168,6 @@ int render(t_game *game)
         x++;
     }
     return (1);
-}
-
-void	*ft_memset(void *s, int c, size_t n)
-{
-	char	*pos;
-
-	pos = s;
-	while (n > 0)
-	{
-		*pos = c;
-		pos++;
-		n--;
-	}
-	return (s);
-}
-
-void clear_image(t_mlx *mlx, int floor_color, int ceiling_color)
-{
-    (void)floor_color;
-    (void)ceiling_color;
-    ft_memset(mlx->img_data, 0, mlx->height * mlx->line_length);
 }
 
 int render_loop(t_game *game)
