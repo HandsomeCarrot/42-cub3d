@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/06 17:19:08 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/06 17:28:06 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -573,7 +573,7 @@ static int	extract_texture_data(char **file_data, t_data *data)
 	return (free(ids), line);
 }
 
-static t_char_group	*get_map_char_rules(void)//TODO: complete (on hold)
+static t_char_group	*get_map_char_rules(void)
 {
 	t_char_group	*rules;
 	int				rule_count;
@@ -583,8 +583,8 @@ static t_char_group	*get_map_char_rules(void)//TODO: complete (on hold)
 			__LINE__);
 	if (!rules)
 		return (NULL);
-	rules[0] = (t_char_group){MAP_TERRAIN, 0, 0, 0, "terrain"};
-	rules[1] = (t_char_group){PLAYER_SPAWN, 1, 1, 0, "player spawn"};
+	rules[0] = (t_char_group){MAP_TERRAIN, -1, "terrain"};
+	rules[1] = (t_char_group){PLAYER_SPAWN, 1, "player spawn"};
 	return (rules);
 }
 
@@ -617,6 +617,11 @@ static bool	is_early_map(char *line, int row)//TODO: complete (on hold)
 	free(rules);
 	log_msg(DEBUG, __FILE__, __LINE__, "line is a valid map line");
 	return (true);
+}
+
+static int	extract_map_layout(char **lines, int map_start, t_data *data)
+{
+
 }
 
 /**

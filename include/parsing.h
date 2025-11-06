@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/05 19:21:54 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/06 17:27:36 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 # define WHITESPACE "\t\n\v\f\r "
 # define MAP_TERRAIN " 01"
-# define PLAYER_SPAWN "NESWc"
+# define PLAYER_SPAWN "NESW"
 
 # define BYTE 8
 
@@ -59,12 +59,8 @@ typedef struct s_char_group
 {
 	// Characters in this group
 	const char		*valid_chars;
-	// 0 = unlimited, 1+ = specific limit
-	size_t			max_count;
-	// Minimum required (0 = optional)
-	size_t			min_count;
-	// Tracked during validation
-	size_t			current_count;
+	// -1 = unlimited, 0 = not allowed, 1+ = specific limit
+	int			limit;
 	// For error messages
 	const char		*group_name;
 }					t_char_group;
