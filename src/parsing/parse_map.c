@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/06 17:08:32 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/06 17:19:08 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,27 +25,16 @@ static bool	is_whitespace(char c)
 	return (false);
 }
 
-/**
- * @return table with defined identifiers accepted in map
- */
-static t_map_id	*get_map_texture_identifiers(void)
+static size_t	skip_whitespace(const char *str)
 {
-	t_map_id	*ids;
-	int			id_count;
+	size_t	skipped;
 
-	log_msg(DEBUG, __FILE__, __LINE__,
-		"creating map texture identifier table (NO, EA, SO, WE, F, C)");
-	id_count = 6;
-	ids = log_calloc(id_count + 1, sizeof(t_map_id), __FILE__, __LINE__);
-	if (!ids)
-		return (NULL);
-	ids[0] = (t_map_id){T_IMAGE, false, "NO", 2};
-	ids[1] = (t_map_id){T_IMAGE, false, "EA", 2};
-	ids[2] = (t_map_id){T_IMAGE, false, "SO", 2};
-	ids[3] = (t_map_id){T_IMAGE, false, "WE", 2};
-	ids[4] = (t_map_id){T_COLOR, false, "C", 1};
-	ids[5] = (t_map_id){T_COLOR, false, "F", 1};
-	return (ids);
+	if (!str)
+		return (log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM), 0);
+	skipped = 0;
+	while (is_whitespace(str[skipped]))
+		skipped++;
+	return (skipped);
 }
 
 /**
@@ -76,50 +65,27 @@ static bool	is_empty(char *line)
 	return (true);
 }
 
-static t_char_group	*get_map_char_rules(void)
+/**
+ * @return table with defined identifiers accepted in map
+ */
+static t_map_id	*get_map_texture_identifiers(void)
 {
-	t_char_group	*rules;
-	int				rule_count;
+	t_map_id	*ids;
+	int			id_count;
 
-	rule_count = 2;
-	rules = log_calloc(rule_count + 1, sizeof(t_char_group), __FILE__,
-			__LINE__);
-	if (!rules)
+	log_msg(DEBUG, __FILE__, __LINE__,
+		"creating map texture identifier table (NO, EA, SO, WE, F, C)");
+	id_count = 6;
+	ids = log_calloc(id_count + 1, sizeof(t_map_id), __FILE__, __LINE__);
+	if (!ids)
 		return (NULL);
-	rules[0] = (t_char_group){MAP_TERRAIN, 0, 0, 0, "terrain"};
-	rules[1] = (t_char_group){PLAYER_SPAWN, 1, 1, 0, "player spawn"};
-	return (rules);
-}
-
-static bool	is_early_map(char *line, int row)
-{
-	t_char_group	*rules;
-	int				line_pos;
-	int				rule_pos;
-
-	(void)row;
-	if (!line)
-		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), false);
-	log_msg(DEBUG, __FILE__, __LINE__, "checking if line is a map line");
-	rules = get_map_char_rules();
-	if (!rules)
-		return (false); //TODO: make returns better (true, false, error)
-	line_pos = 0;
-	while (line[line_pos] == ' ')
-		line_pos++;
-	rule_pos = 0;
-	while (rules[rule_pos].valid_chars) //TODO
-	{
-		if (ft_strchr(rules[rule_pos].valid_chars, line[line_pos]))
-		{
-			free(rules);
-			return (true);
-		}
-		rule_pos++;
-	}
-	free(rules);
-	log_msg(DEBUG, __FILE__, __LINE__, "line is a valid map line");
-	return (true);
+	ids[0] = (t_map_id){T_IMAGE, false, "NO", 2};
+	ids[1] = (t_map_id){T_IMAGE, false, "EA", 2};
+	ids[2] = (t_map_id){T_IMAGE, false, "SO", 2};
+	ids[3] = (t_map_id){T_IMAGE, false, "WE", 2};
+	ids[4] = (t_map_id){T_COLOR, false, "C", 1};
+	ids[5] = (t_map_id){T_COLOR, false, "F", 1};
+	return (ids);
 }
 
 /**
@@ -224,18 +190,6 @@ static void	log_id_processing(t_map_id *data_id, char *src_file, int src_line)
 	if (data_id->id)
 		ft_putstr_fd((char *)data_id->id, log_fd);
 	ft_putchar_fd('\n', log_fd);
-}
-
-static size_t	skip_whitespace(const char *str)
-{
-	size_t	skipped;
-
-	if (!str)
-		return (log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM), 0);
-	skipped = 0;
-	while (is_whitespace(str[skipped]))
-		skipped++;
-	return (skipped);
 }
 
 /**
@@ -617,6 +571,52 @@ static int	extract_texture_data(char **file_data, t_data *data)
 	}
 	log_msg(INFO, __FILE__, __LINE__, "extracted all necessary texture data");
 	return (free(ids), line);
+}
+
+static t_char_group	*get_map_char_rules(void)//TODO: complete (on hold)
+{
+	t_char_group	*rules;
+	int				rule_count;
+
+	rule_count = 2;
+	rules = log_calloc(rule_count + 1, sizeof(t_char_group), __FILE__,
+			__LINE__);
+	if (!rules)
+		return (NULL);
+	rules[0] = (t_char_group){MAP_TERRAIN, 0, 0, 0, "terrain"};
+	rules[1] = (t_char_group){PLAYER_SPAWN, 1, 1, 0, "player spawn"};
+	return (rules);
+}
+
+static bool	is_early_map(char *line, int row)//TODO: complete (on hold)
+{
+	t_char_group	*rules;
+	int				line_pos;
+	int				rule_pos;
+
+	(void)row;
+	if (!line)
+		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), false);
+	log_msg(DEBUG, __FILE__, __LINE__, "checking if line is a map line");
+	rules = get_map_char_rules();
+	if (!rules)
+		return (false); //TODO: make returns better (true, false, error)
+	line_pos = 0;
+	while (line[line_pos] == ' ')
+		line_pos++;
+	rule_pos = 0;
+	while (rules[rule_pos].valid_chars) //TODO
+	{
+		if (ft_strchr(rules[rule_pos].valid_chars, line[line_pos]))
+		{
+			free(rules);
+			return (true);
+		}
+		rule_pos++;
+	}
+	free(rules);
+	log_msg(DEBUG, __FILE__, __LINE__, "line is a valid map line");
+	return (true);
 }
 
 /**
