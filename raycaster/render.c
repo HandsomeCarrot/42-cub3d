@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 14:32:38 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/06 08:32:28 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/06 08:40:48 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,15 +131,18 @@ void draw_column(t_ray *ray, t_game *game, int x)
     wallX = wallX - (int)wallX;
     tex = get_texture(game, ray);
     texX = (int)(wallX * (tex->width));
+    double step = (double)tex->height / line_height;
+    double tex_pos = (draw_start - original_draw_start) * step;
     y = draw_start;
     while (y <= draw_end)
     {
-        texY = (int)((y - original_draw_start) * tex->height / line_height);
+        texY = (int)tex_pos;  // Cast once per pixel, no division
         if (texY < 0)
             texY = 0;
         if (texY >= tex->height)
             texY = tex->height - 1;
         put_pixel(&game->mlx, x, y, get_pixel_color(tex, texX, texY));
+        tex_pos += step;  // Increment by the step dont need to calculate every pixel
         y++;
     }
 
