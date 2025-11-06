@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 09:32:42 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/22 11:21:53 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/06 08:28:53 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	main(void)
 
 	init_player(&game.player, 4, 3, 'N');
 	game.map = test_map;
+	game.floor_color = COLOR_GRAY;
+	game.ceiling_color = COLOR_BLACK;
 	if (!init_mlx(&game))
 	{
 		printf("Error\nMLX initialization failed\n");

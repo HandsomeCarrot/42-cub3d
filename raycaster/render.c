@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 14:32:38 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/04 09:17:43 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/06 08:27:10 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ t_texture *get_texture(t_game *game, t_ray *ray)
 void draw_column(t_ray *ray, t_game *game, int x)
 {
     int         line_height;
-    int         original_draw_start; //! the calculation works now without warping but need to test more to see if it is stable
+    int         original_draw_start;
     int         draw_start;
     int         draw_end;
     int         y;
@@ -109,36 +109,49 @@ void draw_column(t_ray *ray, t_game *game, int x)
     line_height = (int)(game->mlx.height / ray->perp_wall_dist);
     original_draw_start = -line_height / 2 + game->mlx.height / 2;
     draw_start = original_draw_start;
-     if (draw_start < 0)
+    if (draw_start < 0)
         draw_start = 0;
     draw_end = line_height / 2 + game->mlx.height / 2;
     if (draw_end >= game->mlx.height)
         draw_end = game->mlx.height - 1;
-    if (ray->side == 0)  // ! vertical wall (hit x-grid line)
+
+    // draw ceiling from top of screen to top of wall
+    y = 0;
+    while (y < draw_start)
+    {
+        put_pixel(&game->mlx, x, y, game->ceiling_color);
+        y++;
+    }
+
+    // draw walls
+    if (ray->side == 0)
         wallX = game->player.pos.y + ray->perp_wall_dist * ray->dir.y;
-    else  // ! horizontal wall (hit y-grid line)
+    else
         wallX = game->player.pos.x + ray->perp_wall_dist * ray->dir.x;
-
     wallX = wallX - (int)wallX;
-
     tex = get_texture(game, ray);
     texX = (int)(wallX * (tex->width));
     y = draw_start;
     while (y <= draw_end)
     {
-        texY = (int)((y - original_draw_start) * tex->height / line_height); //using now the unclamped value for the calculation works good but needs more testing
-    if (texY < 0)
-        texY = 0;
-    if (texY >= tex->height)
-        texY = tex->height - 1;
-/*
-        if (x == game->mlx.width / 2 && y % 100 == 0)
-            printf("y=%d, draw_start=%d, line_height=%d, texY=%d\n", y, draw_start, line_height, texY);
-*/
-    put_pixel(&game->mlx, x, y, get_pixel_color(tex, texX, texY));
+        texY = (int)((y - original_draw_start) * tex->height / line_height);
+        if (texY < 0)
+            texY = 0;
+        if (texY >= tex->height)
+            texY = tex->height - 1;
+        put_pixel(&game->mlx, x, y, get_pixel_color(tex, texX, texY));
+        y++;
+    }
+
+    // draw floor from bottom of wall to bottom of screen
+    y = draw_end + 1;
+    while (y < game->mlx.height)
+    {
+        put_pixel(&game->mlx, x, y, game->floor_color);
         y++;
     }
 }
+
 
 
 int render(t_game *game)
@@ -157,27 +170,25 @@ int render(t_game *game)
     return (1);
 }
 
+void	*ft_memset(void *s, int c, size_t n)
+{
+	char	*pos;
+
+	pos = s;
+	while (n > 0)
+	{
+		*pos = c;
+		pos++;
+		n--;
+	}
+	return (s);
+}
+
 void clear_image(t_mlx *mlx, int floor_color, int ceiling_color)
 {
-    int x;
-    int y;
-    int half_height;
-
-    half_height = mlx->height / 2;
-    y = 0;
-    while (y < mlx->height)
-    {
-        x = 0;
-        while (x < mlx->width)
-        {
-            if (y < half_height)
-                put_pixel(mlx, x, y, ceiling_color);
-            else
-                put_pixel(mlx, x, y, floor_color);
-            x++;
-        }
-        y++;
-    }
+    (void)floor_color;
+    (void)ceiling_color;
+    ft_memset(mlx->img_data, 0, mlx->height * mlx->line_length);
 }
 
 int render_loop(t_game *game)
@@ -189,10 +200,8 @@ int render_loop(t_game *game)
     double tile_size = get_tile_size(game);
     game->player.delta_time = current_time - last_time;
     last_time = current_time;
-    
-    clear_image(&game->mlx, COLOR_BLACK, COLOR_BLACK);
     new_pos(game);
-    render(game);
+    render(game); //removed the clear_image call from here we now use draw Colum to draw the ceiling and floor
     draw_minimap(game);
     draw_minimap_rays(game, tile_size);
     draw_player_triangle(game, tile_size);
