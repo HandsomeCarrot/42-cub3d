@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/06 17:28:06 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/06 17:49:04 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -619,9 +619,21 @@ static bool	is_early_map(char *line, int row)//TODO: complete (on hold)
 	return (true);
 }
 
+/**
+ * @return 0 on success, other on fail
+ */
 static int	extract_map_layout(char **lines, int map_start, t_data *data)
 {
+	size_t	line;
 
+	line = 0;
+	while (lines[line])
+	{
+		//TODO: if empty line, end this loop
+		//TODO: continue if it is a valid map line, otherwise print error
+		line++;
+	}
+	return (0);
 }
 
 /**
