@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/05 19:32:58 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/06 17:08:32 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  */
 static bool	is_whitespace(char c)
 {
-	if (c == ' ' || (c >= 9 && c <= 13))
+	if (c == ' ' || (c >= '\t' && c <= '\r'))
 		return (true);
 	return (false);
 }
@@ -57,22 +57,38 @@ static t_map_id	*get_map_texture_identifiers(void)
  */
 static bool	is_empty(char *line)
 {
-	char	*trimmed;
-	bool	empty;
+	size_t	pos;
 
 	if (!line)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), false);
 	log_msg(DEBUG, __FILE__, __LINE__, "checking for empty line");
-	trimmed = ft_strtrim(line, WHITESPACE);
-	if (!trimmed)
-		return (log_msg(ERROR, __FILE__, __LINE__, LOG_ALLOC_FAIL), false);
-	empty = trimmed[0] == 0;
-	free(trimmed);
-	if (empty)
-		log_msg(DEBUG, __FILE__, __LINE__, "is a empty line");
-	else
-		log_msg(DEBUG, __FILE__, __LINE__, "not a empty line");
-	return (empty);
+	pos = 0;
+	while (line[pos])
+	{
+		if (!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!is_whitespace(line[pos]))
+		{
+			log_msg(DEBUG, __FILE__, __LINE__, "not a empty line");
+			return (false);
+		}
+		pos++;
+	}
+	log_msg(DEBUG, __FILE__, __LINE__, "is a empty line");
+	return (true);
+}
+
+static t_char_group	*get_map_char_rules(void)
+{
+	t_char_group	*rules;
+	int				rule_count;
+
+	rule_count = 2;
+	rules = log_calloc(rule_count + 1, sizeof(t_char_group), __FILE__,
+			__LINE__);
+	if (!rules)
+		return (NULL);
+	rules[0] = (t_char_group){MAP_TERRAIN, 0, 0, 0, "terrain"};
+	rules[1] = (t_char_group){PLAYER_SPAWN, 1, 1, 0, "player spawn"};
+	return (rules);
 }
 
 static bool	is_early_map(char *line, int row)
@@ -81,6 +97,7 @@ static bool	is_early_map(char *line, int row)
 	int				line_pos;
 	int				rule_pos;
 
+	(void)row;
 	if (!line)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), false);
 	log_msg(DEBUG, __FILE__, __LINE__, "checking if line is a map line");
@@ -285,6 +302,7 @@ static bool	validate_trailing_content(char *line, int row)
 	skipped = skip_whitespace(line);
 	if (line[skipped] != 0)
 	{
+		printf("'%s'\n + %ld = '%s'\n", line, skipped, line + skipped);
 		log_line_error(row, "extra content found after map configuration data",
 			__FILE__, __LINE__);
 		return (false);
@@ -522,21 +540,6 @@ static int	call_save_function(t_map_id *data_id, char *line, int row,
 		return (save_color(line, data_id, data));
 	log_msg(ERROR, __FILE__, __LINE__, "data type not recognized");
 	return (0);
-}
-
-static t_char_group	*get_map_char_rules(void)
-{
-	t_char_group	*rules;
-	int				rule_count;
-
-	rule_count = 2;
-	rules = log_calloc(rule_count + 1, sizeof(t_char_group), __FILE__,
-			__LINE__);
-	if (!rules)
-		return (NULL);
-	rules[0] = (t_char_group){MAP_TERRAIN, 0, 0, 0, "terrain"};
-	rules[1] = (t_char_group){PLAYER_SPAWN, 1, 1, 0, "player spawn"};
-	return (rules);
 }
 
 /**
