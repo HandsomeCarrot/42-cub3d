@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 16:55:33 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/04 16:03:52 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/07 08:40:25 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@
 
 // --- Collision Value for wall_check ---
 #define RADIUS 0.25
+#define SAFE_STEP 0.2
 
 //mlx_setup.c
 void	put_pixel(t_mlx *mlx, int x, int y, int color);
