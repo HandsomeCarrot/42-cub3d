@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 16:57:12 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/29 14:58:32 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/07 07:16:12 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_texture
 	int					width;
 	int					height;
 	int					bits_per_pixel;
+	int					bytes_per_pixel;
 	int					line_length;
 	int					endian;
 	bool				is_img_created;
@@ -61,6 +62,7 @@ typedef struct s_mlx
 	int			width;
 	int			height;
 	int			bits_per_pixel;
+	int			bytes_per_pixel;
 	int			line_length;
 	int			endian;
 }	t_mlx;

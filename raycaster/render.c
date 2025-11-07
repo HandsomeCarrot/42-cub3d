@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 14:32:38 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/06 08:40:48 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/07 07:25:13 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,8 +155,6 @@ void draw_column(t_ray *ray, t_game *game, int x)
     }
 }
 
-
-
 int render(t_game *game)
 {
     int     x;
@@ -166,7 +164,7 @@ int render(t_game *game)
     while (x < game->mlx.width)
     {
         init_ray(&ray, game, x);
-        perform_dda(&ray, game);
+            perform_dda(&ray, game);
         draw_column(&ray, game, x);
         x++;
     }
