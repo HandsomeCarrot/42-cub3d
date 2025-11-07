@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/06 17:49:04 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/07 15:43:18 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static size_t	skip_whitespace(const char *str)
  *
  * @return true if it is empty, false otherwise
  */
-static bool	is_empty(char *line)
+static bool	is_empty_line(char *line)
 {
 	size_t	pos;
 
@@ -550,7 +550,7 @@ static bool	all_ids_found(t_map_id *ids)
  *
  * @return 0 on success, other on error
  */
-static int	extract_texture_data(char **file_data, t_data *data)
+static int	extract_texture_data(char **file_data, t_data *data, int *last_row)
 {
 	t_map_id	*ids;
 	int			line;
@@ -564,13 +564,19 @@ static int	extract_texture_data(char **file_data, t_data *data)
 	line = -1;
 	while (file_data[++line] && !all_ids_found(ids))
 	{
-		if (is_empty(file_data[line]))
+		if (is_empty_line(file_data[line]))
 			continue ;
 		if (!save_line_data(file_data[line], line + 1, ids, data))
-			return (free(ids), 1);
+		{
+			free(ids);
+			return (1);
+		}
 	}
+	if (last_row)
+		*last_row = line;
+	free(ids);
 	log_msg(INFO, __FILE__, __LINE__, "extracted all necessary texture data");
-	return (free(ids), line);
+	return (0);
 }
 
 static t_char_group	*get_map_char_rules(void)
@@ -619,20 +625,56 @@ static bool	is_early_map(char *line, int row)//TODO: complete (on hold)
 	return (true);
 }
 
+static void	print_string_array(const char **array)
+{
+	int	line;
+
+	if (!array)
+		return ;
+	line = 0;
+	while (array[line])
+	{
+		ft_putendl_fd(array[line], STDOUT_FILENO);
+		line++;
+	}
+}
+
 /**
  * @return 0 on success, other on fail
  */
-static int	extract_map_layout(char **lines, int map_start, t_data *data)
+static int	extract_map_layout(char **lines, size_t map_start, t_data *data)
 {
 	size_t	line;
 
-	line = 0;
-	while (lines[line])
+	if (!lines || !data)
+		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
+	log_msg(INFO, __FILE__, __LINE__, "getting map layout");
+	while (lines[map_start] && is_empty_line(lines[map_start])) //skip empty lines before map lines
+		map_start++;
+	if (!lines[map_start]) //return error if no more lines are available
+		return (1);
+	line = map_start;
+	while (lines[line]) //count how many lines the map has
 	{
-		//TODO: if empty line, end this loop
+		if (is_empty_line(lines[line]))
+			break ;
 		//TODO: continue if it is a valid map line, otherwise print error
 		line++;
 	}
+	printf("map lines: %ld\n", (line - map_start)); //! remove
+	data->map_data.map = log_calloc((line - map_start) + 1, sizeof(char *), __FILE__, __LINE__);
+	if (!data->map_data.map)
+		return (1);
+	int	i = 0;
+	while(map_start + i < line && lines[map_start + i]) //save the map layout to a new string array
+	{
+		data->map_data.map[i] = ft_strdup(lines[map_start + i]); //TODO: remove the newline characters at the end if present
+		if (!data->map_data.map[i])
+			return (1);
+		i++;
+	}
+	print_string_array(data->map_data.map);
+	log_msg(INFO, __FILE__, __LINE__, "map layout extracted");
 	return (0);
 }
 
@@ -648,8 +690,9 @@ static int	parse_file_data(char **file_data, t_data *data)
 	log_msg(DEBUG, __FILE__, __LINE__, "parsing map file data");
 	if (!file_data || !data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
-	row = extract_texture_data(file_data, data);//TODO: extract the texture data with this new type array
-	if (row <= 0)
+	if (extract_texture_data(file_data, data, &row))//TODO: extract the texture data with this new type array
+		return (1);
+	if (extract_map_layout(file_data, row, data))
 		return (1);
 	//TODO: extract map & player info (posX posY W/N/E/S)
 	//? check for invalid hanging data (either here, or in line checking already)
