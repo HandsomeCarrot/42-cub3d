@@ -6,17 +6,17 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 13:09:50 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/29 12:32:39 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/07 10:31:46 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/render.h"
 
-void texture_img_destroyer(t_game *g, t_texture *tex)
+void	texture_img_destroyer(t_game *g, t_texture *tex)
 {
-	while(tex)
+	while (tex)
 	{
-		if(tex->is_img_created)
+		if (tex->is_img_created)
 		{
 			mlx_destroy_image(g->mlx.mlx, tex->img);
 			tex->is_img_created = false;
@@ -25,7 +25,7 @@ void texture_img_destroyer(t_game *g, t_texture *tex)
 	}
 }
 
-void cleanup_game(t_game *game)
+void	cleanup_game(t_game *game)
 {
 	texture_img_destroyer(game, &game->north_texture);
 	if (game->mlx.img)
@@ -36,11 +36,11 @@ void cleanup_game(t_game *game)
 		mlx_destroy_display(game->mlx.mlx);
 	if (game->mlx.mlx)
 		free(game->mlx.mlx);
-/* 	i = 0;
-	if (game->map)
-	{
-		while (game->map[i])
-			free(game->map[i++]);
-		free(game->map);
-	} */
+	/* 	i = 0;
+		if (game->map)
+		{
+			while (game->map[i])
+				free(game->map[i++]);
+			free(game->map);
+		} */
 }

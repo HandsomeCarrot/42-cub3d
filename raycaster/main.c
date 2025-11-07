@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 09:32:42 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/06 08:28:53 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/07 10:32:07 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 int	main(void)
 {
 	t_game	game = {0};
-
 	init_player(&game.player, 4, 3, 'N');
 	game.map = test_map;
 	game.floor_color = COLOR_GRAY;
