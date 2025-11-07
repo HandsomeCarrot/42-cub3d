@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/07 16:50:48 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/07 17:41:01 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -687,7 +687,6 @@ static int	extract_map_layout(char **lines, size_t map_start, t_data *data)
 			return (1);
 		line++;
 	}
-	printf("map lines: %ld\n", (line - map_start)); //! remove
 	data->map_data.map = log_calloc((line - map_start) + 1, sizeof(char *), __FILE__, __LINE__);
 	if (!data->map_data.map)
 		return (1);
@@ -720,7 +719,7 @@ static int	parse_file_data(char **file_data, t_data *data)
 		return (1);
 	if (extract_map_layout(file_data, row, data))
 		return (1);
-	//TODO: extract map & player info (posX posY W/N/E/S)
+	//TODO: extract player info (posX posY W/N/E/S)
 	//? check for invalid hanging data (either here, or in line checking already)
 	//? is done by hamza (convert xpm's to mlx images and extract data)
 	log_msg(DEBUG, __FILE__, __LINE__, "parsed map file data successfully");
