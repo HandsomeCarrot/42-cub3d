@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 20:31:25 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/29 15:46:26 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/07 17:42:20 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ typedef struct s_map_data
 	char	*west_wall_image;
 	int		floor_color;
 	int		ceiling_color;
+	int		player_posX;
+	int		player_posY;
 }				t_map_data;
 
 typedef struct s_data
