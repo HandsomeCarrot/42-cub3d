@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/07 15:48:48 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/07 16:50:48 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -630,13 +630,38 @@ static void	print_string_array(const char **array)
 	int	line;
 
 	if (!array)
+	{
+		log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM);
 		return ;
+	}
 	line = 0;
 	while (array[line])
 	{
 		ft_putendl_fd((char *)array[line], STDOUT_FILENO);
 		line++;
 	}
+}
+
+/**
+ * @return true, or false
+ */
+static bool	is_valid_layout_line(const char *line, size_t row)
+{
+	int	pos;
+
+	if (!line)
+		return (log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM), false);
+	pos = 0;
+	while (line[pos])
+	{
+		if (!ft_strchr(MAP_LAYOUT_CHARACTERS"\n", line[pos]))
+		{
+			log_line_error(row, "invalid character in map", __FILE__, __LINE__);
+			return (false);
+		}
+		pos++;
+	}
+	return (true);
 }
 
 /**
@@ -658,7 +683,8 @@ static int	extract_map_layout(char **lines, size_t map_start, t_data *data)
 	{
 		if (is_empty_line(lines[line]))
 			break ;
-		//TODO: continue if it is a valid map line, otherwise print error
+		if (!is_valid_layout_line(lines[line], line + 1))
+			return (1);
 		line++;
 	}
 	printf("map lines: %ld\n", (line - map_start)); //! remove
