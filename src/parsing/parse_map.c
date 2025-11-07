@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/07 15:43:18 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/07 15:48:48 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -634,7 +634,7 @@ static void	print_string_array(const char **array)
 	line = 0;
 	while (array[line])
 	{
-		ft_putendl_fd(array[line], STDOUT_FILENO);
+		ft_putendl_fd((char *)array[line], STDOUT_FILENO);
 		line++;
 	}
 }
@@ -668,12 +668,12 @@ static int	extract_map_layout(char **lines, size_t map_start, t_data *data)
 	int	i = 0;
 	while(map_start + i < line && lines[map_start + i]) //save the map layout to a new string array
 	{
-		data->map_data.map[i] = ft_strdup(lines[map_start + i]); //TODO: remove the newline characters at the end if present
+		data->map_data.map[i] = ft_strtrim(lines[map_start + i], "\n");
 		if (!data->map_data.map[i])
 			return (1);
 		i++;
 	}
-	print_string_array(data->map_data.map);
+	print_string_array((const char **)data->map_data.map);
 	log_msg(INFO, __FILE__, __LINE__, "map layout extracted");
 	return (0);
 }
