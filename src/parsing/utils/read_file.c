@@ -6,31 +6,11 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:41:23 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/05 12:39:09 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/07 16:19:04 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-/**
- * @brief Checks if the given line indicates the end of a file.
- *
- * This function determines if a line read from a file represents
- * the end of the file by checking for the absence of a newline
- * character or if the line is NULL.
- *
- * @param line The line read from the file to check.
- * @return 1 if the line indicates end of file, 0 otherwise.
- */
-static int	is_eof(const char *line)
-{
-	log_msg(DEBUG, __FILE__, __LINE__, "checking for end-of-file");
-	if (!line)
-		return (log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
-	if (!ft_strchr(line, '\n'))
-		return (1);
-	return (0);
-}
 
 /**
  * @brief Reads lines from file descriptor into the array.
@@ -53,18 +33,13 @@ static int	read_file_lines(int file_fd, t_array *lines)
 	{
 		line = log_get_next_line(file_fd, __FILE__, __LINE__);
 		if (!line)
-		{
-			free_string_array((char ***)&lines->ptr);
-			return (1);
-		}
+			break ;
 		if (append_to_array(&line, lines))
 		{
 			free(line);
 			free_string_array((char ***)&lines->ptr);
 			return (1);
 		}
-		if (is_eof(line))
-			break ;
 		current_line++;
 	}
 	return (0);
