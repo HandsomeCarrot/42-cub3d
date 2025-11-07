@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 09:13:56 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/07 10:09:30 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/07 10:18:15 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,28 +57,32 @@ void    perform_rot(t_game *game, double angle)
     game->player.plane.y = tmp_vec * sin(angle) + game->player.plane.y * cos(angle);
 }
 
-void precise_wall_check(t_game *game, double *p_axis1, double target_axis1, double axis2_fixed, bool is_x)
+void	precise_wall_check(t_game *game, double *p_axis, double target, \
+		double fixed, bool is_x)
 {
-	double curr_pos = *p_axis1;
-		double dist = fabs(target_axis1 - curr_pos);
-		if (dist < 0.0001)  // zero
-			return;
-		int num_steps = (int)ceil(dist / SAFE_STEP);
-		double step_size = (target_axis1 - curr_pos) / num_steps;
-		double current_axis = curr_pos;
-		for (int i = 0; i < num_steps; i++)
-		{
-			current_axis += step_size;
-			if(is_x)
-			{
-				if (check_wall_collision(game, current_axis, axis2_fixed))
-					break;
-			}
-			else
-				if (check_wall_collision(game, axis2_fixed, current_axis))
-					break;
-			*p_axis1 = current_axis;
-		}
+	double	dist;
+	int		num_steps;
+	double	step_size;
+	double	current;
+	int		i;
+
+	dist = fabs(target - *p_axis);
+	if (dist < 0.0001)
+		return ;
+	num_steps = (int)ceil(dist / SAFE_STEP);
+	step_size = (target - *p_axis) / num_steps;
+	current = *p_axis;
+	i = 0;
+	while (i < num_steps)
+	{
+		current += step_size;
+		if (is_x && check_wall_collision(game, current, fixed))
+			break ;
+		if (!is_x && check_wall_collision(game, fixed, current))
+			break ;
+		*p_axis = current;
+		i++;
+	}
 }
 
 void    perform_move(t_game *game, char op, t_vector v2)
