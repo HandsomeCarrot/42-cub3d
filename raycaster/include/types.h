@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 16:57:12 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/07 07:16:12 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/08 07:22:52 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ typedef struct s_game
 	t_player	player;
 	t_keys		keys;
 	char		**map;
+	int			map_width;
+	int			map_height;
 	t_texture	north_texture;
 	t_texture	south_texture;
 	t_texture	east_texture;

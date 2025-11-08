@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 16:55:33 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/07 08:40:25 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/08 07:18:31 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void perform_dda(t_ray *ray, t_game *game);
 
 //minimap.c
 void	draw_minimap(t_game *game);
+void	get_map_dimensions(t_game *game, int *width, int *height);
 void	draw_player_triangle(t_game *game, double tile_size);
 void 	draw_minimap_rays(t_game *game, double tile_size);
 double	get_tile_size(t_game *game);

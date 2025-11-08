@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 14:32:38 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/07 07:25:13 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/08 09:42:40 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,21 @@ void perform_dda(t_ray *ray, t_game *game)
             ray->map.y += ray->step.y;
             ray->side = 1;
         }
-        if (game->map[ray->map.y][ray->map.x] == '1') //!without collision this line creates a segfault when out of bounds easy fix
+        if(ray->map.y < 0 || ray->map.x < 0 || ray->map.y >= game->map_height || ray->map.x >= game->map_width)
+        {
+            hit = 1;
+            ray->perp_wall_dist = 1e30;
+        }
+        else if (game->map[ray->map.y][ray->map.x] == '1') //!without collision this line creates a segfault when out of bounds easy fix
             hit = 1;
     }
-
-    if (ray->side == 0)
-        ray->perp_wall_dist = (ray->map.x - game->player.pos.x + (1 - ray->step.x) / 2.0) / ray->dir.x;
-    else
-        ray->perp_wall_dist = (ray->map.y - game->player.pos.y + (1 - ray->step.y) / 2.0) / ray->dir.y;
+    if(ray->perp_wall_dist != 1e30)
+    {
+        if (ray->side == 0)
+            ray->perp_wall_dist = (ray->map.x - game->player.pos.x + (1 - ray->step.x) / 2.0) / ray->dir.x;
+        else
+            ray->perp_wall_dist = (ray->map.y - game->player.pos.y + (1 - ray->step.y) / 2.0) / ray->dir.y;
+    }
 }
 
 t_texture *get_texture(t_game *game, t_ray *ray)
