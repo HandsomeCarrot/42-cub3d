@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/07 17:41:01 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/11 13:26:45 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -550,7 +550,7 @@ static bool	all_ids_found(t_map_id *ids)
  *
  * @return 0 on success, other on error
  */
-static int	extract_texture_data(char **file_data, t_data *data, int *last_row)
+static int	extract_texture_data(char **file_data, t_data *data, size_t *row)
 {
 	t_map_id	*ids;
 	int			line;
@@ -572,14 +572,14 @@ static int	extract_texture_data(char **file_data, t_data *data, int *last_row)
 			return (1);
 		}
 	}
-	if (last_row)
-		*last_row = line;
+	if (row)
+		*row = (size_t)line;
 	free(ids);
 	log_msg(INFO, __FILE__, __LINE__, "extracted all necessary texture data");
 	return (0);
 }
 
-static t_char_group	*get_map_char_rules(void)
+/*static t_char_group	*get_map_char_rules(void)
 {
 	t_char_group	*rules;
 	int				rule_count;
@@ -593,8 +593,9 @@ static t_char_group	*get_map_char_rules(void)
 	rules[1] = (t_char_group){PLAYER_SPAWN, 1, "player spawn"};
 	return (rules);
 }
+*/
 
-static bool	is_early_map(char *line, int row)//TODO: complete (on hold)
+/*static bool	is_early_map(char *line, int row)//TODO: complete (on hold)
 {
 	t_char_group	*rules;
 	int				line_pos;
@@ -624,8 +625,9 @@ static bool	is_early_map(char *line, int row)//TODO: complete (on hold)
 	log_msg(DEBUG, __FILE__, __LINE__, "line is a valid map line");
 	return (true);
 }
+*/
 
-static void	print_string_array(const char **array)
+/*static void	print_string_array(const char **array)
 {
 	int	line;
 
@@ -640,7 +642,7 @@ static void	print_string_array(const char **array)
 		ft_putendl_fd((char *)array[line], STDOUT_FILENO);
 		line++;
 	}
-}
+}*/
 
 /**
  * @return true, or false
@@ -654,7 +656,7 @@ static bool	is_valid_layout_line(const char *line, size_t row)
 	pos = 0;
 	while (line[pos])
 	{
-		if (!ft_strchr(MAP_LAYOUT_CHARACTERS"\n", line[pos]))
+		if (!ft_strchr(MAP_LAYOUT_CHARACTERS"\n", line[pos]))//? maybe handle the newline character differently
 		{
 			log_line_error(row, "invalid character in map", __FILE__, __LINE__);
 			return (false);
@@ -667,13 +669,15 @@ static bool	is_valid_layout_line(const char *line, size_t row)
 /**
  * @return 0 on success, other on fail
  */
-static int	extract_map_layout(char **lines, size_t map_start, t_data *data)
+static int	extract_map_layout(char **lines, size_t *row, t_data *data)
 {
+	size_t	map_start;
 	size_t	line;
 
-	if (!lines || !data)
+	if (!lines || !row || !data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	log_msg(INFO, __FILE__, __LINE__, "getting map layout");
+	map_start = *row;
 	while (lines[map_start] && is_empty_line(lines[map_start])) //skip empty lines before map lines
 		map_start++;
 	if (!lines[map_start]) //return error if no more lines are available
@@ -687,6 +691,7 @@ static int	extract_map_layout(char **lines, size_t map_start, t_data *data)
 			return (1);
 		line++;
 	}
+	*row = line;
 	data->map_data.map = log_calloc((line - map_start) + 1, sizeof(char *), __FILE__, __LINE__);
 	if (!data->map_data.map)
 		return (1);
@@ -698,8 +703,27 @@ static int	extract_map_layout(char **lines, size_t map_start, t_data *data)
 			return (1);
 		i++;
 	}
-	print_string_array((const char **)data->map_data.map);
-	log_msg(INFO, __FILE__, __LINE__, "map layout extracted");
+	log_msg(DEBUG, __FILE__, __LINE__, "map layout extracted");
+	return (0);
+}
+
+/**
+ * @return 0 on success, other on error
+ */
+static int	check_hanging_lines(char **lines, size_t row)
+{
+	if (!lines)
+		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
+	while (lines[row])
+	{
+		if (!is_empty_line(lines[row]))
+		{
+			log_line_error(row + 1, "found non-empty line after map layout",
+				__FILE__, __LINE__);
+			return (1);
+		}
+		row++;
+	}
 	return (0);
 }
 
@@ -708,21 +732,20 @@ static int	extract_map_layout(char **lines, size_t map_start, t_data *data)
  *
  * @return 0 on success, other on error
  */
-static int	parse_file_data(char **file_data, t_data *data)
+static int	extract_file_data(char **file_data, t_data *data)
 {
-	int	row;
+	size_t	row;
 
-	log_msg(DEBUG, __FILE__, __LINE__, "parsing map file data");
+	log_msg(DEBUG, __FILE__, __LINE__, "extracting map file data");
 	if (!file_data || !data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	if (extract_texture_data(file_data, data, &row))//TODO: extract the texture data with this new type array
 		return (1);
-	if (extract_map_layout(file_data, row, data))
+	if (extract_map_layout(file_data, &row, data))
 		return (1);
-	//TODO: extract player info (posX posY W/N/E/S)
-	//? check for invalid hanging data (either here, or in line checking already)
-	//? is done by hamza (convert xpm's to mlx images and extract data)
-	log_msg(DEBUG, __FILE__, __LINE__, "parsed map file data successfully");
+	if (check_hanging_lines(file_data, row))
+		return (1);
+	log_msg(DEBUG, __FILE__, __LINE__, "extracted map file data successfully");
 	return (0);
 }
 
@@ -754,7 +777,7 @@ int	parse_map_file(char *file, t_data *data)
 	lines = read_file(file);
 	if (!lines)
 		return (1);
-	ret = parse_file_data(lines, data);
+	ret = extract_file_data(lines, data);
 	free_string_array(&lines);
 	return (ret);
 }
