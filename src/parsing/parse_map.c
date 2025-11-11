@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/11 19:50:47 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/11 20:09:51 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -558,23 +558,50 @@ static int	extract_texture_data(char **file_data, t_data *data, size_t *row)
 /**
  * @return true, or false
  */
-static bool	is_valid_layout_line(const char *line, size_t row)
+static bool	is_valid_layout_line(const char *line, size_t row, t_map *map)
 {
 	int	pos;
 
-	if (!line)
+	if (!line || !map)
 		return (log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM), false);
 	pos = 0;
-	while (line[pos])
+	while (line[pos] && line[pos] != '\n')
 	{
-		if (!ft_strchr(MAP_LAYOUT_CHARACTERS"\n", line[pos]))//? maybe handle the newline character differently
+		if (!ft_strchr(MAP_LAYOUT_CHARACTERS, line[pos]))
 		{
 			log_line_error(row, "invalid character in map", __FILE__, __LINE__);
 			return (false);
 		}
 		pos++;
 	}
+	if (pos > map->width)
+		map->width = pos;
 	return (true);
+}
+
+static char	*modified_map_line(char *old_line, t_map *map)
+{
+	char	*new_line;
+	int		pos;
+
+	if (!old_line || !map)
+		return (log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM), NULL);
+	log_msg(DEBUG, __FILE__, __LINE__, "creating new map line");
+	new_line = log_calloc(map->width + 1, sizeof(char), __FILE__, __LINE__);
+	if (!new_line)
+		return (NULL);
+	pos = 0;
+	while (pos < map->width && old_line[pos] && old_line[pos] != '\n')
+	{
+		new_line[pos] = old_line[pos];
+		pos++;
+	}
+	while (pos < map->width)
+	{
+		new_line[pos] = ' ';
+		pos++;
+	}
+	return (new_line);
 }
 
 /**
@@ -599,7 +626,7 @@ static int	extract_map_layout(char **lines, size_t *row, t_map *map)//TODO: get 
 	{
 		if (is_empty_line(lines[map_start + map_height]))
 			break ;
-		if (!is_valid_layout_line(lines[map_start + map_height], map_height + 1))
+		if (!is_valid_layout_line(lines[map_start + map_height], map_height + 1, map))
 			return (1);
 		map_height++;
 	}
@@ -611,7 +638,7 @@ static int	extract_map_layout(char **lines, size_t *row, t_map *map)//TODO: get 
 	i = 0;
 	while(i < map_height && lines[map_start + i]) //save the map layout to a new string array
 	{
-		map->layout[i] = ft_strtrim(lines[map_start + i], "\n");
+		map->layout[i] = modified_map_line(lines[map_start + i], map);
 		if (!map->layout[i])
 			return (1);
 		i++;
