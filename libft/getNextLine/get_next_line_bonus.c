@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 15:08:31 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/21 02:05:19 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/11 13:49:41 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,9 @@ char	*get_next_line(int fd)
 		return (del_str(content + fd), NULL);
 	result = get_line(content + fd);
 	if (!result || !*result)
+	{
+		del_str(&result);
 		return (del_str(content + fd), NULL);
+	}
 	return (result);
 }
