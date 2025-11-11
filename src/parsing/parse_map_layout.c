@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 14:05:56 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/11 19:56:11 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/11 20:20:53 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,25 @@ static bool	is_player_spawn(char c)
  */
 static int	save_player_pos(int y, int x, char orientation, t_player *player)
 {
+	int	log_fd;
+
 	if (!player)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
-	log_msg(DEBUG, __FILE__, __LINE__, "saving player position data");
 	if (player->found)
 	{
 		log_msg(ERROR, __FILE__, __LINE__, "multiple player spawns defined");
 		return (1);
+	}
+	log_fd = log_start(DEBUG, __FILE__, __LINE__);
+	if (log_fd >= 0)
+	{
+		ft_putstr_fd("found player position: [", log_fd);
+		ft_putnbr_fd(y, log_fd);
+		ft_putchar_fd(',', log_fd);
+		ft_putnbr_fd(x, log_fd);
+		ft_putchar_fd(',', log_fd);
+		ft_putchar_fd(orientation, log_fd);
+		ft_putendl_fd("]", log_fd);
 	}
 	player->found = 1;
 	player->posY = y;
@@ -166,6 +178,7 @@ int	parse_map_layout(t_data *data) //TODO: finish
 		return(log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	if (get_player_pos(&(data->map_data)))
 		return (1);
+	print_string_array((const char**)data->map_data.map.layout);
 	map = copy_string_array((const char **)data->map_data.map.layout);
 	if (!map)
 		return (1);
