@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 17:55:19 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/11 18:42:52 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/11 19:34:23 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 static void	free_map_data(t_map_data *data)
 {
 	log_msg(DEBUG, __FILE__, __LINE__, "cleaning map data");
-	if (data->map)
-		free_string_array(&data->map);
+	if (data->map.layout)
+		free_string_array(&data->map.layout);
 	if (data->images.north_wall)
 		free(data->images.north_wall);
 	if (data->images.east_wall)

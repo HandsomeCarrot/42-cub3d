@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/11 16:54:55 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/11 19:31:36 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,20 +61,20 @@ typedef struct s_char_group
 	// Characters in this group
 	const char		*valid_chars;
 	// -1 = unlimited, 0 = not allowed, 1+ = specific limit
-	int			limit;
+	int				limit;
 	// For error messages
 	const char		*group_name;
 }					t_char_group;
 
 typedef struct s_array
 {
-	//the data pointer
+	// the data pointer
 	void			*ptr;
-	//the allocated space
+	// the allocated space
 	size_t			capacity;
-	//the used space
+	// the used space
 	size_t			used_space;
-	//size of each member
+	// size of each member
 	size_t			member_size;
 }					t_array;
 
@@ -90,6 +90,14 @@ int					parse_map_file(char *file, t_data *data);
 
 int					parse_map_layout(t_data *data);
 
+//-----------------------------------UTILS-----------------------------------//
+//-----parse_whitespace.c-----//
+
+bool				is_whitespace(char c);
+size_t				skip_whitespace(const char *str);
+bool				is_empty_line(char *line);
+bool				has_leading_whitespace(char *line, int row);
+
 //-----file_ops.c-----//
 
 int					open_file_read(const char *file);
@@ -103,9 +111,10 @@ char				**read_file(const char *file);
 
 //-----arrays.c-----//
 
-int	new_array(size_t member_size, size_t capacity, t_array *array);
-int	expand_array(t_array *array);
-int	append_to_array(void *src, t_array *array);
+int					new_array(size_t member_size, size_t capacity,
+						t_array *array);
+int					expand_array(t_array *array);
+int					append_to_array(void *src, t_array *array);
 
 //-----color_utils.c-----//
 

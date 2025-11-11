@@ -6,64 +6,11 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/11 19:22:07 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/11 19:50:47 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-/**
- * @brief checks if 'c' is a whitespace character
- *
- * @param c character to compare whitespace characters to
- * @return true if a whitespace character, false otherwise
- */
-static bool	is_whitespace(char c)
-{
-	if (c == ' ' || (c >= '\t' && c <= '\r'))
-		return (true);
-	return (false);
-}
-
-static size_t	skip_whitespace(const char *str)
-{
-	size_t	skipped;
-
-	if (!str)
-		return (log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM), 0);
-	skipped = 0;
-	while (is_whitespace(str[skipped]))
-		skipped++;
-	return (skipped);
-}
-
-/**
- * @brief checks if the 'line' only consists of whitespace characters
- *
- * @param line string to check
- *
- * @return true if it is empty, false otherwise
- */
-static bool	is_empty_line(char *line)
-{
-	size_t	pos;
-
-	if (!line)
-		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), false);
-	log_msg(DEBUG, __FILE__, __LINE__, "checking for empty line");
-	pos = 0;
-	while (line[pos])
-	{
-		if (!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!is_whitespace(line[pos]))
-		{
-			log_msg(DEBUG, __FILE__, __LINE__, "not a empty line");
-			return (false);
-		}
-		pos++;
-	}
-	log_msg(DEBUG, __FILE__, __LINE__, "is a empty line");
-	return (true);
-}
 
 /**
  * @return table with defined identifiers accepted in map
@@ -86,25 +33,6 @@ static t_map_id	*get_map_texture_identifiers(void)
 	ids[4] = (t_map_id){T_COLOR, false, "C", 1};
 	ids[5] = (t_map_id){T_COLOR, false, "F", 1};
 	return (ids);
-}
-
-/**
- * returns true if the first character of 'line' is a whitespace character,
- * false otherwise
- */
-static bool	has_leading_whitespace(char *line, int row)
-{
-	if (!line)
-		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), true);
-	log_msg(DEBUG, __FILE__, __LINE__, "checking for leading whitespaces");
-	if (is_whitespace(line[0]))
-	{
-		log_line_error(row, "leading whitespace before map data", __FILE__,
-			__LINE__);
-		return (true);
-	}
-	log_msg(DEBUG, __FILE__, __LINE__, "no leading whitespaces");
-	return (false);
 }
 
 /**
@@ -655,7 +583,8 @@ static bool	is_valid_layout_line(const char *line, size_t row)
 static int	extract_map_layout(char **lines, size_t *row, t_map *map)//TODO: get the width of the longest line and append spaces if a line is shorter to the desired length, until the map is a square
 {
 	size_t	map_start;
-	size_t	line;
+	size_t	map_height;
+	size_t	i;
 
 	if (!lines || !row || !map)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
@@ -665,22 +594,22 @@ static int	extract_map_layout(char **lines, size_t *row, t_map *map)//TODO: get 
 		map_start++;
 	if (!lines[map_start]) //return error if no more lines are available
 		return (1);
-	line = 0;
-	while (lines[map_start + line]) //count how many lines the map has
+	map_height = 0;
+	while (lines[map_start + map_height]) //count how many lines the map has
 	{
-		if (is_empty_line(lines[map_start + line]))
+		if (is_empty_line(lines[map_start + map_height]))
 			break ;
-		if (!is_valid_layout_line(lines[map_start + line], line + 1))
+		if (!is_valid_layout_line(lines[map_start + map_height], map_height + 1))
 			return (1);
-		line++;
+		map_height++;
 	}
-	*row = map_start + line;
-	map->layout = log_calloc(line + 1, sizeof(char *), __FILE__, __LINE__);
+	*row = map_start + map_height;
+	map->layout = log_calloc(map_height + 1, sizeof(char *), __FILE__, __LINE__);
 	if (!map->layout)
 		return (1);
-	map->height = line;
-	int	i = 0;
-	while(map_start + i < line && lines[map_start + i]) //save the map layout to a new string array
+	map->height = map_height;
+	i = 0;
+	while(i < map_height && lines[map_start + i]) //save the map layout to a new string array
 	{
 		map->layout[i] = ft_strtrim(lines[map_start + i], "\n");
 		if (!map->layout[i])
@@ -725,7 +654,7 @@ static int	extract_file_data(char **file_data, t_data *data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	if (extract_texture_data(file_data, data, &row))//TODO: extract the texture data with this new type array
 		return (1);
-	if (extract_map_layout(file_data, &row, data))
+	if (extract_map_layout(file_data, &row, &(data->map_data.map)))
 		return (1);
 	if (check_hanging_lines(file_data, row))
 		return (1);

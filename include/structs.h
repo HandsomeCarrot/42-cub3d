@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 20:31:25 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/11 19:12:15 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/11 19:33:30 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 typedef struct s_map
 {
 	char		**layout;
-	size_t		width;
-	size_t		height;
+	int			width;
+	int			height;
 }				t_map;
 
 typedef struct s_images

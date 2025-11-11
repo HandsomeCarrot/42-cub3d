@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 14:05:56 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/11 19:26:37 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/11 19:56:11 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	get_player_pos(t_map_data *data)
 		{
 			if (is_player_spawn(map[posY][posX])
 				&& save_player_pos(posY, posX, map[posY][posX],
-					&data->player))
+					&(data->player)))
 					return (1);
 			posX++;
 		}
@@ -164,7 +164,7 @@ int	parse_map_layout(t_data *data) //TODO: finish
 
 	if (!data)
 		return(log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
-	if (get_player_pos(&data->map_data))
+	if (get_player_pos(&(data->map_data)))
 		return (1);
 	map = copy_string_array((const char **)data->map_data.map.layout);
 	if (!map)
