@@ -6,12 +6,20 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 20:31:25 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/07 17:42:20 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/11 17:01:55 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
+
+typedef struct s_player
+{
+	int		found;
+	int		posX;
+	int		posY;
+	char	orientation;
+}				t_player;
 
 typedef struct s_map_data
 {
@@ -22,8 +30,7 @@ typedef struct s_map_data
 	char	*west_wall_image;
 	int		floor_color;
 	int		ceiling_color;
-	int		player_posX;
-	int		player_posY;
+	t_player	player;
 }				t_map_data;
 
 typedef struct s_data
