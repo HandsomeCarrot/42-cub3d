@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/11 13:26:45 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/11 18:41:36 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -338,21 +338,21 @@ static void	log_found_color(int color, char *src_file, int src_line)
 	ft_putendl_fd("", log_fd);
 }
 
-static bool	set_wall_texture_path(char *img_path, t_map_id *id, t_data *data)
+static bool	set_wall_texture_path(char *img_path, t_map_id *id, t_images *imgs)
 {
-	if (!img_path || !id || !data)
+	if (!img_path || !id || !imgs)
 	{
 		log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM);
 		return (false);
 	}
 	if (ft_strncmp(id->id, "NO", id->id_len) == 0)
-		data->map_data.north_wall_image = img_path;
+		imgs->north_wall = img_path;
 	else if (ft_strncmp(id->id, "EA", id->id_len) == 0)
-		data->map_data.east_wall_image = img_path;
+		imgs->east_wall = img_path;
 	else if (ft_strncmp(id->id, "SO", id->id_len) == 0)
-		data->map_data.south_wall_image = img_path;
+		imgs->south_wall = img_path;
 	else if (ft_strncmp(id->id, "WE", id->id_len) == 0)
-		data->map_data.west_wall_image = img_path;
+		imgs->west_wall = img_path;
 	else
 	{
 		log_msg(ERROR, __FILE__, __LINE__, "unknown image type");
@@ -385,7 +385,7 @@ static int	save_image(char *line, int row, t_map_id *data_id, t_data *data)
 	img_path = get_xmp_img_path(img_path, row, data_id);
 	if (!img_path)
 		return (0);
-	if (!set_wall_texture_path(img_path, data_id, data))
+	if (!set_wall_texture_path(img_path, data_id, &data->map_data.images))
 	{
 		free(img_path);
 		return (0);
@@ -419,51 +419,51 @@ static int	get_color_value(char *colors)
  * TODO: need to split up this function and make the logging better
  * @return 0 on error, 1 on success
  */
-static int	save_color(char *line, t_map_id *data_id, t_data *data)
+static int	save_color(char *line, t_map_id *data_id, t_colors *colors)
 {
-	char	*colors;
+	char	*colors_string;
 	int		final_color;
 	int		color_channel;
 
-	if (!line || !data_id || !data)
+	if (!line || !data_id || !colors)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 0);
 	log_id_processing(data_id, __FILE__, __LINE__);
-	colors = line + data_id->id_len;
-	colors += skip_whitespace(colors);
-	color_channel = get_color_value(colors);
+	colors_string = line + data_id->id_len;
+	colors_string += skip_whitespace(colors_string);
+	color_channel = get_color_value(colors_string);
 	if (color_channel < 0)
 		return (0);
 	final_color = set_color_channel(0, RED_CHANNEL, color_channel);
-	while (ft_isdigit(colors[0]))
-		colors++;
-	colors += skip_whitespace(colors);
-	if (colors[0] != ',')
+	while (ft_isdigit(colors_string[0]))
+		colors_string++;
+	colors_string += skip_whitespace(colors_string);
+	if (colors_string[0] != ',')
 		return (log_msg(ERROR, __FILE__, __LINE__, "invalid char detected"), 0);
-	colors++;
-	colors += skip_whitespace(colors);
-	color_channel = get_color_value(colors);
+	colors_string++;
+	colors_string += skip_whitespace(colors_string);
+	color_channel = get_color_value(colors_string);
 	if (color_channel < 0)
 		return (0);
 	final_color = set_color_channel(final_color, GREEN_CHANNEL, color_channel);
-	while (ft_isdigit(colors[0]))
-		colors++;
-	colors += skip_whitespace(colors);
-	if (colors[0] != ',')
+	while (ft_isdigit(colors_string[0]))
+		colors_string++;
+	colors_string += skip_whitespace(colors_string);
+	if (colors_string[0] != ',')
 		return (log_msg(ERROR, __FILE__, __LINE__, "invalid char detected"), 0);
-	colors++;
-	colors += skip_whitespace(colors);
-	color_channel = get_color_value(colors);
+	colors_string++;
+	colors_string += skip_whitespace(colors_string);
+	color_channel = get_color_value(colors_string);
 	if (color_channel < 0)
 		return (0);
 	final_color = set_color_channel(final_color, BLUE_CHANNEL, color_channel);
-	while (ft_isdigit(colors[0]))
-		colors++;
-	if (!validate_trailing_content(colors, 0))
+	while (ft_isdigit(colors_string[0]))
+		colors_string++;
+	if (!validate_trailing_content(colors_string, 0))
 		return (0);
 	if (ft_strncmp(data_id->id, "C", data_id->id_len) == 0)
-		data->map_data.ceiling_color = final_color;
+		colors->ceiling = final_color;
 	else if (ft_strncmp(data_id->id, "F", data_id->id_len) == 0)
-		data->map_data.floor_color = final_color;
+		colors->floor = final_color;
 	log_found_color(final_color, __FILE__, __LINE__);
 	return (1);
 }
@@ -491,7 +491,7 @@ static int	call_save_function(t_map_id *data_id, char *line, int row,
 	if (data_id->type == T_IMAGE)
 		return (save_image(line, row, data_id, data));
 	else if (data_id->type == T_COLOR)
-		return (save_color(line, data_id, data));
+		return (save_color(line, data_id, &data->map_data.colors));
 	log_msg(ERROR, __FILE__, __LINE__, "data type not recognized");
 	return (0);
 }
