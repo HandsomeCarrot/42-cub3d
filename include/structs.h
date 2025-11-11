@@ -6,12 +6,19 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 20:31:25 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/11 18:34:40 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/11 19:12:15 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
+
+typedef struct s_map
+{
+	char		**layout;
+	size_t		width;
+	size_t		height;
+}				t_map;
 
 typedef struct s_images
 {
@@ -37,7 +44,7 @@ typedef struct s_player
 
 typedef struct s_map_data
 {
-	char		**map;
+	t_map		map;
 	t_images	images;
 	t_colors	colors;
 	t_player	player;

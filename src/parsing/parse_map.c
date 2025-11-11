@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/11 18:41:36 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/11 19:22:07 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -627,23 +627,6 @@ static int	extract_texture_data(char **file_data, t_data *data, size_t *row)
 }
 */
 
-/*static void	print_string_array(const char **array)
-{
-	int	line;
-
-	if (!array)
-	{
-		log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM);
-		return ;
-	}
-	line = 0;
-	while (array[line])
-	{
-		ft_putendl_fd((char *)array[line], STDOUT_FILENO);
-		line++;
-	}
-}*/
-
 /**
  * @return true, or false
  */
@@ -669,12 +652,12 @@ static bool	is_valid_layout_line(const char *line, size_t row)
 /**
  * @return 0 on success, other on fail
  */
-static int	extract_map_layout(char **lines, size_t *row, t_data *data)
+static int	extract_map_layout(char **lines, size_t *row, t_map *map)//TODO: get the width of the longest line and append spaces if a line is shorter to the desired length, until the map is a square
 {
 	size_t	map_start;
 	size_t	line;
 
-	if (!lines || !row || !data)
+	if (!lines || !row || !map)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	log_msg(INFO, __FILE__, __LINE__, "getting map layout");
 	map_start = *row;
@@ -682,24 +665,25 @@ static int	extract_map_layout(char **lines, size_t *row, t_data *data)
 		map_start++;
 	if (!lines[map_start]) //return error if no more lines are available
 		return (1);
-	line = map_start;
-	while (lines[line]) //count how many lines the map has
+	line = 0;
+	while (lines[map_start + line]) //count how many lines the map has
 	{
-		if (is_empty_line(lines[line]))
+		if (is_empty_line(lines[map_start + line]))
 			break ;
-		if (!is_valid_layout_line(lines[line], line + 1))
+		if (!is_valid_layout_line(lines[map_start + line], line + 1))
 			return (1);
 		line++;
 	}
-	*row = line;
-	data->map_data.map = log_calloc((line - map_start) + 1, sizeof(char *), __FILE__, __LINE__);
-	if (!data->map_data.map)
+	*row = map_start + line;
+	map->layout = log_calloc(line + 1, sizeof(char *), __FILE__, __LINE__);
+	if (!map->layout)
 		return (1);
+	map->height = line;
 	int	i = 0;
 	while(map_start + i < line && lines[map_start + i]) //save the map layout to a new string array
 	{
-		data->map_data.map[i] = ft_strtrim(lines[map_start + i], "\n");
-		if (!data->map_data.map[i])
+		map->layout[i] = ft_strtrim(lines[map_start + i], "\n");
+		if (!map->layout[i])
 			return (1);
 		i++;
 	}
