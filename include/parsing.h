@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/07 16:28:49 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/11 14:07:50 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,10 @@ int					parse(int argc, char **argv, t_data *data);
 //-----parse_map.c-----//
 
 int					parse_map_file(char *file, t_data *data);
+
+//-----parse_map_layout.c-----//
+
+int	parse_map_layout(void);
 
 //-----file_ops.c-----//
 
