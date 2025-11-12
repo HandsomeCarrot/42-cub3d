@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 14:05:56 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/12 17:11:00 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/12 23:27:10 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,34 +23,37 @@ static bool	is_player_spawn(char c)
 }
 
 /**
+ * @return true/false
+ */
+static bool	is_map_terrain(char c)
+{
+	if (ft_strchr(MAP_TERRAIN, c))
+		return (true);
+	return (false);
+}
+
+/**
  * @return 0 on success, other on error
  */
-static int	save_player_pos(int y, int x, char orientation, t_player *player)
+static int	save_player_pos(int y, int x, t_map_data *data)
 {
 	int	log_fd;
 
-	if (!player)
+	if (!data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
-	if (player->found)
+	if (data->player.found)
 	{
 		log_msg(ERROR, __FILE__, __LINE__, "multiple player spawns defined");
 		return (1);
 	}
+	data->player.found = 1;
+	data->player.posY = y;
+	data->player.posX = x;
+	data->player.orientation = data->map.layout[y][x];
 	log_fd = log_start(DEBUG, __FILE__, __LINE__);
 	if (log_fd >= 0)
-	{
-		ft_putstr_fd("found player position: [", log_fd);
-		ft_putnbr_fd(y, log_fd);
-		ft_putchar_fd(',', log_fd);
-		ft_putnbr_fd(x, log_fd);
-		ft_putchar_fd(',', log_fd);
-		ft_putchar_fd(orientation, log_fd);
-		ft_putendl_fd("]", log_fd);
-	}
-	player->found = 1;
-	player->posY = y;
-	player->posX = x;
-	player->orientation = orientation;
+		printf("found player position: [%d,%d|%c]\n", x + 1, y + 1,
+			data->player.orientation);
 	return (0);
 }
 
@@ -74,8 +77,7 @@ static int	get_player_pos(t_map_data *data)
 		while (map[posY][posX])
 		{
 			if (is_player_spawn(map[posY][posX])
-				&& save_player_pos(posY, posX, map[posY][posX],
-					&(data->player)))
+				&& save_player_pos(posY, posX, data))
 					return (1);
 			posX++;
 		}
@@ -86,31 +88,44 @@ static int	get_player_pos(t_map_data *data)
 	return (0);
 }
 
-static bool	is(char c)
+static bool	is_map_border(int x, int y, t_map_data *data)
 {
-	if (c == '0' || c == '1' || is_player_spawn(c))
+	if (y <= 0 || y >= data->map.height - 1
+		|| x <= 0 || x >= data->map.width - 1)
 		return (true);
 	return (false);
 }
 
-static bool	cross_check(int x, int y, t_map_data *data)
+static bool	is_valid_neighbor(char c)
+{
+	if (is_map_terrain(c) || is_player_spawn(c))
+		return (true);
+	return (false);
+}
+
+static bool	has_valid_neighbors(int x, int y, t_map_data *data)
 {
 	char	**map;
 
 	map = data->map.layout;
-	if (y <= 0 || y >= (data->map.height - 1))
+	
+	if (is_map_border(x, y, data)
+		|| !is_valid_neighbor(map[y + 1][x])
+		|| !is_valid_neighbor(map[y][x + 1])
+		|| !is_valid_neighbor(map[y - 1][x])
+		|| !is_valid_neighbor(map[y][x - 1]))
+	{
+		log_msg(ERROR, __FILE__, __LINE__,
+			"invalid map layout: map is not surrounded by walls");
 		return (false);
-	else if (x <= 0 || x >= data->map.width - 1)
-		return (false);
-	else if (!is(map[y + 1][x]) || !is(map[y][x + 1]) || !is(map[y - 1][x]) || !is(map[y][x - 1]))
-		return (false);
+	}
 	return (true);
 }
 
 /**
  * @return 0 on success, other on failure
  */
-static int	check_map_playability(t_map_data *data)//TODO: iterative flood fill
+static int	check_map_playability(t_map_data *data)
 {
 	char	**map;
 	int		x;
@@ -126,14 +141,9 @@ static int	check_map_playability(t_map_data *data)//TODO: iterative flood fill
 		x = 0;
 		while (map[y][x])
 		{
-			if (map[y][x] == '0' || is_player_spawn(map[y][x]))
-			{
-				if (!cross_check(x, y, data))
-				{
-					log_line_error(y + 1, "invalid map", __FILE__, __LINE__);
+			if ((map[y][x] == '0' || is_player_spawn(map[y][x]))
+				&& !has_valid_neighbors(x, y, data))
 					return (1);
-				}
-			}
 			x++;
 		}
 		y++;
@@ -153,7 +163,7 @@ static void	print_string_array(const char **array)
 	line = 0;
 	while (array[line])
 	{
-		ft_putendl_fd((char *)array[line], STDOUT_FILENO);
+		printf("%s\n", array[line]);
 		line++;
 	}
 }
