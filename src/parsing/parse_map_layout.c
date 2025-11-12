@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 14:05:56 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/11 20:20:53 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/12 17:11:00 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,70 +86,59 @@ static int	get_player_pos(t_map_data *data)
 	return (0);
 }
 
+static bool	is(char c)
+{
+	if (c == '0' || c == '1' || is_player_spawn(c))
+		return (true);
+	return (false);
+}
+
+static bool	cross_check(int x, int y, t_map_data *data)
+{
+	char	**map;
+
+	map = data->map.layout;
+	if (y <= 0 || y >= (data->map.height - 1))
+		return (false);
+	else if (x <= 0 || x >= data->map.width - 1)
+		return (false);
+	else if (!is(map[y + 1][x]) || !is(map[y][x + 1]) || !is(map[y - 1][x]) || !is(map[y][x - 1]))
+		return (false);
+	return (true);
+}
+
 /**
  * @return 0 on success, other on failure
  */
-static int	check_map_playability(char **map, t_map_data *data)//TODO: first have to fix map, so that all lines have same width
+static int	check_map_playability(t_map_data *data)//TODO: iterative flood fill
 {
-	int	down, up, left, right;
+	char	**map;
+	int		x;
+	int		y;
 
-	if (!map || !data)
+	if (!data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	log_msg(DEBUG, __FILE__, __LINE__, "checking map integrity");
-	down = data->player.posY;
-	left = data->player.posX;
-	//check down
-	while (down >= 0 && map[down])
+	map = data->map.layout;
+	y = 0;
+	while (map[y])
 	{
-		//check left
-		while (left >= 0 && map[down][left])
+		x = 0;
+		while (map[y][x])
 		{
-			//check up
-			up = down;
-			while (map[up][left])
+			if (map[y][x] == '0' || is_player_spawn(map[y][x]))
 			{
-				//check right
-				right = left;
-				while (map[up][right])
+				if (!cross_check(x, y, data))
 				{
-					if (map[up][right] == '0')
-						map[up][right] = '1';
-					right++;
+					log_line_error(y + 1, "invalid map", __FILE__, __LINE__);
+					return (1);
 				}
-				up++;
 			}
-			left--;
+			x++;
 		}
-		down--;
+		y++;
 	}
 	return (0);
-}
-
-static char	**copy_string_array(const char **array)
-{
-	char	**array_copy;
-	size_t	size;
-
-	if (!array)
-		return (NULL);
-	size = 0;
-	while (array[size])
-		size++;
-	array_copy = log_calloc(size + 1, sizeof(char *), __FILE__, __LINE__);
-	if (!array_copy)
-		return (NULL);
-	size = 0;
-	while (array[size])
-	{
-		array_copy[size] = ft_strdup(array[size]);
-		if (!array_copy[size])
-		{
-			free_string_array(&array_copy);
-			return (NULL);
-		}
-		size++;
-	}
-	return (array_copy);
 }
 
 static void	print_string_array(const char **array)
@@ -171,7 +160,6 @@ static void	print_string_array(const char **array)
 
 int	parse_map_layout(t_data *data) //TODO: finish
 {
-	char	**map;
 	int		error;
 
 	if (!data)
@@ -179,12 +167,6 @@ int	parse_map_layout(t_data *data) //TODO: finish
 	if (get_player_pos(&(data->map_data)))
 		return (1);
 	print_string_array((const char**)data->map_data.map.layout);
-	map = copy_string_array((const char **)data->map_data.map.layout);
-	if (!map)
-		return (1);
-	error = check_map_playability(map, &data->map_data);
-	print_string_array((const char**)map);
-	free_string_array(&map);
-	print_string_array((const char**)data->map_data.map.layout);
+	error = check_map_playability(&data->map_data);
 	return (error);
 }
