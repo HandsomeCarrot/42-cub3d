@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 13:41:51 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/13 14:49:30 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/13 15:26:15 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ static int	process_rgb_channels(char **colors_string, int *final_color)
  * @param colors Colors structure to store the result
  * @return int 0 on success, 1 on error
  */
-static int	save_color(char *line, t_map_id *data_id, t_colors *colors)
+int	save_color(char *line, t_map_id *data_id, t_colors *colors)
 {
 	char	*colors_string;
 	int		final_color;

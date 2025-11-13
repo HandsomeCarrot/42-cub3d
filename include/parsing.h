@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/13 14:45:22 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/13 17:37:53 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,29 @@ t_map_id	*get_map_data_type(char *line, int row, t_map_id *ids);
 bool		all_ids_found(t_map_id *ids);
 t_map_id	*get_map_identifiers(void);
 
+//-----parse_images.c-----//
+
+int	save_image(char *line, int row, t_map_id *data_id, t_data *data);
+
+//-----parse_colors.c-----//
+
+int	save_color(char *line, t_map_id *data_id, t_colors *colors);
+
+//-----trailing_content.c-----//
+
+bool	validate_trailing_content(char *line, int row);
+int		check_hanging_lines(char **lines, size_t row);
+
+//-----map_layout_identifiers.c-----//
+
+bool	has_valid_neighbors(int x, int y, t_map_data *data);
+
+//-----player_position_helpers.c-----//
+
+bool	is_player_spawn(char c);
+int		get_player_pos(t_map_data *data);
+
+
 //-----------------------------------UTILS-----------------------------------//
 //-----parse_whitespace.c-----//
 
@@ -104,6 +127,7 @@ bool				is_whitespace(char c);
 size_t				skip_whitespace(const char *str);
 bool				is_empty_line(char *line);
 bool				has_leading_whitespace(char *line, int row);
+size_t				skip_empty_lines(char **lines, size_t start_row);
 
 //-----file_ops.c-----//
 

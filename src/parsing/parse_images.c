@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 13:24:00 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/13 13:29:23 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/13 15:26:51 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ static char	*get_xmp_img_path(char *line, int row, t_map_id *data_id)
  * @param data Main data structure to store image path
  * @return 0 on error, 1 on success
  */
-static int	save_image(char *line, int row, t_map_id *data_id, t_data *data)
+int	save_image(char *line, int row, t_map_id *data_id, t_data *data)
 {
 	char	*img_path;
 

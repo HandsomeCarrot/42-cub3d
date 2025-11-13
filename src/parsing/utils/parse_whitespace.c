@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 19:28:02 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/11 19:30:21 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/13 17:37:55 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,18 @@ bool	has_leading_whitespace(char *line, int row)
 	}
 	log_msg(DEBUG, __FILE__, __LINE__, "no leading whitespaces");
 	return (false);
+}
+
+/**
+ * Find the first non-empty map line starting from the given row.
+ * @return map_start position on success, SIZE_MAX on error
+ */
+size_t	skip_empty_lines(char **lines, size_t start_row)
+{
+	size_t	map_start;
+
+	map_start = start_row;
+	while (lines[map_start] && is_empty_line(lines[map_start]))
+		map_start++;
+	return (map_start);
 }
