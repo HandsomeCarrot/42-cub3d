@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/12 23:05:19 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/13 14:45:22 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@
 
 typedef enum e_color_channel
 {
-	RED_CHANNEL,
-	GREEN_CHANNEL,
-	BLUE_CHANNEL,
-	ALPHA_CHANNEL
+	RED_CH,
+	GREEN_CH,
+	BLUE_CH,
+	ALPHA_CH
 }					t_color_channel;
 
 typedef enum e_map_data_type
@@ -90,6 +90,12 @@ int					parse_map_file(char *file, t_data *data);
 //-----parse_map_layout.c-----//
 
 int					parse_map_layout(t_data *data);
+
+//-----map_identification.c-----//
+
+t_map_id	*get_map_data_type(char *line, int row, t_map_id *ids);
+bool		all_ids_found(t_map_id *ids);
+t_map_id	*get_map_identifiers(void);
 
 //-----------------------------------UTILS-----------------------------------//
 //-----parse_whitespace.c-----//

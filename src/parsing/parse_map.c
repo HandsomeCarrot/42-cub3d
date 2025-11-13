@@ -6,119 +6,11 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/11 20:09:51 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/13 13:43:13 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-/**
- * @return table with defined identifiers accepted in map
- */
-static t_map_id	*get_map_texture_identifiers(void)
-{
-	t_map_id	*ids;
-	int			id_count;
-
-	log_msg(DEBUG, __FILE__, __LINE__,
-		"creating map texture identifier table (NO, EA, SO, WE, F, C)");
-	id_count = 6;
-	ids = log_calloc(id_count + 1, sizeof(t_map_id), __FILE__, __LINE__);
-	if (!ids)
-		return (NULL);
-	ids[0] = (t_map_id){T_IMAGE, false, "NO", 2};
-	ids[1] = (t_map_id){T_IMAGE, false, "EA", 2};
-	ids[2] = (t_map_id){T_IMAGE, false, "SO", 2};
-	ids[3] = (t_map_id){T_IMAGE, false, "WE", 2};
-	ids[4] = (t_map_id){T_COLOR, false, "C", 1};
-	ids[5] = (t_map_id){T_COLOR, false, "F", 1};
-	return (ids);
-}
-
-/**
- * checks if this identifier was already found
- */
-static bool	is_duplicate_id(t_map_id data_id, int row)
-{
-	int	log_fd;
-
-	if (!data_id.found)
-		return (false);
-	log_fd = log_start(ERROR, __FILE__, __LINE__);
-	if (log_fd >= 0)
-	{
-		ft_putstr_fd("in map on line ", log_fd);
-		ft_putnbr_fd(row, log_fd);
-		ft_putstr_fd(": duplicate declaration of '", log_fd);
-		ft_putstr_fd((char *)data_id.id, log_fd);
-		ft_putendl_fd("'", log_fd);
-	}
-	return (true);
-}
-
-/**
- * checks if 'line' starts with the same characters as 'data_id'
- */
-static bool	has_same_id(char *line, t_map_id data_id)
-{
-	if (!line)
-		return (log_msg(WARNING, __FILE__, __LINE__, LOG_ALLOC_FAIL), false);
-	if (!ft_strncmp(line, data_id.id, data_id.id_len)
-		&& is_whitespace(line[data_id.id_len]))
-		return (true);
-	return (false);
-}
-
-/**
- * returns a pointer to data_id entry that was found, NULL on error
- */
-static t_map_id	*get_map_data_type(char *line, int row, t_map_id *ids)
-{
-	int	id_pos;
-
-	if (!line || !ids)
-		return (log_msg(DEBUG, __FILE__, __LINE__, LOG_INVALID_PARAM), NULL);
-	log_msg(DEBUG, __FILE__, __LINE__, "determining map data type");
-	id_pos = 0;
-	while (ids && ids[id_pos].id)
-	{
-		if (has_same_id(line, ids[id_pos]))
-		{
-			if (is_duplicate_id(ids[id_pos], row))
-				return (NULL);
-			ids[id_pos].found = true;
-			return (&ids[id_pos]);
-		}
-		id_pos++;
-	}
-	log_line_error(row, "unknown map data identifier", __FILE__, __LINE__);
-	return (NULL);
-}
-
-/**
- * prints a log message
- */
-static void	log_id_processing(t_map_id *data_id, char *src_file, int src_line)
-{
-	int	log_fd;
-
-	if (!data_id || !src_file)
-	{
-		log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM);
-		return ;
-	}
-	log_fd = log_start(INFO, src_file, src_line);
-	if (log_fd < 0)
-		return ;
-	ft_putstr_fd("extracting data for ", log_fd);
-	if (data_id->type == T_IMAGE)
-		ft_putstr_fd("image ", log_fd);
-	else if (data_id->type == T_COLOR)
-		ft_putstr_fd("color ", log_fd);
-	if (data_id->id)
-		ft_putstr_fd((char *)data_id->id, log_fd);
-	ft_putchar_fd('\n', log_fd);
-}
 
 /**
  * returns amount of characters it skipped which consists of
@@ -146,29 +38,6 @@ static size_t	get_next_char_block(char **save, const char *str)
 }
 
 /**
- * @brief Extracts image path from configuration line after identifier
- *
- * @param line The configuration line containing the image path
- * @param data_id Map identifier metadata
- * @param row Line number for error reporting
- * @return char* Allocated image path string, or NULL on error
- */
-static size_t	extract_image_path(char **save, char *line, int row)
-{
-	size_t	skipped;
-
-	if (!save || !line)
-		return (log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM), 0);
-	skipped = get_next_char_block(save, line);
-	if (!*save || skipped == 0)
-	{
-		log_line_error(row, "no image path given", __FILE__, __LINE__);
-		return (0);
-	}
-	return (skipped);
-}
-
-/**
  * @brief Validates that no extra content follows the image path
  *
  * @param line The configuration line
@@ -190,210 +59,6 @@ static bool	validate_trailing_content(char *line, int row)
 		return (false);
 	}
 	return (true);
-}
-
-/**
- * @brief Extracts and validates XPM image path from configuration line
- *
- * Parses the line after the identifier to extract the image path,
- * validates that no extra content follows, and checks file extension.
- *
- * @param line The configuration line containing the image path
- * @param row Line number for error reporting
- * @param data_id Map identifier metadata
- * @return char* Allocated image path string, or NULL on error
- * @note Caller is responsible for freeing the returned string
- */
-static char	*get_xmp_img_path(char *line, int row, t_map_id *data_id)
-{
-	char	*img_path;
-	size_t	skipped;
-
-	if (!line || !data_id)
-		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), NULL);
-	skipped = extract_image_path(&img_path, line, row);
-	if (skipped == 0 || !img_path)
-		return (NULL);
-	if (!validate_trailing_content(line + skipped, row))
-	{
-		free(img_path);
-		return (NULL);
-	}
-	if (correct_file_extension(img_path, ".xpm"))
-	{
-		free(img_path);
-		return (NULL);
-	}
-	return (img_path);
-}
-
-static void	log_found_img(char *img_path, char *src_file, int src_line)
-{
-	int	log_fd;
-
-	if (!img_path || !src_file)
-	{
-		log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM);
-		return ;
-	}
-	log_fd = log_start(INFO, src_file, src_line);
-	if (log_fd >= 0)
-	{
-		ft_putstr_fd("FOUND: '", log_fd);
-		ft_putstr_fd(img_path, log_fd);
-		ft_putendl_fd("'", log_fd);
-	}
-}
-
-static void	log_found_color(int color, char *src_file, int src_line)
-{
-	int	log_fd;
-
-	if (!src_file)
-	{
-		log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM);
-		return ;
-	}
-	log_fd = log_start(INFO, src_file, src_line);
-	if (log_fd < 0)
-		return ;
-	ft_putstr_fd("FOUND: r:", log_fd);
-	ft_putnbr_fd(get_color_channel(color, RED_CHANNEL), log_fd);
-	ft_putstr_fd(", g:", log_fd);
-	ft_putnbr_fd(get_color_channel(color, GREEN_CHANNEL), log_fd);
-	ft_putstr_fd(", b:", log_fd);
-	ft_putnbr_fd(get_color_channel(color, BLUE_CHANNEL), log_fd);
-	ft_putendl_fd("", log_fd);
-}
-
-static bool	set_wall_texture_path(char *img_path, t_map_id *id, t_images *imgs)
-{
-	if (!img_path || !id || !imgs)
-	{
-		log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM);
-		return (false);
-	}
-	if (ft_strncmp(id->id, "NO", id->id_len) == 0)
-		imgs->north_wall = img_path;
-	else if (ft_strncmp(id->id, "EA", id->id_len) == 0)
-		imgs->east_wall = img_path;
-	else if (ft_strncmp(id->id, "SO", id->id_len) == 0)
-		imgs->south_wall = img_path;
-	else if (ft_strncmp(id->id, "WE", id->id_len) == 0)
-		imgs->west_wall = img_path;
-	else
-	{
-		log_msg(ERROR, __FILE__, __LINE__, "unknown image type");
-		return (false);
-	}
-	log_found_img(img_path, __FILE__, __LINE__);
-	return (true);
-}
-
-/**
- * @brief Saves extracted image path to appropriate data structure field
- *
- * @param line The configuration line
- * @param row Line number for error reporting
- * @param data_id Map identifier metadata
- * @param data Main data structure to store image path
- * @return 0 on error, 1 on success
- */
-static int	save_image(char *line, int row, t_map_id *data_id, t_data *data)
-{
-	char	*img_path;
-
-	if (!line || !data_id || !data)
-	{
-		log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM);
-		return (0);
-	}
-	log_id_processing(data_id, __FILE__, __LINE__);
-	img_path = line + data_id->id_len;
-	img_path = get_xmp_img_path(img_path, row, data_id);
-	if (!img_path)
-		return (0);
-	if (!set_wall_texture_path(img_path, data_id, &data->map_data.images))
-	{
-		free(img_path);
-		return (0);
-	}
-	return (1);
-}
-
-/**
- * TODO: make the logging better
- * @return -1 on failure, other on success
- */
-static int	get_color_value(char *colors)
-{
-	int	num;
-
-	if (!colors)
-		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), -1);
-	log_msg(DEBUG, __FILE__, __LINE__, "extracting a color value");
-	if (!ft_isdigit(colors[0]))
-		return (log_msg(ERROR, __FILE__, __LINE__, "invalid char detected"),
-			-1);
-	num = ft_atoi(colors);
-	if (num < 0 || num > 255)
-		return (log_msg(ERROR, __FILE__, __LINE__,
-				"color value has to be in range [0,255]"), -1);
-	log_msg(DEBUG, __FILE__, __LINE__, "extracted a color value successfully");
-	return (num);
-}
-
-/**
- * TODO: need to split up this function and make the logging better
- * @return 0 on error, 1 on success
- */
-static int	save_color(char *line, t_map_id *data_id, t_colors *colors)
-{
-	char	*colors_string;
-	int		final_color;
-	int		color_channel;
-
-	if (!line || !data_id || !colors)
-		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 0);
-	log_id_processing(data_id, __FILE__, __LINE__);
-	colors_string = line + data_id->id_len;
-	colors_string += skip_whitespace(colors_string);
-	color_channel = get_color_value(colors_string);
-	if (color_channel < 0)
-		return (0);
-	final_color = set_color_channel(0, RED_CHANNEL, color_channel);
-	while (ft_isdigit(colors_string[0]))
-		colors_string++;
-	colors_string += skip_whitespace(colors_string);
-	if (colors_string[0] != ',')
-		return (log_msg(ERROR, __FILE__, __LINE__, "invalid char detected"), 0);
-	colors_string++;
-	colors_string += skip_whitespace(colors_string);
-	color_channel = get_color_value(colors_string);
-	if (color_channel < 0)
-		return (0);
-	final_color = set_color_channel(final_color, GREEN_CHANNEL, color_channel);
-	while (ft_isdigit(colors_string[0]))
-		colors_string++;
-	colors_string += skip_whitespace(colors_string);
-	if (colors_string[0] != ',')
-		return (log_msg(ERROR, __FILE__, __LINE__, "invalid char detected"), 0);
-	colors_string++;
-	colors_string += skip_whitespace(colors_string);
-	color_channel = get_color_value(colors_string);
-	if (color_channel < 0)
-		return (0);
-	final_color = set_color_channel(final_color, BLUE_CHANNEL, color_channel);
-	while (ft_isdigit(colors_string[0]))
-		colors_string++;
-	if (!validate_trailing_content(colors_string, 0))
-		return (0);
-	if (ft_strncmp(data_id->id, "C", data_id->id_len) == 0)
-		colors->ceiling = final_color;
-	else if (ft_strncmp(data_id->id, "F", data_id->id_len) == 0)
-		colors->floor = final_color;
-	log_found_color(final_color, __FILE__, __LINE__);
-	return (1);
 }
 
 /**
@@ -445,28 +110,6 @@ static int	save_line_data(char *line, int row, t_map_id *ids, t_data *data)
 }
 
 /**
- * @brief Checks if all required texture identifiers have been found
- *
- * @param ids Array of texture identifiers to check
- * @return true if all identifiers have been found, false otherwise
- */
-static bool	all_ids_found(t_map_id *ids)
-{
-	int	id_pos;
-
-	if (!ids)
-		return (log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM), false);
-	id_pos = 0;
-	while (ids[id_pos].id)
-	{
-		if (!ids[id_pos].found)
-			return (false);
-		id_pos++;
-	}
-	return (true);
-}
-
-/**
  * Iterates over the file data and checks each line for info.
  * If the line is empty it gets skipped.
  * If there is some info (NO, EA, SO, WE, F, C)
@@ -486,7 +129,7 @@ static int	extract_texture_data(char **file_data, t_data *data, size_t *row)
 	log_msg(DEBUG, __FILE__, __LINE__, "extracting texture data from map file");
 	if (!file_data || !data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
-	ids = get_map_texture_identifiers();
+	ids = get_map_identifiers();
 	if (!ids)
 		return (1);
 	line = -1;
@@ -506,54 +149,6 @@ static int	extract_texture_data(char **file_data, t_data *data, size_t *row)
 	log_msg(INFO, __FILE__, __LINE__, "extracted all necessary texture data");
 	return (0);
 }
-
-/*static t_char_group	*get_map_char_rules(void)
-{
-	t_char_group	*rules;
-	int				rule_count;
-
-	rule_count = 2;
-	rules = log_calloc(rule_count + 1, sizeof(t_char_group), __FILE__,
-			__LINE__);
-	if (!rules)
-		return (NULL);
-	rules[0] = (t_char_group){MAP_TERRAIN, -1, "terrain"};
-	rules[1] = (t_char_group){PLAYER_SPAWN, 1, "player spawn"};
-	return (rules);
-}
-*/
-
-/*static bool	is_early_map(char *line, int row)//TODO: complete (on hold)
-{
-	t_char_group	*rules;
-	int				line_pos;
-	int				rule_pos;
-
-	(void)row;
-	if (!line)
-		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), false);
-	log_msg(DEBUG, __FILE__, __LINE__, "checking if line is a map line");
-	rules = get_map_char_rules();
-	if (!rules)
-		return (false); //TODO: make returns better (true, false, error)
-	line_pos = 0;
-	while (line[line_pos] == ' ')
-		line_pos++;
-	rule_pos = 0;
-	while (rules[rule_pos].valid_chars) //TODO
-	{
-		if (ft_strchr(rules[rule_pos].valid_chars, line[line_pos]))
-		{
-			free(rules);
-			return (true);
-		}
-		rule_pos++;
-	}
-	free(rules);
-	log_msg(DEBUG, __FILE__, __LINE__, "line is a valid map line");
-	return (true);
-}
-*/
 
 /**
  * @return true, or false
@@ -607,7 +202,7 @@ static char	*modified_map_line(char *old_line, t_map *map)
 /**
  * @return 0 on success, other on fail
  */
-static int	extract_map_layout(char **lines, size_t *row, t_map *map)//TODO: get the width of the longest line and append spaces if a line is shorter to the desired length, until the map is a square
+static int	extract_map_layout(char **lines, size_t *row, t_map *map)
 {
 	size_t	map_start;
 	size_t	map_height;
@@ -679,7 +274,7 @@ static int	extract_file_data(char **file_data, t_data *data)
 	log_msg(DEBUG, __FILE__, __LINE__, "extracting map file data");
 	if (!file_data || !data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
-	if (extract_texture_data(file_data, data, &row))//TODO: extract the texture data with this new type array
+	if (extract_texture_data(file_data, data, &row))
 		return (1);
 	if (extract_map_layout(file_data, &row, &(data->map_data.map)))
 		return (1);

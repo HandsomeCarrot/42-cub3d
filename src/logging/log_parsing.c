@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 20:08:44 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/28 20:17:39 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/13 14:44:49 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,68 @@ void	log_line_error(int line_num, const char *message, const char *src_file,
 		ft_putstr_fd(": ", log_fd);
 		ft_putendl_fd((char *)message, log_fd);
 	}
+}
+
+/**
+ * prints a log message
+ */
+void	log_id_processing(t_map_id *data_id, char *src_file, int src_line)
+{
+	int	log_fd;
+
+	if (!data_id || !src_file)
+	{
+		log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM);
+		return ;
+	}
+	log_fd = log_start(INFO, src_file, src_line);
+	if (log_fd < 0)
+		return ;
+	ft_putstr_fd("extracting data for ", log_fd);
+	if (data_id->type == T_IMAGE)
+		ft_putstr_fd("image ", log_fd);
+	else if (data_id->type == T_COLOR)
+		ft_putstr_fd("color ", log_fd);
+	if (data_id->id)
+		ft_putstr_fd((char *)data_id->id, log_fd);
+	ft_putchar_fd('\n', log_fd);
+}
+
+void	log_found_img(char *img_path, char *src_file, int src_line)
+{
+	int	log_fd;
+
+	if (!img_path || !src_file)
+	{
+		log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM);
+		return ;
+	}
+	log_fd = log_start(INFO, src_file, src_line);
+	if (log_fd >= 0)
+	{
+		ft_putstr_fd("FOUND: '", log_fd);
+		ft_putstr_fd(img_path, log_fd);
+		ft_putendl_fd("'", log_fd);
+	}
+}
+
+void	log_found_color(int color, char *src_file, int src_line)
+{
+	int	log_fd;
+
+	if (!src_file)
+	{
+		log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM);
+		return ;
+	}
+	log_fd = log_start(INFO, src_file, src_line);
+	if (log_fd < 0)
+		return ;
+	ft_putstr_fd("FOUND: r:", log_fd);
+	ft_putnbr_fd(get_color_channel(color, RED), log_fd);
+	ft_putstr_fd(", g:", log_fd);
+	ft_putnbr_fd(get_color_channel(color, GREEN_CH), log_fd);
+	ft_putstr_fd(", b:", log_fd);
+	ft_putnbr_fd(get_color_channel(color, BLUE_CH), log_fd);
+	ft_putendl_fd("", log_fd);
 }

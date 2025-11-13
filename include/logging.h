@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:34:28 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/28 20:17:11 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/13 13:59:12 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LOGGING_H
 
 # include "libft.h"
+# include "parsing.h"
 # include <stdio.h>
 
 # ifndef LOGGING_LEVEL
@@ -59,5 +60,8 @@ void	log_extension_error(const char *file, const char *message,
 			const char *src_file, int line);
 void	log_line_error(int line_num, const char *message, const char *src_file,
 			int line);
+void	log_id_processing(t_map_id *data_id, char *src_file, int src_line);
+void	log_found_img(char *img_path, char *src_file, int src_line);
+void	log_found_color(int color, char *src_file, int src_line);
 
 #endif /* LOGGING_H */
