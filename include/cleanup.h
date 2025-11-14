@@ -6,15 +6,15 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 20:31:32 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/05 12:38:36 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/14 17:32:09 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CLEANUP_H
 # define CLEANUP_H
 
+# include "definitions.h"
 # include "libft.h"
-# include "structs.h"
 # include "logging.h"
 # include <mlx.h>
 

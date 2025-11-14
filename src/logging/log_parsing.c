@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 20:08:44 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/13 14:44:49 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/14 17:31:21 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	log_found_color(int color, char *src_file, int src_line)
 	if (log_fd < 0)
 		return ;
 	ft_putstr_fd("FOUND: r:", log_fd);
-	ft_putnbr_fd(get_color_channel(color, RED), log_fd);
+	ft_putnbr_fd(get_color_channel(color, RED_CH), log_fd);
 	ft_putstr_fd(", g:", log_fd);
 	ft_putnbr_fd(get_color_channel(color, GREEN_CH), log_fd);
 	ft_putstr_fd(", b:", log_fd);

@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/11/11 19:32:58 by vpoka            ###   ########.fr        #
+#    Updated: 2025/11/14 17:24:23 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,14 +42,28 @@ LOGGING_SRCS :=	$(addprefix logging/, \
 
 PARSING_SRCS :=	$(addprefix parsing/, \
 				parse.c \
-				parse_map.c \
-				parse_map_layout.c \
+				$(addprefix config/, \
+				color_parser.c \
+				texture_identifiers.c \
+				texture_parser.c) \
+				$(addprefix map/, \
+				map_data_saver.c \
+				map_file_reader.c \
+				map_layout_extractor.c \
+				map_line_processor.c \
+				map_validation.c \
+				map_validator.c) \
+				$(addprefix player/, \
+				player_location.c) \
 				$(addprefix utils/, \
+				arrays.c \
+				char_checks.c \
 				color_utils.c \
-				parse_whitespace.c \
 				file_ops.c \
-				read_file.c \
-				arrays.c))
+				line_utils.c \
+				read_file.c) \
+				$(addprefix validation/, \
+				content_validation.c))
 
 SRCS :=	$(addprefix $(S)/, \
 		main.c \

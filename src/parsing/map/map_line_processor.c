@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_map.c                                        :+:      :+:    :+:   */
+/*   map_line_processor.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/14 17:10:58 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/14 17:49:29 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * - skipped whitespace characters
  * - characters until next whitespace/null character
  */
-static size_t	get_next_char_block(char **save, const char *str)
+size_t	get_next_char_block(char **save, const char *str)
 {
 	size_t	spaces;
 	size_t	str_len;
@@ -40,7 +40,7 @@ static size_t	get_next_char_block(char **save, const char *str)
 /**
  * @return true, or false
  */
-static bool	is_valid_layout_line(const char *line, size_t row, t_map *map)
+bool	is_valid_layout_line(const char *line, size_t row, t_map *map)
 {
 	int	pos;
 
@@ -61,7 +61,7 @@ static bool	is_valid_layout_line(const char *line, size_t row, t_map *map)
 	return (true);
 }
 
-static char	*modified_map_line(char *old_line, t_map *map)
+char	*modified_map_line(char *old_line, t_map *map)
 {
 	char	*new_line;
 	int		pos;

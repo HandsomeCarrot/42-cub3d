@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 17:10:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/14 17:11:03 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/14 17:47:55 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	call_save_function(t_map_id *data_id, char *line, int row,
  *
  * @return 0 on error, other on success
  */
-static int	save_line_data(char *line, int row, t_map_id *ids, t_data *data)
+int	save_line_data(char *line, int row, t_map_id *ids, t_data *data)
 {
 	t_map_id	*data_id;
 

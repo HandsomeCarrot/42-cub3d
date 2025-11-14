@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 16:12:14 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/14 17:10:11 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/14 17:48:07 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	populate_map_layout(char **lines, size_t map_start, t_map *map)
 /**
  * @return 0 on success, other on fail
  */
-static int	extract_map_layout(char **lines, size_t *row, t_map *map)
+int	extract_map_layout(char **lines, size_t *row, t_map *map)
 {
 	size_t	map_start;
 	size_t	map_height;

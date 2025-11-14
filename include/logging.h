@@ -6,13 +6,14 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:34:28 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/13 13:59:12 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/14 17:33:56 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LOGGING_H
 # define LOGGING_H
 
+# include "definitions.h"
 # include "libft.h"
 # include "parsing.h"
 # include <stdio.h>
