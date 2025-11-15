@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/11/14 17:24:23 by vpoka            ###   ########.fr        #
+#    Updated: 2025/11/15 16:37:15 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -145,6 +145,11 @@ run: all
 	@ printf "\n"
 	$(call log,INFO,executing $(NAME))
 	@ ./$(NAME) ./assets/maps/basic.cub
+
+test: all
+	@ printf "\n"
+	$(call log,INFO,executing $(NAME) with test maps)
+	@ ./tests.sh
 
 #-----LOG LEVEL RULES-----#
 
