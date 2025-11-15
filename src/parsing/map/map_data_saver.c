@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 17:10:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/15 17:02:18 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/15 20:26:34 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  * @param line The configuration line
  * @param row Line number for error reporting
  * @param data Main data structure to store parsed data
- * @return 0 on error, other on success
+ * @return 0 on success, other on error
  */
 static int	call_save_function(t_map_id *data_id, char *line, int row,
 		t_data *data)
@@ -30,14 +30,14 @@ static int	call_save_function(t_map_id *data_id, char *line, int row,
 	if (!data_id || !line || !data)
 	{
 		log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM);
-		return (0);
+		return (1);
 	}
 	if (data_id->type == T_IMAGE)
 		return (save_image(line, row, data_id, data));
 	else if (data_id->type == T_COLOR)
 		return (save_color(line, data_id, &data->map_data.colors));
 	log_msg(ERROR, __FILE__, __LINE__, "data type not recognized");
-	return (0);
+	return (1);
 }
 
 /**
