@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 17:07:29 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/14 17:08:53 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/15 17:02:27 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	extract_texture_data(char **file_data, t_data *data, size_t *row)
 	{
 		if (is_empty_line(file_data[line]))
 			continue ;
-		if (!save_line_data(file_data[line], line + 1, ids, data))
+		if (save_line_data(file_data[line], line + 1, ids, data))
 		{
 			free(ids);
 			return (1);
