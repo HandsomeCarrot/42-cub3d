@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 16:57:12 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/08 07:22:52 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/18 12:31:44 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@
 # include <stdlib.h>
 # include <stdbool.h>
 # include <sys/time.h>
+
+#define P1_LOCAL_X 0.0
+#define P1_LOCAL_Y 0.5
+#define P2_LOCAL_X -0.3
+#define P2_LOCAL_Y -0.3
+#define P3_LOCAL_X 0.3
+#define P3_LOCAL_Y -0.3
 
 typedef struct s_vector
 {
