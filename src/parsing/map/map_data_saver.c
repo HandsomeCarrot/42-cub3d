@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 17:10:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/15 20:26:34 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/18 16:40:21 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ int	save_line_data(char *line, int row, t_map_id *ids, t_data *data)
 		return (0);
 	data_id = get_map_data_type(line, row, ids);
 	if (!data_id)
-		return (0);
+		return (1);
 	return (call_save_function(data_id, line, row, data));
 }

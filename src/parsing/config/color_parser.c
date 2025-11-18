@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 13:41:51 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/18 16:28:20 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/18 17:42:39 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	parse_color_channel(char **colors_string, int *color_channel)
 	num = ft_atoi(*colors_string);
 	if (num < 0 || num > 255)
 		return (log_msg(ERROR, __FILE__, __LINE__,
-			"Color value out of range - must be between 0 and 255"), 1);
+			"Color value out of range: must be between 0 and 255"), 1);
 	*color_channel = num;
 	while (ft_isdigit((*colors_string)[0]))
 		(*colors_string)++;
