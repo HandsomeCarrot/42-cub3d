@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_colors.c                                     :+:      :+:    :+:   */
+/*   color_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 13:41:51 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/13 15:26:15 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/18 16:28:20 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int	save_color(char *line, t_map_id *data_id, t_colors *colors)
 	colors_string += skip_whitespace(colors_string);
 	if (process_rgb_channels(&colors_string, &final_color))
 		return (1);
-	if (validate_trailing_content(colors_string, 0))
+	if (has_trailing_content(colors_string, 0))
 		return (1);
 	if (assign_final_color(data_id, colors, final_color))
 		return (1);

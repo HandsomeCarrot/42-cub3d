@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/15 12:03:38 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/18 16:24:48 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ size_t		skip_whitespace(const char *str);
 //---------------------------------VALIDATION---------------------------------//
 //-----content_validation.c-----//
 
-bool		validate_trailing_content(char *line, int row);
+bool		has_trailing_content(char *line, int row);
 int			check_hanging_lines(char **lines, size_t row);
 
 #endif /* PARSING_H */

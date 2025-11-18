@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   trailing_content.c                                 :+:      :+:    :+:   */
+/*   content_validation.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 15:23:22 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/13 15:23:53 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/18 16:26:31 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  * @param row Line number for error reporting
  * @return true if valid, false if extra content detected
  */
-bool	validate_trailing_content(char *line, int row)
+bool	has_trailing_content(char *line, int row)
 {
 	size_t	skipped;
 
@@ -31,9 +31,9 @@ bool	validate_trailing_content(char *line, int row)
 		printf("'%s'\n + %ld = '%s'\n", line, skipped, line + skipped);
 		log_line_error(row, "extra content found after map configuration data",
 			__FILE__, __LINE__);
-		return (false);
+		return (true);
 	}
-	return (true);
+	return (false);
 }
 
 /**

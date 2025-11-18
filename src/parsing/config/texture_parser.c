@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_images.c                                     :+:      :+:    :+:   */
+/*   texture_parser.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 13:24:00 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/13 15:26:51 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/18 16:30:23 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static char	*get_xmp_img_path(char *line, int row, t_map_id *data_id)
 	skipped = extract_image_path(&img_path, line, row);
 	if (skipped == 0 || !img_path)
 		return (NULL);
-	if (!validate_trailing_content(line + skipped, row))
+	if (has_trailing_content(line + skipped, row))
 	{
 		free(img_path);
 		return (NULL);
@@ -101,7 +101,7 @@ static char	*get_xmp_img_path(char *line, int row, t_map_id *data_id)
  * @param row Line number for error reporting
  * @param data_id Map identifier metadata
  * @param data Main data structure to store image path
- * @return 0 on error, 1 on success
+ * @return 0 on success, other on error
  */
 int	save_image(char *line, int row, t_map_id *data_id, t_data *data)
 {
@@ -110,17 +110,17 @@ int	save_image(char *line, int row, t_map_id *data_id, t_data *data)
 	if (!line || !data_id || !data)
 	{
 		log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM);
-		return (0);
+		return (1);
 	}
 	log_id_processing(data_id, __FILE__, __LINE__);
 	img_path = line + data_id->id_len;
 	img_path = get_xmp_img_path(img_path, row, data_id);
 	if (!img_path)
-		return (0);
+		return (1);
 	if (!set_wall_texture_path(img_path, data_id, &data->map_data.images))
 	{
 		free(img_path);
-		return (0);
+		return (1);
 	}
-	return (1);
+	return (0);
 }
