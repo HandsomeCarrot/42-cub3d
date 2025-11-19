@@ -6,29 +6,14 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 14:32:38 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/19 12:39:37 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/19 15:17:35 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/render.h"
 
-void	init_ray(t_ray *ray, t_game *game, int x)
+static void	calculate_ray_steps(t_ray *ray, t_game *game)
 {
-	double	camera_x;
-
-	camera_x = 2.0 * x / (double)game->mlx.width - 1.0;
-	ray->dir.x = game->player.look_dir.x + camera_x * game->player.plane.x;
-	ray->dir.y = game->player.look_dir.y + camera_x * game->player.plane.y;
-	ray->map.x = (int)game->player.pos.x;
-	ray->map.y = (int)game->player.pos.y;
-	if (ray->dir.x == 0)
-		ray->delta_dist.x = 1e30;
-	else
-		ray->delta_dist.x = fabs(1.0 / ray->dir.x);
-	if (ray->dir.y == 0)
-		ray->delta_dist.y = 1e30;
-	else
-		ray->delta_dist.y = fabs(1.0 / ray->dir.y);
 	if (ray->dir.x < 0)
 	{
 		ray->step.x = -1;
@@ -53,6 +38,26 @@ void	init_ray(t_ray *ray, t_game *game, int x)
 		ray->side_dist.y = (ray->map.y + 1.0 - game->player.pos.y)
 			* ray->delta_dist.y;
 	}
+}
+
+void	init_ray(t_ray *ray, t_game *game, int x)
+{
+	double	camera_x;
+
+	camera_x = 2.0 * x / (double)game->mlx.width - 1.0;
+	ray->dir.x = game->player.look_dir.x + camera_x * game->player.plane.x;
+	ray->dir.y = game->player.look_dir.y + camera_x * game->player.plane.y;
+	ray->map.x = (int)game->player.pos.x;
+	ray->map.y = (int)game->player.pos.y;
+	if (ray->dir.x == 0)
+		ray->delta_dist.x = 1e30;
+	else
+		ray->delta_dist.x = fabs(1.0 / ray->dir.x);
+	if (ray->dir.y == 0)
+		ray->delta_dist.y = 1e30;
+	else
+		ray->delta_dist.y = fabs(1.0 / ray->dir.y);
+	calculate_ray_steps(ray, game);
 }
 
 void	perform_dda(t_ray *ray, t_game *game)
