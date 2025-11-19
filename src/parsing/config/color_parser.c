@@ -19,7 +19,7 @@
  * @param color_channel Pointer to store the parsed color value
  * @return int 0 on success, 1 on failure
  */
-static int	parse_color_channel(char **colors_string, int *color_channel)
+static int	parse_color_channel(char **colors_string, int *color_channel, int row)
 {
 	int	num;
 
@@ -32,8 +32,11 @@ static int	parse_color_channel(char **colors_string, int *color_channel)
 				"Invalid character in color value - expected digit"), 1);
 	num = ft_atoi(*colors_string);
 	if (num < 0 || num > 255)
-		return (log_msg(ERROR, __FILE__, __LINE__,
-			"Color value out of range: must be between 0 and 255"), 1);
+	{
+		log_line_error(row, "Color value out of range: must be between 0 and 255",
+			__FILE__, __LINE__);
+		return (1);
+	}
 	*color_channel = num;
 	while (ft_isdigit((*colors_string)[0]))
 		(*colors_string)++;
@@ -91,23 +94,23 @@ static int	assign_final_color(t_map_id *data_id, t_colors *colors,
  * @param final_color Pointer to store the computed color value
  * @return int 0 on success, 1 on failure
  */
-static int	process_rgb_channels(char **colors_string, int *final_color)
+static int	process_rgb_channels(char **colors_string, int *final_color, int row)
 {
 	int	color_channel;
 
 	if (!colors_string || !*colors_string || !final_color)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
-	if (parse_color_channel(colors_string, &color_channel))
+	if (parse_color_channel(colors_string, &color_channel, row))
 		return (1);
 	*final_color = set_color_channel(0, RED_CH, color_channel);
 	if (process_separator(colors_string))
 		return (1);
-	if (parse_color_channel(colors_string, &color_channel))
+	if (parse_color_channel(colors_string, &color_channel, row))
 		return (1);
 	*final_color = set_color_channel(*final_color, GREEN_CH, color_channel);
 	if (process_separator(colors_string))
 		return (1);
-	if (parse_color_channel(colors_string, &color_channel))
+	if (parse_color_channel(colors_string, &color_channel, row))
 		return (1);
 	*final_color = set_color_channel(*final_color, BLUE_CH, color_channel);
 	return (0);
@@ -124,7 +127,7 @@ static int	process_rgb_channels(char **colors_string, int *final_color)
  * @param colors Colors structure to store the result
  * @return int 0 on success, 1 on error
  */
-int	save_color(char *line, t_map_id *data_id, t_colors *colors)
+int	save_color(char *line, int row, t_map_id *data_id, t_colors *colors)
 {
 	char	*colors_string;
 	int		final_color;
@@ -134,7 +137,7 @@ int	save_color(char *line, t_map_id *data_id, t_colors *colors)
 	log_id_processing(data_id, __FILE__, __LINE__);
 	colors_string = line + data_id->id_len;
 	colors_string += skip_whitespace(colors_string);
-	if (process_rgb_channels(&colors_string, &final_color))
+	if (process_rgb_channels(&colors_string, &final_color, row))
 		return (1);
 	if (has_trailing_content(colors_string, 0))
 		return (1);

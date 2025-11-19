@@ -26,12 +26,12 @@ static size_t	get_map_height(char **lines, size_t map_start, t_map *map)
 		if (is_empty_line(lines[map_start + map_height]))
 			break ;
 		if (!is_valid_layout_line(lines[map_start + map_height],
-			map_height + 1, map))
+			map_start + map_height + 1, map))
 			return (0);
 		map_height++;
 	}
 	if (map_height == 0)
-		log_msg(ERROR, __FILE__, __LINE__, "no map layout given");
+		log_msg(ERROR, __FILE__, __LINE__, "No map layout found in file");
 	return (map_height);
 }
 

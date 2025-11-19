@@ -12,7 +12,7 @@
 
 #include "parsing.h"
 
-static bool	set_wall_texture_path(char *img_path, t_map_id *id, t_images *imgs)
+static bool	set_wall_texture_path(char *img_path, t_map_id *id, t_images *imgs, int row)
 {
 	if (!img_path || !id || !imgs)
 	{
@@ -29,7 +29,7 @@ static bool	set_wall_texture_path(char *img_path, t_map_id *id, t_images *imgs)
 		imgs->west_wall = img_path;
 	else
 	{
-		log_msg(ERROR, __FILE__, __LINE__, "unknown image type");
+		log_line_error(row, "unknown image type", __FILE__, __LINE__);
 		return (false);
 	}
 	log_found_img(img_path, __FILE__, __LINE__);
@@ -117,7 +117,7 @@ int	save_image(char *line, int row, t_map_id *data_id, t_data *data)
 	img_path = get_xmp_img_path(img_path, row, data_id);
 	if (!img_path)
 		return (1);
-	if (!set_wall_texture_path(img_path, data_id, &data->map_data.images))
+	if (!set_wall_texture_path(img_path, data_id, &data->map_data.images, row))
 	{
 		free(img_path);
 		return (1);

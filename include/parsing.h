@@ -25,7 +25,7 @@
 
 //-----color_parser.c-----//
 
-int			save_color(char *line, t_map_id *data_id, t_colors *colors);
+int			save_color(char *line, int row, t_map_id *data_id, t_colors *colors);
 
 //-----texture_identifiers.c-----//
 

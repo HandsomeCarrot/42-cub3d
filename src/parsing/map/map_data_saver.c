@@ -35,7 +35,7 @@ static int	call_save_function(t_map_id *data_id, char *line, int row,
 	if (data_id->type == T_IMAGE)
 		return (save_image(line, row, data_id, data));
 	else if (data_id->type == T_COLOR)
-		return (save_color(line, data_id, &data->map_data.colors));
+		return (save_color(line, row, data_id, &data->map_data.colors));
 	log_msg(ERROR, __FILE__, __LINE__, "data type not recognized");
 	return (1);
 }
