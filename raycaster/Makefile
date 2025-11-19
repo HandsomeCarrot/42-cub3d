@@ -13,7 +13,18 @@
 NAME = sandbox
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-MLX_FLAGS = -lmlx -lXext -lX11 -lm
+
+# Detect operating system
+UNAME_S := $(shell uname -s)
+
+# Set platform-specific flags
+ifeq ($(UNAME_S),Darwin)
+    # macOS with Metal MLX
+    MLX_FLAGS = -lmlx -framework Metal -framework MetalKit
+else ifeq ($(UNAME_S),Linux)
+    # Linux with X11 MLX
+    MLX_FLAGS = -lmlx -lXext -lX11 -lm
+endif
 
 SRC = main.c player.c test_map.c mlx_setup.c hooks.c cleanup.c render.c utils.c minimap.c movement.c
 OBJ = $(SRC:.c=.o)
@@ -35,3 +46,4 @@ run: all clean
 	./$(NAME)
 
 .PHONY: all clean fclean re run
+

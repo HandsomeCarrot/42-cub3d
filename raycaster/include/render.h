@@ -19,8 +19,7 @@
 #include "types.h"
 #include "utils.h"
 #include <stdbool.h>
-#include <X11/keysym.h>
-#include <X11/X.h>
+#include "keys.h"
 
 // --- Basic Colors ---
 #define COLOR_WHITE   0xFFFFFF
