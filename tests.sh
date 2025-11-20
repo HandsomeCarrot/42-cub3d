@@ -19,7 +19,7 @@ run_map_test() {
     local expected_code="$2"
     local test_name=$(basename "$map_file")
     
-    echo "\n${YELLOW}TEST: $test_name${NC}"
+    echo -e "\n${YELLOW}TEST: $test_name${NC}"
 	total_tests=$((total_tests + 1))
     
     # Run cub3d with the map file and capture exit code
@@ -28,17 +28,17 @@ run_map_test() {
     
     # Compare actual and expected codes
     if [ "$actual_code" -eq "$expected_code" ]; then
-        echo "${GREEN}✓ PASS: Expected $expected_code and got $actual_code${NC}"
+        echo -e "${GREEN}✓ PASS: Expected $expected_code and got $actual_code${NC}"
 		passed_tests=$((passed_tests + 1))
         return 0
     else
-        echo "${RED}✗ FAIL: Expected $expected_code but got $actual_code${NC}"
+        echo -e "${RED}✗ FAIL: Expected $expected_code but got $actual_code${NC}"
 		failed_tests=$((failed_tests + 1))
         return 1
     fi
 }
 
-echo "\n${YELLOW}=== Running Map Tests ===${NC}"
+echo -e "\n${YELLOW}=== Running Map Tests ===${NC}"
 
 # Run all test cases with expected return codes
 # Valid map should return 0 (success)
@@ -58,6 +58,6 @@ run_map_test "./assets/maps/wrong_extension2.cub.all" 1
 run_map_test "./assets/maps/wrong_texture.cub" 1
 run_map_test "./assets/maps/wrong_texture2.cub" 1
 
-echo "\nTotal tests: $total_tests"
-echo "${GREEN}Passed tests: $passed_tests${NC}"
-echo "${RED}Failed tests: $failed_tests${NC}"
+echo -e "\nTotal tests: $total_tests"
+echo -e "${GREEN}Passed tests: $passed_tests${NC}"
+echo -e "${RED}Failed tests: $failed_tests${NC}"
