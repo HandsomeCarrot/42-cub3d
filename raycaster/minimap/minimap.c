@@ -6,83 +6,32 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 17:06:00 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/21 16:41:37 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/21 17:32:30 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/render.h"
-
-int	color_picker(t_game *game, int map_y, int map_x)
-{
-	char	c;
-
-	c = game->map[map_y][map_x];
-	if (c == '1')
-		return (COLOR_GRAY);
-	else
-		return (COLOR_WHITE);
-}
-
-void	get_map_dimensions(t_game *game, int *width, int *height)
-{
-	int	w;
-	int	h;
-	int	current_row_len;
-
-	w = 0;
-	h = 0;
-	while (game->map[h])
-	{
-		current_row_len = 0;
-		while (game->map[h][current_row_len])
-		{
-			current_row_len++;
-		}
-		if (current_row_len > w)
-			w = current_row_len;
-		h++;
-	}
-	*width = w;
-	*height = h;
-}
-
-double	get_tile_size(t_game *game)
-{
-	t_point	map_grid;
-	t_point	ratio;
-	t_point	minimap_max;
-	double	tile_size;
-
-	get_map_dimensions(game, &map_grid.x, &map_grid.y);
-	minimap_max.x = game->mlx.width / 4;
-	minimap_max.y = game->mlx.height / 4;
-	ratio.x = (double)minimap_max.x / (double)map_grid.x;
-	ratio.y = (double)minimap_max.y / (double)map_grid.y;
-	tile_size = fmin(ratio.x, ratio.y);
-	return (tile_size);
-}
+#include "../include/render.h"
 
 static void	fill_tile(t_game *game, int map_x, int map_y, double tile_size)
 {
-	int	pixel_x;
-	int	pixel_y;
-	int	screen_x;
-	int	screen_y;
-	int	color;
+	t_point	pixel;
+	int		screen_x;
+	int		screen_y;
+	int		color;
 
 	color = color_picker(game, map_y, map_x);
-	pixel_y = 0;
-	while (pixel_y < (int)tile_size)
+	pixel.y = 0;
+	while (pixel.y < (int)tile_size)
 	{
-		pixel_x = 0;
-		screen_y = map_y * tile_size + pixel_y;
-		while (pixel_x < (int)tile_size)
+		pixel.x = 0;
+		screen_y = map_y * tile_size + pixel.y;
+		while (pixel.x < (int)tile_size)
 		{
-			screen_x = map_x * tile_size + pixel_x;
+			screen_x = map_x * tile_size + pixel.x;
 			put_pixel(&game->mlx, screen_x, screen_y, color);
-			pixel_x++;
+			pixel.x++;
 		}
-		pixel_y++;
+		pixel.y++;
 	}
 }
 
