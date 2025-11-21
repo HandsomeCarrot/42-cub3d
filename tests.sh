@@ -46,9 +46,9 @@ run_map_test "./assets/maps/valid_basic.cub" 0
 run_map_test "./assets/maps/valid_complex.cub" 0
 run_map_test "./assets/maps/valid_order.cub" 0
 run_map_test "./assets/maps/valid_spacing.cub" 0
+run_map_test "./assets/maps/.valid_hidden_file.cub" 0
 
 # Invalid maps should return non-zero (error)
-run_map_test "./assets/maps/.invalid_hidden_file.cub" 1
 run_map_test "./assets/maps/invalid_empty.cub" 1
 run_map_test "./assets/maps/invalid_extra_color.cub" 1
 run_map_test "./assets/maps/invalid_extra_map_layout.cub" 1

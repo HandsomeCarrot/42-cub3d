@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 15:50:33 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 16:29:16 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 17:38:17 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,15 @@ static int	save_player_pos(int y, int x, t_map_data *data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	if (data->player.found)
 	{
-		log_msg(ERROR, __FILE__, __LINE__, "map layout: multiple player spawns defined");
+		log_fd = log_start(ERROR, __FILE__, __LINE__);
+		if (log_fd >= 0)
+		{
+			ft_putstr_fd("in map layout: multiple player spawns defined (found at line ", log_fd);
+			ft_putnbr_fd(y + 1, log_fd);
+			ft_putstr_fd(":", log_fd);
+			ft_putnbr_fd(x + 1, log_fd);
+			ft_putendl_fd(")", log_fd);
+		}
 		return (1);
 	}
 	data->player.found = 1;
@@ -74,6 +82,6 @@ int	get_player_pos(t_map_data *data)
 		posY++;
 	}
 	if (!data->player.found)
-		return (log_msg(ERROR, __FILE__, __LINE__, "map layout: missing player spawn"), 1);
+		return (log_msg(ERROR, __FILE__, __LINE__, "in map layout: missing player spawn"), 1);
 	return (0);
 }

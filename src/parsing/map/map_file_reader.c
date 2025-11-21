@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 17:07:29 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/15 20:54:56 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 17:44:20 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ static int	extract_texture_data(char **file_data, t_data *data, size_t *row)
 	if (!ids)
 		return (1);
 	line = -1;
+	if (!file_data[0])
+	{
+		log_missing_ids(ids);
+		free(ids);
+		return (1);
+	}
 	while (file_data[++line] && !all_ids_found(ids))
 	{
 		if (is_empty_line(file_data[line]))

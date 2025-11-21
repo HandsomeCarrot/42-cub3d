@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 16:29:05 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 17:38:22 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ bool	is_valid_layout_line(const char *line, size_t row, t_map *map)
 			{
 				ft_putstr_fd("in map on line ", log_fd);
 				ft_putnbr_fd(row, log_fd);
+				ft_putstr_fd(":", log_fd);
+				ft_putnbr_fd(pos + 1, log_fd);
 				ft_putstr_fd(": invalid character in map: '", log_fd);
 				ft_putchar_fd(line[pos], log_fd);
 				ft_putendl_fd("'", log_fd);
