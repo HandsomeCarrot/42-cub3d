@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 17:06:00 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/18 17:26:58 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/21 16:41:37 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ double	get_tile_size(t_game *game)
 
 static void	fill_tile(t_game *game, int map_x, int map_y, double tile_size)
 {
-	int		pixel_x;
-	int		pixel_y;
-	int		screen_x;
-	int		screen_y;
-	int		color;
+	int	pixel_x;
+	int	pixel_y;
+	int	screen_x;
+	int	screen_y;
+	int	color;
 
 	color = color_picker(game, map_y, map_x);
 	pixel_y = 0;
@@ -106,32 +106,29 @@ void	draw_minimap(t_game *game)
 	}
 }
 
-
 void	draw_line(t_mlx *mlx, t_point p1, t_point p2, int color)
 {
-	double	delta_x;
-	double	delta_y;
-	int		steps;
-	double	x;
-	double	y;
-	double	x_inc;
-	double	y_inc;
+	t_vector	delta;
+	int			steps;
+	double		x;
+	double		y;
+	t_vector	inc;
 
-	delta_x = p2.x - p1.x;
-	delta_y = p2.y - p1.y;
-	if (fabs(delta_x) > fabs(delta_y))
-		steps = fabs(delta_x);
+	delta.x = p2.x - p1.x;
+	delta.y = p2.y - p1.y;
+	if (fabs(delta.x) > fabs(delta.y))
+		steps = fabs(delta.x);
 	else
-		steps = fabs(delta_y);
-	x_inc = delta_x / (double)steps;
-	y_inc = delta_y / (double)steps;
+		steps = fabs(delta.y);
+	inc.x = delta.x / (double)steps;
+	inc.y = delta.y / (double)steps;
 	x = p1.x;
 	y = p1.y;
 	while (steps >= 0)
 	{
 		put_pixel(mlx, (int)x, (int)y, color);
-		x += x_inc;
-		y += y_inc;
+		x += inc.x;
+		y += inc.y;
 		steps--;
 	}
 }
@@ -167,12 +164,11 @@ void	draw_player_triangle(t_game *game, double tile_size)
 
 void	draw_minimap_rays(t_game *game, double tile_size)
 {
-	t_ray	ray;
-	t_point	player_pos;
-	t_point	hit_pos;
-	int		x;
-	double	hit_world_x;
-	double	hit_world_y;
+	t_ray		ray;
+	t_point		player_pos;
+	t_point		hit_pos;
+	int			x;
+	t_vector	hit_world;
 
 	player_pos.x = (int)(game->player.pos.x * tile_size);
 	player_pos.y = (int)(game->player.pos.y * tile_size);
@@ -181,10 +177,10 @@ void	draw_minimap_rays(t_game *game, double tile_size)
 	{
 		init_ray(&ray, game, x);
 		perform_dda(&ray, game);
-		hit_world_x = game->player.pos.x + ray.perp_wall_dist * ray.dir.x;
-		hit_world_y = game->player.pos.y + ray.perp_wall_dist * ray.dir.y;
-		hit_pos.x = (int)(hit_world_x * tile_size);
-		hit_pos.y = (int)(hit_world_y * tile_size);
+		hit_world.x = game->player.pos.x + ray.perp_wall_dist * ray.dir.x;
+		hit_world.y = game->player.pos.y + ray.perp_wall_dist * ray.dir.y;
+		hit_pos.x = (int)(hit_world.x * tile_size);
+		hit_pos.y = (int)(hit_world.y * tile_size);
 		draw_line(&game->mlx, player_pos, hit_pos, COLOR_YELLOW);
 		x += 10;
 	}
