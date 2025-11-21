@@ -6,23 +6,13 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 07:31:49 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/08 10:53:26 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/21 21:47:43 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //#include "cub3d.h"
 #include "./include/render.h"
 #include "./include/types.h"
-
-void	put_pixel(t_mlx *mlx, int x, int y, int color)
-{
-	int	offset;
-
-	if (x < 0 || x >= mlx->width || y < 0 || y >= mlx->height)
-		return ;
-	offset = (y * mlx->line_length + x * mlx->bytes_per_pixel);
-	*(unsigned int *)(mlx->img_data + offset) = color;
-}
 
 static void	init_texture_node(t_texture *texture)
 {
@@ -48,20 +38,19 @@ static void	init_texture_list(t_game *game)
 	game->east_texture.next = &game->west_texture;
 }
 
-int get_pixel_color(t_texture *tex, int x, int y)
+int	get_pixel_color(t_texture *tex, int x, int y)
 {
-    int offset;
+	int	offset;
 
-    offset = y * tex->line_length + x * tex->bytes_per_pixel;
-    return *(int *)(tex->img_data + offset);
+	offset = y * tex->line_length + x * tex->bytes_per_pixel;
+	return (*(int *)(tex->img_data + offset));
 }
-
 
 static int	load_texture(t_game *g, t_texture *dest, const char *path)
 {
 	printf("loading\n"); //?need to remove
-	dest->img = mlx_xpm_file_to_image(g->mlx.mlx, (char *)path,
-			&dest->width, &dest->height);
+	dest->img = mlx_xpm_file_to_image(g->mlx.mlx, (char *)path, &dest->width,
+			&dest->height);
 	if (!dest->img)
 	{
 		cleanup_game(g);
@@ -82,6 +71,11 @@ static int	load_texture(t_game *g, t_texture *dest, const char *path)
 
 int	init_mlx(t_game *game)
 {
+	char	*north_path;
+	char	*south_path;
+	char	*east_path;
+	char	*west_path;
+
 	game->mlx.mlx = mlx_init();
 	if (!game->mlx.mlx)
 		return (0);
@@ -105,26 +99,23 @@ int	init_mlx(t_game *game)
 	game->mlx.img_data = mlx_get_data_addr(game->mlx.img,
 			&game->mlx.bits_per_pixel, &game->mlx.line_length,
 			&game->mlx.endian);
-		if (!game->mlx.img_data)
-		{
-			cleanup_game(game);
-			return (0);
-		}
+	if (!game->mlx.img_data)
+	{
+		cleanup_game(game);
+		return (0);
+	}
 	game->mlx.bytes_per_pixel = game->mlx.bits_per_pixel >> 3;
 	init_texture_list(game);
-
-	char *north_path = "./textures/xpm/Futuristic_1024.xpm"; // Placeholder
-	char *south_path = "./textures/xpm/Metal_1024.xpm"; // Placeholder
-	char *east_path = "./textures/xpm/Wood_1024.xpm";   // Placeholder
-	char *west_path = "./textures/xpm/Stone_1024.xpm";   // Placeholder
-
+	north_path = "./textures/xpm/Futuristic_1024.xpm";
+	south_path = "./textures/xpm/Metal_1024.xpm";
+	east_path = "./textures/xpm/Wood_1024.xpm";
+	west_path = "./textures/xpm/Stone_1024.xpm";
 	if (!load_texture(game, &game->north_texture, north_path)
 		|| !load_texture(game, &game->south_texture, south_path)
 		|| !load_texture(game, &game->east_texture, east_path)
 		|| !load_texture(game, &game->west_texture, west_path))
-		{
-			return (0);
-		}
+	{
+		return (0);
+	}
 	return (1);
 }
-

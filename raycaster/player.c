@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 07:20:33 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/07 10:51:30 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/21 21:58:30 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	init_player(t_player *player, int grid_x, int grid_y, char orientation)
 
 	fov = 0.66;
 	player_zeroed(player, grid_x, grid_y);
-
 	if (orientation == 'N')
 	{
 		set_player(&player->look_dir.y, -1.0);

@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 10:59:07 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/22 11:00:02 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/21 21:47:55 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,14 @@ double get_time(void)
     
     gettimeofday(&tv, NULL);
     return (tv.tv_sec + tv.tv_usec / 1000000.0);
+}
+
+void	put_pixel(t_mlx *mlx, int x, int y, int color)
+{
+	int	offset;
+
+	if (x < 0 || x >= mlx->width || y < 0 || y >= mlx->height)
+		return ;
+	offset = (y * mlx->line_length + x * mlx->bytes_per_pixel);
+	*(unsigned int *)(mlx->img_data + offset) = color;
 }

@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 09:13:56 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/07 10:34:48 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/21 21:57:41 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	perform_rot(t_game *game, double angle)
 }
 
 void	precise_wall_check(t_game *game, double *p_axis, double target,
-		double fixed, bool is_x)
+	bool is_x)
 {
 	double	dist;
 	int		num_steps;
@@ -78,9 +78,9 @@ void	precise_wall_check(t_game *game, double *p_axis, double target,
 	while (i < num_steps)
 	{
 		current += step_size;
-		if (is_x && check_wall_collision(game, current, fixed))
+		if (is_x && check_wall_collision(game, current, game->player.pos.y))
 			break ;
-		if (!is_x && check_wall_collision(game, fixed, current))
+		if (!is_x && check_wall_collision(game, game->player.pos.x, current))
 			break ;
 		*p_axis = current;
 		i++;
@@ -99,18 +99,18 @@ void	perform_move(t_game *game, char op, t_vector v2)
 	{
 		tmp.x = game->player.pos.x + v2.x * move_speed;
 		tmp.y = game->player.pos.y + v2.y * move_speed;
-		precise_wall_check(game, &game->player.pos.x, tmp.x, game->player.pos.y,
+		precise_wall_check(game, &game->player.pos.x, tmp.x,
 			true);
-		precise_wall_check(game, &game->player.pos.y, tmp.y, game->player.pos.x,
+		precise_wall_check(game, &game->player.pos.y, tmp.y,
 			false);
 	}
 	else
 	{
 		tmp.x = game->player.pos.x - v2.x * move_speed;
 		tmp.y = game->player.pos.y - v2.y * move_speed;
-		precise_wall_check(game, &game->player.pos.x, tmp.x, game->player.pos.y,
+		precise_wall_check(game, &game->player.pos.x, tmp.x,
 			true);
-		precise_wall_check(game, &game->player.pos.y, tmp.y, game->player.pos.x,
+		precise_wall_check(game, &game->player.pos.y, tmp.y,
 			false);
 	}
 }
