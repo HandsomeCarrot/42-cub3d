@@ -23,7 +23,7 @@ run_map_test() {
 	total_tests=$((total_tests + 1))
     
     # Run cub3d with the map file and capture exit code
-    ./cub3d "$map_file" > /dev/null 2>&1
+    ./cub3d "$map_file" #> /dev/null 2>&1
     local actual_code=$?
     
     # Compare actual and expected codes
@@ -41,22 +41,32 @@ run_map_test() {
 echo -e "\n${YELLOW}=== Running Map Tests ===${NC}"
 
 # Run all test cases with expected return codes
-# Valid map should return 0 (success)
-run_map_test "./assets/maps/basic.cub" 0
+# Valid maps should return 0 (success)
+run_map_test "./assets/maps/valid_basic.cub" 0
+run_map_test "./assets/maps/valid_complex.cub" 0
+run_map_test "./assets/maps/valid_order.cub" 0
+run_map_test "./assets/maps/valid_spacing.cub" 0
+
 # Invalid maps should return non-zero (error)
-run_map_test "./assets/maps/empty.cub" 1
-run_map_test "./assets/maps/extra_color.cub" 1
-run_map_test "./assets/maps/extra_map_layout.cub" 1
-run_map_test "./assets/maps/extra_texture.cub" 1
-run_map_test "./assets/maps/missing_color.cub" 1
-run_map_test "./assets/maps/missing_extension" 1
-run_map_test "./assets/maps/missing_map_layout.cub" 1
-run_map_test "./assets/maps/missing_texture.cub" 1
-run_map_test "./assets/maps/wrong_color_format.cub" 1
-run_map_test "./assets/maps/wrong_extension.txt" 1
-run_map_test "./assets/maps/wrong_extension2.cub.all" 1
-run_map_test "./assets/maps/wrong_texture.cub" 1
-run_map_test "./assets/maps/wrong_texture2.cub" 1
+run_map_test "./assets/maps/.invalid_hidden_file.cub" 1
+run_map_test "./assets/maps/invalid_empty.cub" 1
+run_map_test "./assets/maps/invalid_extra_color.cub" 1
+run_map_test "./assets/maps/invalid_extra_map_layout.cub" 1
+run_map_test "./assets/maps/invalid_extra_texture.cub" 1
+run_map_test "./assets/maps/invalid_missing_color.cub" 1
+run_map_test "./assets/maps/invalid_missing_extension" 1
+run_map_test "./assets/maps/invalid_missing_map_layout.cub" 1
+run_map_test "./assets/maps/invalid_missing_texture.cub" 1
+run_map_test "./assets/maps/invalid_color_format.cub" 1
+run_map_test "./assets/maps/invalid_extension.txt" 1
+run_map_test "./assets/maps/invalid_extension_double.cub.all" 1
+run_map_test "./assets/maps/invalid_texture_extension.cub" 1
+run_map_test "./assets/maps/invalid_texture_path.cub" 1
+run_map_test "./assets/maps/invalid_duplicate_player.cub" 1
+run_map_test "./assets/maps/invalid_no_player.cub" 1
+run_map_test "./assets/maps/invalid_open_map.cub" 1
+run_map_test "./assets/maps/invalid_char.cub" 1
+run_map_test "./assets/maps/invalid_map_first.cub" 1
 
 echo -e "\nTotal tests: $total_tests"
 echo -e "${GREEN}Passed tests: $passed_tests${NC}"

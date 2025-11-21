@@ -1,0 +1,18 @@
+NO ./assets/textures/xpm/Wood.xpm
+SO ./assets/textures/xpm/Metal.xpm
+WE ./assets/textures/xpm/Brick.xpm
+EA ./assets/textures/xpm/Stone.xpm
+
+F 220,100,0
+C 225,30,0
+
+        1111111111
+      11100000000111
+    1110000000000001
+    1000000000000001
+11111000000N00000001
+10000000000000000001
+11111000000000000001
+    1000000000000001
+    1110000000000001
+      11111111111111
