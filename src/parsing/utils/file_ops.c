@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 18:15:52 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 16:31:11 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 18:28:30 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ void	log_close(int fd, const char *file, int line)
 	}
 }
 
-
 /**
  * @brief Validates that a file has the correct extension.
  *
@@ -157,15 +156,7 @@ int	correct_file_extension(const char *file, const char *extension)
 		filename++;
 	if (!has_correct_extension(file, extension))
 	{
-		int log_fd = log_start(ERROR, __FILE__, __LINE__);
-		if (log_fd >= 0)
-		{
-			ft_putstr_fd("invalid file name '", log_fd);
-			ft_putstr_fd((char *)file, log_fd);
-			ft_putstr_fd("': unsupported file extension (expected: ", log_fd);
-			ft_putstr_fd((char *)extension, log_fd);
-			ft_putendl_fd(")", log_fd);
-		}
+		log_invalid_file(file, extension);
 		return (1);
 	}
 	log_msg(DEBUG, __FILE__, __LINE__, "file has valid extension");

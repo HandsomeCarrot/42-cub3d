@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 15:43:55 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 17:38:20 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 19:27:56 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,24 @@ static bool	is_valid_neighbor(char c)
 bool	has_valid_neighbors(int x, int y, t_map_data *data)
 {
 	char	**map;
+	int		log_fd;
 
 	map = data->map.layout;
-	
 	if (is_map_border(x, y, data)
 		|| !is_valid_neighbor(map[y + 1][x])
 		|| !is_valid_neighbor(map[y][x + 1])
 		|| !is_valid_neighbor(map[y - 1][x])
 		|| !is_valid_neighbor(map[y][x - 1]))
 	{
-		int log_fd = log_start(ERROR, __FILE__, __LINE__);
+		log_fd = log_start(ERROR, __FILE__, __LINE__);
 		if (log_fd >= 0)
 		{
 			ft_putstr_fd("in map on line ", log_fd);
 			ft_putnbr_fd(y + 1, log_fd);
 			ft_putstr_fd(":", log_fd);
 			ft_putnbr_fd(x + 1, log_fd);
-			ft_putendl_fd(": invalid map layout: map is not surrounded by walls", log_fd);
+			ft_putstr_fd(": invalid map layout", log_fd);
+			ft_putendl_fd(": map is not surrounded by walls", log_fd);
 		}
 		return (false);
 	}

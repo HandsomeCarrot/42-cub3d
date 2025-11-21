@@ -6,12 +6,12 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 20:31:25 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/14 17:32:05 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 19:42:42 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTS_H
-# define STRUCTS_H
+#ifndef DEFINITIONS_H
+# define DEFINITIONS_H
 
 # include <stdbool.h>
 # include <stddef.h>
@@ -21,7 +21,7 @@
 # define MAP_PADDING " "
 # define MAP_TERRAIN "01"
 # define PLAYER_SPAWN "NESW"
-# define MAP_LAYOUT_CHARACTERS MAP_PADDING MAP_TERRAIN PLAYER_SPAWN
+# define MAP_LAYOUT_CHARACTERS " 01NESW"
 
 # define BYTE 8
 
@@ -116,4 +116,4 @@ typedef struct s_data
 	t_map_data		map_data;
 }					t_data;
 
-#endif /* STRUCTS_H */
+#endif /* DEFINITIONS_H */

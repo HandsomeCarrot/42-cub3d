@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:34:28 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/14 17:33:56 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 19:25:08 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,11 @@ void	log_line_error(int line_num, const char *message, const char *src_file,
 void	log_id_processing(t_map_id *data_id, char *src_file, int src_line);
 void	log_found_img(char *img_path, char *src_file, int src_line);
 void	log_found_color(int color, char *src_file, int src_line);
+
+//-----log_parsing.c-----//
+
+void	log_missing_ids(t_map_id *ids);
+void	log_invalid_file(const char *file, const char *extension);
+void	log_invalid_map_line(int row, const char *line, int pos);
 
 #endif /* LOGGING_H */

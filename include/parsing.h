@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 16:29:10 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 19:43:23 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PARSING_H
 
 # include "cleanup.h"
+# include "logging.h"
 # include "definitions.h"
 # include "libft.h"
 # include <errno.h>
@@ -25,14 +26,14 @@
 
 //-----color_parser.c-----//
 
-int			save_color(char *line, int row, t_map_id *data_id, t_colors *colors);
+int			save_color(char *line, int row, t_map_id *data_id,
+				t_colors *colors);
 
 //-----texture_identifiers.c-----//
 
 t_map_id	*get_map_data_type(char *line, int row, t_map_id *ids);
 bool		all_ids_found(t_map_id *ids);
 t_map_id	*get_map_identifiers(void);
-void		log_missing_ids(t_map_id *ids);
 
 //-----texture_parser.c-----//
 

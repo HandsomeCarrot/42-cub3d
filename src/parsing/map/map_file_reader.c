@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 17:07:29 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 17:44:20 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 19:20:07 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,28 @@
  *
  * @return 0 on success, other on error
  */
+static int	process_texture_lines(char **file_data, t_map_id *ids,
+		t_data *data, int *line)
+{
+	if (!file_data || !ids || !data || !line)
+		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
+	while (file_data[++(*line)] && !all_ids_found(ids))
+	{
+		if (is_empty_line(file_data[*line]))
+			continue ;
+		if (save_line_data(file_data[*line], *line + 1, ids, data))
+			return (1);
+	}
+	return (0);
+}
+
 static int	extract_texture_data(char **file_data, t_data *data, size_t *row)
 {
 	t_map_id	*ids;
 	int			line;
 
 	log_msg(DEBUG, __FILE__, __LINE__, "extracting texture data from map file");
-	if (!file_data || !data)
+	if (!file_data || !data || !row)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	ids = get_map_identifiers();
 	if (!ids)
@@ -42,18 +57,12 @@ static int	extract_texture_data(char **file_data, t_data *data, size_t *row)
 		free(ids);
 		return (1);
 	}
-	while (file_data[++line] && !all_ids_found(ids))
+	if (process_texture_lines(file_data, ids, data, &line))
 	{
-		if (is_empty_line(file_data[line]))
-			continue ;
-		if (save_line_data(file_data[line], line + 1, ids, data))
-		{
-			free(ids);
-			return (1);
-		}
+		free(ids);
+		return (1);
 	}
-	if (row)
-		*row = (size_t)line;
+	*row = (size_t)line;
 	free(ids);
 	log_msg(INFO, __FILE__, __LINE__, "extracted all necessary texture data");
 	return (0);

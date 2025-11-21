@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 16:12:14 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/14 17:48:07 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 19:21:24 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static size_t	get_map_height(char **lines, size_t map_start, t_map *map)
 		if (is_empty_line(lines[map_start + map_height]))
 			break ;
 		if (!is_valid_layout_line(lines[map_start + map_height],
-			map_start + map_height + 1, map))
+				map_start + map_height + 1, map))
 			return (0);
 		map_height++;
 	}
@@ -46,7 +46,7 @@ static int	populate_map_layout(char **lines, size_t map_start, t_map *map)
 
 	map_height = map->height;
 	map->layout = log_calloc(map_height + 1, sizeof(char *),
-		__FILE__, __LINE__);
+			__FILE__, __LINE__);
 	if (!map->layout)
 		return (1);
 	i = 0;

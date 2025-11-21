@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 13:34:35 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 17:44:18 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 18:27:30 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,36 +70,6 @@ t_map_id	*get_map_data_type(char *line, int row, t_map_id *ids)
 	}
 	log_missing_ids(ids);
 	return (NULL);
-}
-
-/**
- * @brief Logs which texture identifiers are missing
- *
- * @param ids Array of texture identifiers to check
- */
-void	log_missing_ids(t_map_id *ids)
-{
-	int	id_pos;
-	int	log_fd;
-
-	if (!ids)
-		return ;
-	log_fd = log_start(ERROR, __FILE__, __LINE__);
-	if (log_fd < 0)
-		return ;
-	ft_putstr_fd("missing texture identifier(s): ", log_fd);
-	id_pos = 0;
-	while (ids[id_pos].id)
-	{
-		if (!ids[id_pos].found)
-		{
-			ft_putstr_fd("'", log_fd);
-			ft_putstr_fd((char *)ids[id_pos].id, log_fd);
-			ft_putstr_fd("' ", log_fd);
-		}
-		id_pos++;
-	}
-	ft_putendl_fd("", log_fd);
 }
 
 /**

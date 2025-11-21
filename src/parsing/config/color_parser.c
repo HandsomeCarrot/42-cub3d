@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 13:41:51 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/18 17:42:39 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 18:23:45 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
  * @param color_channel Pointer to store the parsed color value
  * @return int 0 on success, 1 on failure
  */
-static int	parse_color_channel(char **colors_string, int *color_channel, int row)
+static int	parse_color_channel(char **colors_string, int *color_channel,
+		int row)
 {
 	int	num;
 
@@ -33,7 +34,8 @@ static int	parse_color_channel(char **colors_string, int *color_channel, int row
 	num = ft_atoi(*colors_string);
 	if (num < 0 || num > 255)
 	{
-		log_line_error(row, "Color value out of range: must be between 0 and 255",
+		log_line_error(row,
+			"Color value out of range: must be between 0 and 255",
 			__FILE__, __LINE__);
 		return (1);
 	}
@@ -82,7 +84,7 @@ static int	assign_final_color(t_map_id *data_id, t_colors *colors,
 		colors->floor = final_color;
 	else
 		return (log_msg(ERROR, __FILE__, __LINE__,
-			"invalid color identifier"), 1);
+				"invalid color identifier"), 1);
 	log_found_color(final_color, __FILE__, __LINE__);
 	return (0);
 }
@@ -94,7 +96,8 @@ static int	assign_final_color(t_map_id *data_id, t_colors *colors,
  * @param final_color Pointer to store the computed color value
  * @return int 0 on success, 1 on failure
  */
-static int	process_rgb_channels(char **colors_string, int *final_color, int row)
+static int	process_rgb_channels(char **colors_string, int *final_color,
+		int row)
 {
 	int	color_channel;
 

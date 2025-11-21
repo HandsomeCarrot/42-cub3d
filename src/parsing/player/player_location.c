@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 15:50:33 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 17:38:17 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 19:37:16 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,7 @@ static int	save_player_pos(int y, int x, t_map_data *data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	if (data->player.found)
 	{
-		log_fd = log_start(ERROR, __FILE__, __LINE__);
-		if (log_fd >= 0)
-		{
-			ft_putstr_fd("in map layout: multiple player spawns defined (found at line ", log_fd);
-			ft_putnbr_fd(y + 1, log_fd);
-			ft_putstr_fd(":", log_fd);
-			ft_putnbr_fd(x + 1, log_fd);
-			ft_putendl_fd(")", log_fd);
-		}
+		log_multiple_player_spawns(y, x);
 		return (1);
 	}
 	data->player.found = 1;
@@ -61,27 +53,28 @@ static int	save_player_pos(int y, int x, t_map_data *data)
 int	get_player_pos(t_map_data *data)
 {
 	char	**map;
-	int		posY;
-	int		posX;
+	int		pos_y;
+	int		pos_x;
 
 	if (!data)
 		return (log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	log_msg(DEBUG, __FILE__, __LINE__, "searching for player spawn");
 	map = data->map.layout;
-	posY = 0;
-	while(map[posY])
+	pos_y = 0;
+	while (map[pos_y])
 	{
-		posX = 0;
-		while (map[posY][posX])
+		pos_x = 0;
+		while (map[pos_y][pos_x])
 		{
-			if (is_player_spawn(map[posY][posX])
-				&& save_player_pos(posY, posX, data))
-					return (1);
-			posX++;
+			if (is_player_spawn(map[pos_y][pos_x])
+				&& save_player_pos(pos_y, pos_x, data))
+				return (1);
+			pos_x++;
 		}
-		posY++;
+		pos_y++;
 	}
 	if (!data->player.found)
-		return (log_msg(ERROR, __FILE__, __LINE__, "in map layout: missing player spawn"), 1);
+		return (log_msg(ERROR, __FILE__, __LINE__,
+				"in map layout: missing player spawn"), 1);
 	return (0);
 }

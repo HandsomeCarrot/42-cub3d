@@ -6,13 +6,14 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 13:24:00 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/18 16:30:23 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 18:34:38 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-static bool	set_wall_texture_path(char *img_path, t_map_id *id, t_images *imgs, int row)
+static bool	set_wall_texture_path(char *img_path, t_map_id *id, t_images *imgs,
+		int row)
 {
 	if (!img_path || !id || !imgs)
 	{

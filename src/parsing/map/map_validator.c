@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_map_layout.c                                 :+:      :+:    :+:   */
+/*   map_validator.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 14:05:56 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/13 15:51:38 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 19:31:15 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	check_map_playability(t_map_data *data)
 		{
 			if ((map[y][x] == '0' || is_player_spawn(map[y][x]))
 				&& !has_valid_neighbors(x, y, data))
-					return (1);
+				return (1);
 			x++;
 		}
 		y++;
@@ -63,10 +63,10 @@ int	parse_map_layout(t_data *data) //TODO: finish
 	int		error;
 
 	if (!data)
-		return(log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
+		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	if (get_player_pos(&(data->map_data)))
 		return (1);
-	print_string_array((const char**)data->map_data.map.layout);
+	print_string_array((const char **)data->map_data.map.layout);
 	error = check_map_playability(&data->map_data);
 	return (error);
 }
