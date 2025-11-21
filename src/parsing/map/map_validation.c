@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 15:43:55 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 19:27:56 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 20:09:27 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ bool	has_valid_neighbors(int x, int y, t_map_data *data)
 		if (log_fd >= 0)
 		{
 			ft_putstr_fd("in map on line ", log_fd);
-			ft_putnbr_fd(y + 1, log_fd);
+			ft_putnbr_fd(data->map.start_line + y + 1, log_fd);
 			ft_putstr_fd(":", log_fd);
 			ft_putnbr_fd(x + 1, log_fd);
 			ft_putstr_fd(": invalid map layout", log_fd);

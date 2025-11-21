@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 15:50:33 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 19:47:58 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 20:14:18 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	save_player_pos(int y, int x, t_map_data *data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	if (data->player.found)
 	{
-		log_multiple_player_spawns(y, x);
+		log_multiple_player_spawns(data->map.start_line + y + 1, x);
 		return (1);
 	}
 	data->player.found = 1;

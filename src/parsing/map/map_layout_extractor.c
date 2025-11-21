@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 16:12:14 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 19:21:24 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 20:09:17 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	extract_map_layout(char **lines, size_t *row, t_map *map)
 	if (map_height == 0)
 		return (1);
 	map->height = map_height;
+	map->start_line = map_start;
 	*row = map_start + map_height;
 	if (populate_map_layout(lines, map_start, map))
 		return (1);
