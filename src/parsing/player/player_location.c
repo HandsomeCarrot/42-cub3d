@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 15:50:33 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 19:37:16 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 19:47:58 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ static int	save_player_pos(int y, int x, t_map_data *data)
 		return (1);
 	}
 	data->player.found = 1;
-	data->player.posY = y;
-	data->player.posX = x;
+	data->player.pos_y = y;
+	data->player.pos_x = x;
 	data->player.orientation = data->map.layout[y][x];
 	log_fd = log_start(DEBUG, __FILE__, __LINE__);
 	if (log_fd >= 0)

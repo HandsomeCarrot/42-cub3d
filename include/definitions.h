@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 20:31:25 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 19:42:42 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 19:46:07 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ typedef struct s_colors
 typedef struct s_player
 {
 	int				found;
-	int				posX;
-	int				posY;
+	int				pos_x;
+	int				pos_y;
 	char			orientation;
 }					t_player;
 
