@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:34:28 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 19:25:08 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 19:50:38 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,6 @@ void	log_found_color(int color, char *src_file, int src_line);
 void	log_missing_ids(t_map_id *ids);
 void	log_invalid_file(const char *file, const char *extension);
 void	log_invalid_map_line(int row, const char *line, int pos);
+void	log_multiple_player_spawns(int y, int x);
 
 #endif /* LOGGING_H */

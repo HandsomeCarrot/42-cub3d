@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 18:26:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 19:39:36 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 19:52:40 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ void	log_invalid_map_line(int row, const char *line, int pos)
 		ft_putnbr_fd(row, log_fd);
 		ft_putstr_fd(":", log_fd);
 		ft_putnbr_fd(pos + 1, log_fd);
-		ft_putstr_fd(": invalid character in map ('", log_fd);
+		ft_putstr_fd(": invalid character in map: '", log_fd);
 		ft_putchar_fd(line[pos], log_fd);
-		ft_putendl_fd("')", log_fd);
+		ft_putendl_fd("'", log_fd);
 	}
 }
 

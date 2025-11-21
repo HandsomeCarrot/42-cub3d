@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/11/18 17:24:58 by vpoka            ###   ########.fr        #
+#    Updated: 2025/11/21 19:50:17 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,8 @@ CLEANUP_SRCS :=	$(addprefix cleanup/, \
 LOGGING_SRCS :=	$(addprefix logging/, \
 				logging.c \
 				log_memory.c \
-				log_parsing.c)
+				log_parsing.c \
+				log_parsing2.c)
 
 PARSING_SRCS :=	$(addprefix parsing/, \
 				parse.c \
