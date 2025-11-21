@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 18:15:52 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/28 20:14:28 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 16:31:11 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,25 +98,6 @@ void	log_close(int fd, const char *file, int line)
 	}
 }
 
-/**
- * @brief Checks if a filename represents a hidden file.
- *
- * This function determines if the given filename is a hidden file
- * by checking if it starts with a dot ('.') character. Hidden files
- * are typically system files or configuration files that should not
- * be processed as regular map files.
- *
- * @param filename A null-terminated string of the filename to check.
- * @return 1 if the file is hidden, 0 otherwise.
- * @note This function assumes the filename has been extracted from
- *       the full path (after the last '/').
- */
-static int	is_hidden_file(const char *filename)
-{
-	if (filename[0] == '.')
-		return (1);
-	return (0);
-}
 
 /**
  * @brief Validates that a file has the correct extension.
@@ -174,16 +155,17 @@ int	correct_file_extension(const char *file, const char *extension)
 		filename = (char *)file;
 	else
 		filename++;
-	if (is_hidden_file(filename))
-	{
-		log_extension_error(file, "hidden files not supported",
-			__FILE__, __LINE__);
-		return (1);
-	}
 	if (!has_correct_extension(file, extension))
 	{
-		log_extension_error(file, "unsupported file extension",
-			__FILE__, __LINE__);
+		int log_fd = log_start(ERROR, __FILE__, __LINE__);
+		if (log_fd >= 0)
+		{
+			ft_putstr_fd("invalid file name '", log_fd);
+			ft_putstr_fd((char *)file, log_fd);
+			ft_putstr_fd("': unsupported file extension (expected: ", log_fd);
+			ft_putstr_fd((char *)extension, log_fd);
+			ft_putendl_fd(")", log_fd);
+		}
 		return (1);
 	}
 	log_msg(DEBUG, __FILE__, __LINE__, "file has valid extension");

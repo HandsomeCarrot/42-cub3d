@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player_position_helpers.c                          :+:      :+:    :+:   */
+/*   player_location.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 15:50:33 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/13 15:54:19 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 16:29:16 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	save_player_pos(int y, int x, t_map_data *data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	if (data->player.found)
 	{
-		log_msg(ERROR, __FILE__, __LINE__, "multiple player spawns defined");
+		log_msg(ERROR, __FILE__, __LINE__, "map layout: multiple player spawns defined");
 		return (1);
 	}
 	data->player.found = 1;
@@ -74,6 +74,6 @@ int	get_player_pos(t_map_data *data)
 		posY++;
 	}
 	if (!data->player.found)
-		return (log_msg(ERROR, __FILE__, __LINE__, "no player spawn found"), 1);
+		return (log_msg(ERROR, __FILE__, __LINE__, "map layout: missing player spawn"), 1);
 	return (0);
 }

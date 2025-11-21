@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/18 16:24:48 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 16:29:10 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int			save_color(char *line, int row, t_map_id *data_id, t_colors *colors);
 t_map_id	*get_map_data_type(char *line, int row, t_map_id *ids);
 bool		all_ids_found(t_map_id *ids);
 t_map_id	*get_map_identifiers(void);
+void		log_missing_ids(t_map_id *ids);
 
 //-----texture_parser.c-----//
 
