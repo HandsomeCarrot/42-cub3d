@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 19:43:23 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 23:51:02 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,93 +22,113 @@
 # include <mlx.h>
 # include <string.h>
 
+int			parse(int argc, char **argv, t_data *data);
+
 //-----------------------------------CONFIG-----------------------------------//
 
-//-----color_parser.c-----//
+//-----parse_colors.c-----//
 
 int			save_color(char *line, int row, t_map_id *data_id,
 				t_colors *colors);
 
-//-----texture_identifiers.c-----//
+//-----identify_textures.c-----//
 
 t_map_id	*get_map_data_type(char *line, int row, t_map_id *ids);
 bool		all_ids_found(t_map_id *ids);
 t_map_id	*get_map_identifiers(void);
 
-//-----texture_parser.c-----//
+//-----parse_textures.c-----//
 
 int			save_image(char *line, int row, t_map_id *data_id, t_data *data);
 
 //-----------------------------------MAP-----------------------------------//
-//-----map_file_reader.c-----//
+//-----read_map_file.c-----//
 
 int			parse_map_file(char *file, t_data *data);
 
-//-----map_validator.c-----//
+//-----validate_map.c-----//
 
 int			parse_map_layout(t_data *data);
 
-//-----map_data_saver.c-----//
+//-----save_map_data.c-----//
 
 int			save_line_data(char *line, int row, t_map_id *ids, t_data *data);
 
-//-----map_layout_extractor.c-----//
+//-----extract_map_layout.c-----//
 
 int			extract_map_layout(char **lines, size_t *row, t_map *map);
 
-//-----map_line_processor.c-----//
+//-----process_map_lines.c-----//
 
 size_t		get_next_char_block(char **save, const char *str);
 bool		is_valid_layout_line(const char *line, size_t row, t_map *map);
 char		*modified_map_line(char *old_line, t_map *map);
 
-//-----map_validation.c-----//
+//-----check_neighbors.c-----//
 
 bool		has_valid_neighbors(int x, int y, t_map_data *data);
 
 //-----------------------------------PLAYER-----------------------------------//
-//-----player_location.c-----//
+//-----locate_player.c-----//
 
 bool		is_player_spawn(char c);
 int			get_player_pos(t_map_data *data);
 
 //-----------------------------------UTILS-----------------------------------//
-//-----arrays.c-----//
+//-----manage_arrays.c-----//
 
 int			new_array(size_t member_size, size_t capacity, t_array *array);
 int			expand_array(t_array *array);
 int			append_to_array(void *src, t_array *array);
 
-//-----color_utils.c-----//
+//-----manage_colors.c-----//
 
 int			set_color_channel(int color, t_color_channel channel, int value);
 int			get_color_channel(int color, t_color_channel channel);
 
-//-----file_ops.c-----//
+//-----manage_files.c-----//
 
 int			open_file_read(const char *file);
 void		log_close(int fd, const char *file, int line);
 int			correct_file_extension(const char *file, const char *extension);
 
-//-----line_utils.c-----//
+//-----check_lines.c-----//
 
 bool		is_empty_line(char *line);
 bool		has_leading_whitespace(char *line, int row);
 size_t		skip_empty_lines(char **lines, size_t start_row);
 
-//-----read_file.c-----//
+//-----read_file_content.c-----//
 
 char		**read_file(const char *file);
 
-//-----char_checks.c-----//
+//-----check_chars.c-----//
 
 bool		is_whitespace(char c);
 size_t		skip_whitespace(const char *str);
 
 //---------------------------------VALIDATION---------------------------------//
-//-----content_validation.c-----//
+//-----validate_content.c-----//
 
 bool		has_trailing_content(char *line, int row);
 int			check_hanging_lines(char **lines, size_t row);
+
+//----------------------------------LOGGING-----------------------------------//
+//-----log_parsing_info.c-----//
+
+void		log_extension_error(const char *file, const char *message,
+				const char *src_file, int line);
+void		log_line_error(int line_num, const char *message,
+				const char *src_file, int line);
+void		log_id_processing(t_map_id *data_id, char *src_file, int src_line);
+void		log_found_img(char *img_path, char *src_file, int src_line);
+void		log_found_color(int color, char *src_file, int src_line);
+
+//-----log_parsing_error.c-----//
+
+void		log_missing_ids(t_map_id *ids);
+void		log_invalid_file(const char *file, const char *extension);
+void		log_invalid_map_line(int row, const char *line, int pos);
+void		log_multiple_player_spawns(int y, int x);
 
 #endif /* PARSING_H */

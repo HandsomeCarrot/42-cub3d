@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:34:28 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 19:50:38 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 23:46:40 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,39 +37,16 @@
 # define LOG_INVALID_PARAM "got invalid parameter"
 # define LOG_ALLOC_FAIL "memory allocation failed"
 
-typedef enum e_log_level
-{
-	ERROR,
-	WARNING,
-	INFO,
-	DEBUG
-}		t_log_level;
+# define LOG_ALLOC_FAIL "memory allocation failed"
 
-//-----logging.c-----//
+//-----logger.c-----//
 
 int		log_start(t_log_level lvl, const char *file, int line);
 void	log_msg(t_log_level lvl, const char *file, int line, char *msg);
 
-//-----log_memory.c-----//
+//-----memory_logger.c-----//
 
 void	*log_calloc(size_t nmemb, size_t size, const char *file, int line);
 char	*log_get_next_line(int file_fd, char *src_file, int src_line);
-
-//-----log_parsing.c-----//
-
-void	log_extension_error(const char *file, const char *message,
-			const char *src_file, int line);
-void	log_line_error(int line_num, const char *message, const char *src_file,
-			int line);
-void	log_id_processing(t_map_id *data_id, char *src_file, int src_line);
-void	log_found_img(char *img_path, char *src_file, int src_line);
-void	log_found_color(int color, char *src_file, int src_line);
-
-//-----log_parsing.c-----//
-
-void	log_missing_ids(t_map_id *ids);
-void	log_invalid_file(const char *file, const char *extension);
-void	log_invalid_map_line(int row, const char *line, int pos);
-void	log_multiple_player_spawns(int y, int x);
 
 #endif /* LOGGING_H */

@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 20:31:25 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 20:09:10 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 23:46:35 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,14 @@ typedef struct s_map_data
 	t_colors		colors;
 	t_player		player;
 }					t_map_data;
+
+typedef enum e_log_level
+{
+	ERROR,
+	WARNING,
+	INFO,
+	DEBUG
+}					t_log_level;
 
 typedef struct s_data
 {

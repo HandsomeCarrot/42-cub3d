@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 20:31:32 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/14 17:32:09 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/21 23:47:14 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 # include "logging.h"
 # include <mlx.h>
 
-//-----main-cleanup.c-----//
+//-----cleanup_main.c-----//
 
 void	main_cleanup(t_data *data);
 
-//-----string-cleanup.c-----//
+//-----cleanup_strings.c-----//
 
 void	free_string_array(char ***string_array);
 

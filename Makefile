@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/11/21 19:50:17 by vpoka            ###   ########.fr        #
+#    Updated: 2025/11/21 23:47:33 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,42 +29,43 @@ RM := rm -f
 S := src
 
 INIT_SRCS :=	$(addprefix inits/, \
-				main_init.c)
+				init_main.c)
 
 CLEANUP_SRCS :=	$(addprefix cleanup/, \
-				main_cleanup.c \
-				string_cleanup.c)
+				cleanup_main.c \
+				cleanup_strings.c)
 
 LOGGING_SRCS :=	$(addprefix logging/, \
-				logging.c \
-				log_memory.c \
-				log_parsing.c \
-				log_parsing2.c)
+				logger.c \
+				memory_logger.c)
 
 PARSING_SRCS :=	$(addprefix parsing/, \
 				parse.c \
 				$(addprefix config/, \
-				color_parser.c \
-				texture_identifiers.c \
-				texture_parser.c) \
+				parse_colors.c \
+				identify_textures.c \
+				parse_textures.c) \
+				$(addprefix logging/, \
+				log_parsing_info.c \
+				log_parsing_error.c) \
 				$(addprefix map/, \
-				map_data_saver.c \
-				map_file_reader.c \
-				map_layout_extractor.c \
-				map_line_processor.c \
-				map_validation.c \
-				map_validator.c) \
+				save_map_data.c \
+				read_map_file.c \
+				extract_map_layout.c \
+				process_map_lines.c \
+				check_neighbors.c \
+				validate_map.c) \
 				$(addprefix player/, \
-				player_location.c) \
+				locate_player.c) \
 				$(addprefix utils/, \
-				arrays.c \
-				char_checks.c \
-				color_utils.c \
-				file_ops.c \
-				line_utils.c \
-				read_file.c) \
+				manage_arrays.c \
+				check_chars.c \
+				manage_colors.c \
+				manage_files.c \
+				check_lines.c \
+				read_file_content.c) \
 				$(addprefix validation/, \
-				content_validation.c))
+				validate_content.c))
 
 SRCS :=	$(addprefix $(S)/, \
 		main.c \
