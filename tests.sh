@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 # Colors for output
@@ -67,6 +66,7 @@ run_map_test "./assets/maps/invalid_no_player.cub" 1
 run_map_test "./assets/maps/invalid_open_map.cub" 1
 run_map_test "./assets/maps/invalid_char.cub" 1
 run_map_test "./assets/maps/invalid_map_first.cub" 1
+run_map_test "./assets/maps/.cub" 1
 
 echo -e "\nTotal tests: $total_tests"
 echo -e "${GREEN}Passed tests: $passed_tests${NC}"
