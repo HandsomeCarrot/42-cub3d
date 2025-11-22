@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_validation.c                                   :+:      :+:    :+:   */
+/*   check_neighbors.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 15:43:55 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 20:09:27 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 13:13:08 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
 /**
- * @return true/false
+ * @brief Checks if a character represents valid map terrain (0 or 1).
+ *
+ * @param c The character to check.
+ * @return true if valid terrain, false otherwise.
  */
 static bool	is_map_terrain(char c)
 {
@@ -22,6 +25,14 @@ static bool	is_map_terrain(char c)
 	return (false);
 }
 
+/**
+ * @brief Checks if the given coordinates are on the map border.
+ *
+ * @param x The x-coordinate.
+ * @param y The y-coordinate.
+ * @param data The map data structure.
+ * @return true if on border, false otherwise.
+ */
 static bool	is_map_border(int x, int y, t_map_data *data)
 {
 	if (y <= 0 || y >= data->map.height - 1
@@ -30,6 +41,14 @@ static bool	is_map_border(int x, int y, t_map_data *data)
 	return (false);
 }
 
+/**
+ * @brief Checks if a character is a valid neighbor for a floor tile.
+ *
+ * Valid neighbors are walls (1), floors (0), or player spawns.
+ *
+ * @param c The character to check.
+ * @return true if valid neighbor, false otherwise.
+ */
 static bool	is_valid_neighbor(char c)
 {
 	if (is_map_terrain(c) || is_player_spawn(c))
@@ -37,6 +56,16 @@ static bool	is_valid_neighbor(char c)
 	return (false);
 }
 
+/**
+ * @brief Verifies that a floor tile has valid neighbors.
+ *
+ * Checks the 4 surrounding neighbors (up, down, left, right).
+ *
+ * @param x The x-coordinate of the tile.
+ * @param y The y-coordinate of the tile.
+ * @param data The map data structure.
+ * @return true if valid, false otherwise.
+ */
 bool	has_valid_neighbors(int x, int y, t_map_data *data)
 {
 	char	**map;

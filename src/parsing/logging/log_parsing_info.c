@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   log_parsing.c                                      :+:      :+:    :+:   */
+/*   log_parsing_info.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 20:08:44 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/14 17:31:21 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 13:13:03 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,11 @@ void	log_line_error(int line_num, const char *message, const char *src_file,
 }
 
 /**
- * prints a log message
+ * @brief Logs the start of processing for a map identifier.
+ *
+ * @param data_id The map identifier being processed.
+ * @param src_file The source file calling this function.
+ * @param src_line The source line calling this function.
  */
 void	log_id_processing(t_map_id *data_id, char *src_file, int src_line)
 {
@@ -90,6 +94,13 @@ void	log_id_processing(t_map_id *data_id, char *src_file, int src_line)
 	ft_putchar_fd('\n', log_fd);
 }
 
+/**
+ * @brief Logs that an image path has been found.
+ *
+ * @param img_path The found image path.
+ * @param src_file The source file calling this function.
+ * @param src_line The source line calling this function.
+ */
 void	log_found_img(char *img_path, char *src_file, int src_line)
 {
 	int	log_fd;
@@ -108,6 +119,13 @@ void	log_found_img(char *img_path, char *src_file, int src_line)
 	}
 }
 
+/**
+ * @brief Logs that a color definition has been found.
+ *
+ * @param color The found color value.
+ * @param src_file The source file calling this function.
+ * @param src_line The source line calling this function.
+ */
 void	log_found_color(int color, char *src_file, int src_line)
 {
 	int	log_fd;

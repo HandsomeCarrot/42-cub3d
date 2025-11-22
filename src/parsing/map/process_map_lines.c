@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_line_processor.c                               :+:      :+:    :+:   */
+/*   process_map_lines.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:39:39 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 19:25:53 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 13:13:13 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
 /**
- * returns amount of characters it skipped which consists of
- * - skipped whitespace characters
- * - characters until next whitespace/null character
+ * @brief Extracts the next block of characters from a string.
+ *
+ * Skips whitespace and extracts characters until the next whitespace or null.
+ *
+ * @param save Pointer to store the extracted string.
+ * @param str The source string.
+ * @return The number of characters processed (skipped + extracted).
  */
 size_t	get_next_char_block(char **save, const char *str)
 {
@@ -38,7 +42,14 @@ size_t	get_next_char_block(char **save, const char *str)
 }
 
 /**
- * @return true, or false
+ * @brief Validates if a line contains only valid map characters.
+ *
+ * Updates the map width if the current line is longer.
+ *
+ * @param line The line to validate.
+ * @param row The line number for error reporting.
+ * @param map Pointer to map structure.
+ * @return true if valid, false otherwise.
  */
 bool	is_valid_layout_line(const char *line, size_t row, t_map *map)
 {
@@ -61,6 +72,13 @@ bool	is_valid_layout_line(const char *line, size_t row, t_map *map)
 	return (true);
 }
 
+/**
+ * @brief Creates a new map line padded with spaces to match map width.
+ *
+ * @param old_line The original map line.
+ * @param map Pointer to map structure containing width.
+ * @return Pointer to the new padded line, or NULL on failure.
+ */
 char	*modified_map_line(char *old_line, t_map *map)
 {
 	char	*new_line;

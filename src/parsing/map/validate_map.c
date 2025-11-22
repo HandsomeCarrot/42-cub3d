@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_validator.c                                    :+:      :+:    :+:   */
+/*   validate_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 14:05:56 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 19:31:15 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 13:13:31 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
 /**
- * @return 0 on success, other on failure
+ * @brief Checks if the map is playable (enclosed by walls).
+ *
+ * Iterates through the map layout and verifies that every floor tile ('0')
+ * and player spawn is surrounded by valid neighbors.
+ *
+ * @param data Map data structure containing the layout.
+ * @return 0 on success, 1 on failure.
  */
 static int	check_map_playability(t_map_data *data)
 {
@@ -41,6 +47,11 @@ static int	check_map_playability(t_map_data *data)
 	return (0);
 }
 
+/**
+ * @brief Prints a string array to stdout (for debugging).
+ *
+ * @param array The null-terminated string array to print.
+ */
 static void	print_string_array(const char **array)
 {
 	int	line;
@@ -58,7 +69,15 @@ static void	print_string_array(const char **array)
 	}
 }
 
-int	parse_map_layout(t_data *data) //TODO: finish
+/**
+ * @brief Validates the parsed map layout.
+ *
+ * Locates the player and checks if the map is surrounded by walls.
+ *
+ * @param data Main data structure.
+ * @return 0 on success, 1 on failure.
+ */
+int	parse_map_layout(t_data *data)
 {
 	int		error;
 

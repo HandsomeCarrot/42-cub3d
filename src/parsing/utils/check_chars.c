@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   char_checks.c                                      :+:      :+:    :+:   */
+/*   check_chars.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 17:12:48 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/14 17:13:09 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 13:13:45 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ bool	is_whitespace(char c)
 	return (false);
 }
 
+/**
+ * @brief Skips whitespace characters in a string.
+ *
+ * @param str The string to scan.
+ * @return The number of whitespace characters skipped.
+ */
 size_t	skip_whitespace(const char *str)
 {
 	size_t	skipped;

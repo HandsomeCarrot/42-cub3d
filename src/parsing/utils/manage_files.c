@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   file_ops.c                                         :+:      :+:    :+:   */
+/*   manage_files.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 18:15:52 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 18:28:30 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 13:14:00 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,21 +127,21 @@ static int	has_correct_extension(const char *file, const char *extension)
 }
 
 /**
-	* @brief Validates that a file has the correct extension.
-	*
-	* This function checks if the given file path ends with the specified
-	* extension. It performs several validations: ensures the file and
-	* extension strings are not NULL, checks that the file name is not
-	* just an extension (starts with '.'), and verifies that the file
-	* ends with the exact extension string.
-	*
-	* @param file A null-terminated string of the file path to validate.
-	* @param extension A null-terminated string of the expected extension,
-	*                  including the leading dot (e.g., ".cub").
-	* @return 0 if the file has the correct extension, 1 otherwise.
-	* @note This function logs a warning for invalid parameters and an
-	*       error for incorrect file extensions.
-	*/
+* @brief Validates that a file has the correct extension.
+*
+* This function checks if the given file path ends with the specified
+* extension. It performs several validations: ensures the file and
+* extension strings are not NULL, checks that the file name is not
+* just an extension (starts with '.'), and verifies that the file
+* ends with the exact extension string.
+*
+* @param file A null-terminated string of the file path to validate.
+* @param extension A null-terminated string of the expected extension,
+*                  including the leading dot (e.g., ".cub").
+* @return 0 if the file has the correct extension, 1 otherwise.
+* @note This function logs a warning for invalid parameters and an
+*       error for incorrect file extensions.
+*/
 int	correct_file_extension(const char *file, const char *extension)
 {
 	char	*filename;

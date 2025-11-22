@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_file_reader.c                                  :+:      :+:    :+:   */
+/*   read_map_file.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 17:07:29 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 19:20:07 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 13:13:15 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,18 @@
  *
  * @return 0 on success, other on error
  */
+/**
+ * @brief Iterates over file data to extract texture information.
+ *
+ * Skips empty lines and extracts data for NO, EA, SO, WE, F, C.
+ * Stops when map layout starts or end of file is reached.
+ *
+ * @param file_data The content of the map file.
+ * @param ids Array of map identifiers.
+ * @param data Main data structure to store extracted info.
+ * @param line Pointer to current line index (updated).
+ * @return 0 on success, 1 on error.
+ */
 static int	process_texture_lines(char **file_data, t_map_id *ids,
 		t_data *data, int *line)
 {
@@ -39,6 +51,17 @@ static int	process_texture_lines(char **file_data, t_map_id *ids,
 	return (0);
 }
 
+/**
+ * @brief Extracts all texture and color data from the map file.
+ *
+ * Initializes identifiers, processes lines, and updates the row index
+ * to point to the start of the map layout.
+ *
+ * @param file_data The content of the map file.
+ * @param data Main data structure.
+ * @param row Pointer to store the index where map layout starts.
+ * @return 0 on success, 1 on error.
+ */
 static int	extract_texture_data(char **file_data, t_data *data, size_t *row)
 {
 	t_map_id	*ids;
@@ -72,6 +95,16 @@ static int	extract_texture_data(char **file_data, t_data *data, size_t *row)
  * @brief parse and save the data from the file data
  *
  * @return 0 on success, other on error
+ */
+/**
+ * @brief Orchestrates the extraction of all data from the file content.
+ *
+ * Extracts textures, colors, and the map layout. Also checks for
+ * hanging lines after the map.
+ *
+ * @param file_data The content of the map file.
+ * @param data Main data structure.
+ * @return 0 on success, 1 on error.
  */
 static int	extract_file_data(char **file_data, t_data *data)
 {

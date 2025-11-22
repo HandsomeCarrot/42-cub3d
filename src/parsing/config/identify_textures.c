@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   texture_identifiers.c                              :+:      :+:    :+:   */
+/*   identify_textures.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 13:34:35 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 18:27:30 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 13:12:49 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
 /**
- * checks if 'line' starts with the same characters as 'data_id'
+ * @brief Checks if 'line' starts with the same characters as 'data_id'.
+ *
+ * @param line The line to check.
+ * @param data_id The map identifier to compare against.
+ * @return true if match found, false otherwise.
  */
 static bool	has_same_id(char *line, t_map_id data_id)
 {
@@ -26,7 +30,13 @@ static bool	has_same_id(char *line, t_map_id data_id)
 }
 
 /**
- * checks if this identifier was already found
+ * @brief Checks if this identifier was already found.
+ *
+ * Logs an error if a duplicate is found.
+ *
+ * @param data_id The map identifier to check.
+ * @param row The current line number in the map file.
+ * @return true if duplicate found, false otherwise.
  */
 static bool	is_duplicate_id(t_map_id data_id, int row)
 {
@@ -47,7 +57,12 @@ static bool	is_duplicate_id(t_map_id data_id, int row)
 }
 
 /**
- * returns a pointer to data_id entry that was found, NULL on error
+ * @brief Identifies the type of map data in the given line.
+ *
+ * @param line The line to analyze.
+ * @param row The current line number in the map file.
+ * @param ids Array of valid map identifiers.
+ * @return Pointer to the found map identifier, or NULL if not found or error.
  */
 t_map_id	*get_map_data_type(char *line, int row, t_map_id *ids)
 {
@@ -95,7 +110,12 @@ bool	all_ids_found(t_map_id *ids)
 }
 
 /**
- * @return table with defined identifiers accepted in map
+ * @brief Creates a table of defined identifiers accepted in the map.
+ *
+ * Allocates and initializes the array of valid map identifiers
+ * (NO, EA, SO, WE, F, C).
+ *
+ * @return Pointer to the array of map identifiers, or NULL on failure.
  */
 t_map_id	*get_map_identifiers(void)
 {

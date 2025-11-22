@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   line_utils.c                                       :+:      :+:    :+:   */
+/*   check_lines.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 19:28:02 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/14 17:13:49 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 13:13:48 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,13 @@ bool	is_empty_line(char *line)
 }
 
 /**
- * returns true if the first character of 'line' is a whitespace character,
- * false otherwise
+ * @brief Checks if a line has leading whitespace.
+ *
+ * Logs an error if leading whitespace is found before map data.
+ *
+ * @param line The line to check.
+ * @param row The line number for error reporting.
+ * @return true if leading whitespace found, false otherwise.
  */
 bool	has_leading_whitespace(char *line, int row)
 {
@@ -60,8 +65,11 @@ bool	has_leading_whitespace(char *line, int row)
 }
 
 /**
- * Find the first non-empty map line starting from the given row.
- * @return map_start position on success, SIZE_MAX on error
+ * @brief Skips empty lines in the file content.
+ *
+ * @param lines Array of file lines.
+ * @param start_row The index to start checking from.
+ * @return The index of the first non-empty line.
  */
 size_t	skip_empty_lines(char **lines, size_t start_row)
 {

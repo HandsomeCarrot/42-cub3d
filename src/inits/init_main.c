@@ -1,17 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_init.c                                        :+:      :+:    :+:   */
+/*   init_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 17:55:19 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/22 19:39:37 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 13:12:34 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inits.h"
 
+/**
+ * @brief Initializes the main data structure and MiniLibX.
+ *
+ * Allocates memory for the data structure and initializes the MLX instance.
+ *
+ * @return Pointer to the initialized data structure, or NULL on failure.
+ */
 t_data	*init_data(void)
 {
 	t_data	*data;

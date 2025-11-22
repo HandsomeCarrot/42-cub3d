@@ -1,17 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   texture_parser.c                                   :+:      :+:    :+:   */
+/*   parse_textures.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 13:24:00 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 18:34:38 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 13:12:55 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
+/**
+ * @brief Sets the texture path for the corresponding wall identifier.
+ *
+ * @param img_path The path to the texture image.
+ * @param id The map identifier (NO, SO, EA, WE).
+ * @param imgs The images structure to update.
+ * @param row The line number for error reporting.
+ * @return true on success, false on error.
+ */
 static bool	set_wall_texture_path(char *img_path, t_map_id *id, t_images *imgs,
 		int row)
 {

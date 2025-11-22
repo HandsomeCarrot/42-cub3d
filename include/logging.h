@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:34:28 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 23:46:40 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 13:12:10 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 # include "parsing.h"
 # include <stdio.h>
 
+// 0 = ERROR
+// 1 = WARNING
+// 2 = INFO
+// 3 = DEBUG
 # ifndef LOGGING_LEVEL
 #  define LOGGING_LEVEL 2
 # endif /* LOGGING_LEVEL */
@@ -35,8 +39,6 @@
 //-----GENERIC-MESSAGES-----//
 
 # define LOG_INVALID_PARAM "got invalid parameter"
-# define LOG_ALLOC_FAIL "memory allocation failed"
-
 # define LOG_ALLOC_FAIL "memory allocation failed"
 
 //-----logger.c-----//

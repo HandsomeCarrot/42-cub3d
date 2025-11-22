@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player_location.c                                  :+:      :+:    :+:   */
+/*   locate_player.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 15:50:33 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 20:14:18 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 13:13:41 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
 /**
- * @return true/false
+ * @brief Checks if a character represents a player spawn orientation.
+ *
+ * @param c The character to check.
+ * @return true if valid spawn (N, E, S, W), false otherwise.
  */
 bool	is_player_spawn(char c)
 {
@@ -23,7 +26,14 @@ bool	is_player_spawn(char c)
 }
 
 /**
- * @return 0 on success, other on error
+ * @brief Saves the player's position and orientation.
+ *
+ * Checks for duplicate spawns.
+ *
+ * @param y The y-coordinate (row).
+ * @param x The x-coordinate (column).
+ * @param data Map data structure.
+ * @return 0 on success, 1 on error (duplicate spawn).
  */
 static int	save_player_pos(int y, int x, t_map_data *data)
 {
@@ -48,7 +58,13 @@ static int	save_player_pos(int y, int x, t_map_data *data)
 }
 
 /**
- * @return 0 on success, other on error
+ * @brief Scans the map to locate the player spawn point.
+ *
+ * Iterates through the map layout to find the player character.
+ * Ensures exactly one player spawn exists.
+ *
+ * @param data Map data structure.
+ * @return 0 on success, 1 on error (missing or duplicate spawn).
  */
 int	get_player_pos(t_map_data *data)
 {

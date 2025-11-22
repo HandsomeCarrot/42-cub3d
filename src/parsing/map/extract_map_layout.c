@@ -1,20 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_layout_extractor.c                             :+:      :+:    :+:   */
+/*   extract_map_layout.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 16:12:14 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 20:09:17 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 13:13:10 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
 /**
- * Count map height and validate each map line.
- * @return map_height on success, SIZE_MAX on error
+ * @brief Calculates the height of the map and validates each line.
+ *
+ * @param lines Array of all file lines.
+ * @param map_start Index where the map starts.
+ * @param map Pointer to map structure.
+ * @return The height of the map, or 0 on error.
  */
 static size_t	get_map_height(char **lines, size_t map_start, t_map *map)
 {
@@ -36,8 +40,12 @@ static size_t	get_map_height(char **lines, size_t map_start, t_map *map)
 }
 
 /**
- * Allocate memory and populate the map layout with validated lines.
- * @return 0 on success, 1 on error
+ * @brief Allocates memory and populates the map layout with validated lines.
+ *
+ * @param lines Array of all file lines.
+ * @param map_start Index where the map starts.
+ * @param map Pointer to map structure.
+ * @return 0 on success, 1 on error.
  */
 static int	populate_map_layout(char **lines, size_t map_start, t_map *map)
 {
@@ -61,7 +69,14 @@ static int	populate_map_layout(char **lines, size_t map_start, t_map *map)
 }
 
 /**
- * @return 0 on success, other on fail
+ * @brief Extracts the map layout from the file lines.
+ *
+ * Determines map height, allocates memory, and fills the layout array.
+ *
+ * @param lines Array of all file lines.
+ * @param row Pointer to current line index (updated on success).
+ * @param map Pointer to map structure.
+ * @return 0 on success, 1 on failure.
  */
 int	extract_map_layout(char **lines, size_t *row, t_map *map)
 {

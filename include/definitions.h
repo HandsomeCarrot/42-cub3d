@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 20:31:25 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 23:46:35 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 13:12:06 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,23 +53,16 @@ typedef struct s_map_id
 
 typedef struct s_char_group
 {
-	// Characters in this group
 	const char		*valid_chars;
-	// -1 = unlimited, 0 = not allowed, 1+ = specific limit
 	int				limit;
-	// For error messages
 	const char		*group_name;
 }					t_char_group;
 
 typedef struct s_array
 {
-	// the data pointer
 	void			*ptr;
-	// the allocated space
 	size_t			capacity;
-	// the used space
 	size_t			used_space;
-	// size of each member
 	size_t			member_size;
 }					t_array;
 

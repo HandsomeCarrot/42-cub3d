@@ -1,17 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_cleanup.c                                     :+:      :+:    :+:   */
+/*   cleanup_main.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 17:55:19 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/11 19:34:23 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 13:12:24 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cleanup.h"
 
+/**
+ * @brief Frees all allocated memory within the map data structure.
+ *
+ * @param data Pointer to the map data structure to be freed.
+ */
 static void	free_map_data(t_map_data *data)
 {
 	log_msg(DEBUG, __FILE__, __LINE__, "cleaning map data");
@@ -27,6 +32,14 @@ static void	free_map_data(t_map_data *data)
 		free(data->images.west_wall);
 }
 
+/**
+ * @brief Performs the main cleanup of the program resources.
+ *
+ * Frees the map data, destroys the MLX display, and frees the MLX pointer
+ * and the main data structure.
+ *
+ * @param data Pointer to the main data structure.
+ */
 void	main_cleanup(t_data *data)
 {
 	log_msg(DEBUG, __FILE__, __LINE__, "cleaning data");

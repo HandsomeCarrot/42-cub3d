@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   content_validation.c                               :+:      :+:    :+:   */
+/*   validate_content.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 15:23:22 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/18 16:26:31 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 13:14:21 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,11 @@ bool	has_trailing_content(char *line, int row)
 }
 
 /**
- * @return 0 on success, other on error
+ * @brief Checks for non-empty lines after the map layout.
+ *
+ * @param lines Array of file lines.
+ * @param row The index where the map layout ended.
+ * @return 0 on success (no hanging lines), 1 on error.
  */
 int	check_hanging_lines(char **lines, size_t row)
 {

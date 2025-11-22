@@ -1,17 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   arrays.c                                           :+:      :+:    :+:   */
+/*   manage_arrays.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:56:02 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 18:20:24 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 13:13:51 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
+/**
+ * @brief Initializes a new dynamic array.
+ *
+ * @param member_size Size of each element in bytes.
+ * @param capacity Initial capacity of the array.
+ * @param array Pointer to the array structure to initialize.
+ * @return 0 on success, 1 on error.
+ */
 int	new_array(size_t member_size, size_t capacity, t_array *array)
 {
 	if (member_size == 0 || capacity == 0 || !array)
@@ -27,7 +35,12 @@ int	new_array(size_t member_size, size_t capacity, t_array *array)
 }
 
 /**
- * @return 0 on success, 1 on error
+ * @brief Expands the capacity of the dynamic array.
+ *
+ * Increases capacity by 1 and reallocates memory.
+ *
+ * @param array Pointer to the array structure.
+ * @return 0 on success, 1 on error.
  */
 int	expand_array(t_array *array)
 {
@@ -50,6 +63,15 @@ int	expand_array(t_array *array)
 	return (0);
 }
 
+/**
+ * @brief Appends an element to the dynamic array.
+ *
+ * Expands the array if necessary.
+ *
+ * @param src Pointer to the element to append.
+ * @param array Pointer to the array structure.
+ * @return 0 on success, 1 on error.
+ */
 int	append_to_array(void *src, t_array *array)
 {
 	void	*dst;

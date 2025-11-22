@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   log_parsing2.c                                     :+:      :+:    :+:   */
+/*   log_parsing_error.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 18:26:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/21 19:52:40 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 13:13:00 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@ void	log_missing_ids(t_map_id *ids)
 	ft_putendl_fd("", log_fd);
 }
 
+/**
+ * @brief Logs an error for an invalid file extension.
+ *
+ * @param file The filename that is invalid.
+ * @param extension The expected extension.
+ */
 void	log_invalid_file(const char *file, const char *extension)
 {
 	int	log_fd;
@@ -57,6 +63,13 @@ void	log_invalid_file(const char *file, const char *extension)
 	}
 }
 
+/**
+ * @brief Logs an error for an invalid character in the map.
+ *
+ * @param row The line number in the map.
+ * @param line The content of the line.
+ * @param pos The position of the invalid character.
+ */
 void	log_invalid_map_line(int row, const char *line, int pos)
 {
 	int	log_fd;
@@ -74,6 +87,12 @@ void	log_invalid_map_line(int row, const char *line, int pos)
 	}
 }
 
+/**
+ * @brief Logs an error when multiple player spawns are found.
+ *
+ * @param y The y-coordinate (line number) of the duplicate spawn.
+ * @param x The x-coordinate (column number) of the duplicate spawn.
+ */
 void	log_multiple_player_spawns(int y, int x)
 {
 	int	log_fd;
