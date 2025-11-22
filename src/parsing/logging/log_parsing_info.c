@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 20:08:44 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 13:13:03 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 15:20:17 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	log_line_error(int line_num, const char *message, const char *src_file,
 	log_fd = log_start(ERROR, src_file, line);
 	if (log_fd >= 0)
 	{
-		ft_putstr_fd("in map on line ", log_fd);
+		ft_putstr_fd("map: line ", log_fd);
 		ft_putnbr_fd(line_num, log_fd);
 		ft_putstr_fd(": ", log_fd);
 		ft_putendl_fd((char *)message, log_fd);

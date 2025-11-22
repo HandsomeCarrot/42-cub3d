@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 13:34:35 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 13:12:49 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 15:19:57 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static bool	is_duplicate_id(t_map_id data_id, int row)
 	log_fd = log_start(ERROR, __FILE__, __LINE__);
 	if (log_fd >= 0)
 	{
-		ft_putstr_fd("in map on line ", log_fd);
+		ft_putstr_fd("map: line ", log_fd);
 		ft_putnbr_fd(row, log_fd);
 		ft_putstr_fd(": duplicate declaration of '", log_fd);
 		ft_putstr_fd((char *)data_id.id, log_fd);

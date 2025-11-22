@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 13:12:16 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 14:50:53 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@
 # include "libft.h"
 # include <errno.h>
 # include <fcntl.h>
-# include <mlx.h>
 # include <string.h>
 
-int			parse(int argc, char **argv, t_data *data);
+int			parse(int argc, char **argv, t_map_data *data);
 
 //-----------------------------------CONFIG-----------------------------------//
 
@@ -39,20 +38,22 @@ t_map_id	*get_map_identifiers(void);
 
 //-----parse_textures.c-----//
 
-int			save_image(char *line, int row, t_map_id *data_id, t_data *data);
+int			save_image(char *line, int row, t_map_id *data_id,
+				t_map_data *data);
 
 //-----------------------------------MAP-----------------------------------//
 //-----read_map_file.c-----//
 
-int			parse_map_file(char *file, t_data *data);
+int			parse_map_file(char *file, t_map_data *data);
 
 //-----validate_map.c-----//
 
-int			parse_map_layout(t_data *data);
+int			parse_map_layout(t_map_data *data);
 
 //-----save_map_data.c-----//
 
-int			save_line_data(char *line, int row, t_map_id *ids, t_data *data);
+int			save_line_data(char *line, int row, t_map_id *ids,
+				t_map_data *data);
 
 //-----extract_map_layout.c-----//
 

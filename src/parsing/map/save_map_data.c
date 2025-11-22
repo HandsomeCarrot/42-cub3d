@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 17:10:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 13:13:18 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 14:52:43 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
  * @return 0 on success, other on error
  */
 static int	call_save_function(t_map_id *data_id, char *line, int row,
-		t_data *data)
+		t_map_data *data)
 {
 	if (!data_id || !line || !data)
 	{
@@ -35,7 +35,7 @@ static int	call_save_function(t_map_id *data_id, char *line, int row,
 	if (data_id->type == T_IMAGE)
 		return (save_image(line, row, data_id, data));
 	else if (data_id->type == T_COLOR)
-		return (save_color(line, row, data_id, &data->map_data.colors));
+		return (save_color(line, row, data_id, &data->colors));
 	log_msg(ERROR, __FILE__, __LINE__, "data type not recognized");
 	return (1);
 }
@@ -57,7 +57,7 @@ static int	call_save_function(t_map_id *data_id, char *line, int row,
  * @param data Main data structure.
  * @return 0 on success, 1 on error.
  */
-int	save_line_data(char *line, int row, t_map_id *ids, t_data *data)
+int	save_line_data(char *line, int row, t_map_id *ids, t_map_data *data)
 {
 	t_map_id	*data_id;
 

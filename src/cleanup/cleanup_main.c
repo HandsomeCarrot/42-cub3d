@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 17:55:19 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 13:12:24 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 14:27:57 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,15 @@ static void	free_map_data(t_map_data *data)
 /**
  * @brief Performs the main cleanup of the program resources.
  *
- * Frees the map data, destroys the MLX display, and frees the MLX pointer
- * and the main data structure.
+ * Frees the map data.
  *
  * @param data Pointer to the main data structure.
  */
-void	main_cleanup(t_data *data)
+void	main_cleanup(t_map_data *data)
 {
 	log_msg(DEBUG, __FILE__, __LINE__, "cleaning data");
 	if (data)
 	{
-		free_map_data(&data->map_data);
-		mlx_destroy_display(data->mlx_ptr);
-		free(data->mlx_ptr);
-		free(data);
+		free_map_data(data);
 	}
 }

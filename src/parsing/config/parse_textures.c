@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 13:24:00 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 13:12:55 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 14:27:03 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ static char	*get_xmp_img_path(char *line, int row, t_map_id *data_id)
  * @param data Main data structure to store image path
  * @return 0 on success, other on error
  */
-int	save_image(char *line, int row, t_map_id *data_id, t_data *data)
+int	save_image(char *line, int row, t_map_id *data_id, t_map_data *data)
 {
 	char	*img_path;
 
@@ -127,7 +127,7 @@ int	save_image(char *line, int row, t_map_id *data_id, t_data *data)
 	img_path = get_xmp_img_path(img_path, row, data_id);
 	if (!img_path)
 		return (1);
-	if (!set_wall_texture_path(img_path, data_id, &data->map_data.images, row))
+	if (!set_wall_texture_path(img_path, data_id, &data->images, row))
 	{
 		free(img_path);
 		return (1);

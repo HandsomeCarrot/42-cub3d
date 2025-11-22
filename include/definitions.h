@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 20:31:25 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 13:12:06 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 14:49:11 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,11 +111,5 @@ typedef enum e_log_level
 	INFO,
 	DEBUG
 }					t_log_level;
-
-typedef struct s_data
-{
-	void			*mlx_ptr;
-	t_map_data		map_data;
-}					t_data;
 
 #endif /* DEFINITIONS_H */

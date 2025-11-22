@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/11/21 23:47:33 by vpoka            ###   ########.fr        #
+#    Updated: 2025/11/22 14:48:51 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,9 +27,6 @@ COMP := $(CC) $(CFLAGS) $(INCLUDE)
 RM := rm -f
 
 S := src
-
-INIT_SRCS :=	$(addprefix inits/, \
-				init_main.c)
 
 CLEANUP_SRCS :=	$(addprefix cleanup/, \
 				cleanup_main.c \
@@ -69,7 +66,6 @@ PARSING_SRCS :=	$(addprefix parsing/, \
 
 SRCS :=	$(addprefix $(S)/, \
 		main.c \
-		$(INIT_SRCS) \
 		$(CLEANUP_SRCS) \
 		$(LOGGING_SRCS) \
 		$(PARSING_SRCS))

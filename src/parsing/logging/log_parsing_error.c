@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 18:26:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 13:13:00 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 15:20:10 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	log_missing_ids(t_map_id *ids)
 	log_fd = log_start(ERROR, __FILE__, __LINE__);
 	if (log_fd < 0)
 		return ;
-	ft_putstr_fd("missing texture identifier(s): ", log_fd);
+	ft_putstr_fd("map: missing texture identifier(s): ", log_fd);
 	id_pos = 0;
 	while (ids[id_pos].id)
 	{
@@ -77,11 +77,11 @@ void	log_invalid_map_line(int row, const char *line, int pos)
 	log_fd = log_start(ERROR, __FILE__, __LINE__);
 	if (log_fd >= 0)
 	{
-		ft_putstr_fd("in map on line ", log_fd);
+		ft_putstr_fd("map: line ", log_fd);
 		ft_putnbr_fd(row, log_fd);
 		ft_putstr_fd(":", log_fd);
 		ft_putnbr_fd(pos + 1, log_fd);
-		ft_putstr_fd(": invalid character in map: '", log_fd);
+		ft_putstr_fd(": map layout: invalid character: '", log_fd);
 		ft_putchar_fd(line[pos], log_fd);
 		ft_putendl_fd("'", log_fd);
 	}
@@ -100,11 +100,10 @@ void	log_multiple_player_spawns(int y, int x)
 	log_fd = log_start(ERROR, __FILE__, __LINE__);
 	if (log_fd >= 0)
 	{
-		ft_putstr_fd("in map layout: multiple player spawns defined", log_fd);
-		ft_putstr_fd(" (found at line ", log_fd);
+		ft_putstr_fd("map: line ", log_fd);
 		ft_putnbr_fd(y + 1, log_fd);
 		ft_putstr_fd(":", log_fd);
 		ft_putnbr_fd(x + 1, log_fd);
-		ft_putendl_fd(")", log_fd);
+		ft_putendl_fd(": map layout: multiple player spawns defined", log_fd);
 	}
 }

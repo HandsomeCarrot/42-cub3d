@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 17:07:29 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 13:13:15 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 14:52:18 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
  * @return 0 on success, 1 on error.
  */
 static int	process_texture_lines(char **file_data, t_map_id *ids,
-		t_data *data, int *line)
+		t_map_data *data, int *line)
 {
 	if (!file_data || !ids || !data || !line)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
@@ -62,7 +62,8 @@ static int	process_texture_lines(char **file_data, t_map_id *ids,
  * @param row Pointer to store the index where map layout starts.
  * @return 0 on success, 1 on error.
  */
-static int	extract_texture_data(char **file_data, t_data *data, size_t *row)
+static int	extract_texture_data(char **file_data, t_map_data *data,
+		size_t *row)
 {
 	t_map_id	*ids;
 	int			line;
@@ -106,7 +107,7 @@ static int	extract_texture_data(char **file_data, t_data *data, size_t *row)
  * @param data Main data structure.
  * @return 0 on success, 1 on error.
  */
-static int	extract_file_data(char **file_data, t_data *data)
+static int	extract_file_data(char **file_data, t_map_data *data)
 {
 	size_t	row;
 
@@ -115,7 +116,7 @@ static int	extract_file_data(char **file_data, t_data *data)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	if (extract_texture_data(file_data, data, &row))
 		return (1);
-	if (extract_map_layout(file_data, &row, &(data->map_data.map)))
+	if (extract_map_layout(file_data, &row, &(data->map)))
 		return (1);
 	if (check_hanging_lines(file_data, row))
 		return (1);
@@ -140,7 +141,7 @@ static int	extract_file_data(char **file_data, t_data *data)
  * @note The function logs informational messages and ensures the file
  *       is properly closed after reading.
  */
-int	parse_map_file(char *file, t_data *data)
+int	parse_map_file(char *file, t_map_data *data)
 {
 	char	**lines;
 	int		ret;

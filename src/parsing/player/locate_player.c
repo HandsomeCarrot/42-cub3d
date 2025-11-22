@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 15:50:33 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 13:13:41 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 15:15:05 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,6 @@ int	get_player_pos(t_map_data *data)
 	}
 	if (!data->player.found)
 		return (log_msg(ERROR, __FILE__, __LINE__,
-				"in map layout: missing player spawn"), 1);
+				"map layout: missing player spawn"), 1);
 	return (0);
 }

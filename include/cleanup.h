@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 20:31:32 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 13:12:02 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 14:49:27 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,10 @@
 # include "definitions.h"
 # include "libft.h"
 # include "logging.h"
-# include <mlx.h>
 
 //-----cleanup_main.c-----//
 
-void	main_cleanup(t_data *data);
+void	main_cleanup(t_map_data *data);
 
 //-----cleanup_strings.c-----//
 

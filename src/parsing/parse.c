@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 18:31:51 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 13:14:24 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 14:51:41 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	parse_input(int argc, char **argv)
  * 
  * @return 1 on error, 0 on success.
  */
-int	parse(int argc, char **argv, t_data *data)
+int	parse(int argc, char **argv, t_map_data *data)
 {
 	log_msg(INFO, __FILE__, __LINE__, "parsing data");
 	if (!argv || !data)

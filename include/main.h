@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 17:26:06 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 13:12:13 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 14:54:03 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 # define MAIN_H
 
 # include "definitions.h"
+# include "libft.h"
 
-t_data	*init_data(void);
-int		parse(int argc, char **argv, t_data *data);
-void	main_cleanup(t_data *data);
+int		parse(int argc, char **argv, t_map_data *map_data);
+void	main_cleanup(t_map_data *data);
 void	log_msg(t_log_level lvl, const char *file, int line, char *msg);
 
 #endif /* MAIN_H */
