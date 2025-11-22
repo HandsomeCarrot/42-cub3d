@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 18:15:52 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 15:56:14 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 18:39:01 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,27 +58,13 @@ int	open_file_read(const char *file)
 /**
  * @brief Closes a file descriptor with error handling and logging.
  *
- * This function attempts to close the provided file descriptor and logs
- * the operation. If the file descriptor is valid (non-negative) and the
- * close operation fails, it logs a warning message including the file
- * descriptor number and the system error description. The function is
- * designed to be safe even when called with invalid file descriptors.
- *
  * @param fd The file descriptor to close. If negative, the function
  *           performs no operation and returns silently.
- * @param file The source file name where this function is called from,
- *             typically passed as __FILE__ macro.
- * @param line The line number in the source file where this function is
- *             called from, typically passed as __LINE__ macro.
+ * @param file __FILE__ macro.
+ * @param line __LINE__ macro.
  * @note This function logs debug messages for normal operations and
  *       warning messages for close failures. It is safe to call with
  *       invalid or already closed file descriptors.
- * @warning While this function handles close failures gracefully by
- *          logging warnings, it does not attempt to retry the close
- *          operation. Critical file descriptors may require additional
- *          error handling in the calling code.
- * @see open_file_read() For opening file descriptors that may need to
- *      be closed with this function.
  */
 void	log_close(int fd, const char *file, int line)
 {

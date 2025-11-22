@@ -6,24 +6,12 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 17:07:29 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 14:52:18 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 18:44:35 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-/**
- * Iterates over the file data and checks each line for info.
- * If the line is empty it gets skipped.
- * If there is some info (NO, EA, SO, WE, F, C)
- * it will get extracted and saved.
- * Stops the loop when it reaches the first line of the map,
- * or the end of the data.
- *
- * should also check if all info was provided
- *
- * @return 0 on success, other on error
- */
 /**
  * @brief Iterates over file data to extract texture information.
  *
@@ -92,11 +80,6 @@ static int	extract_texture_data(char **file_data, t_map_data *data,
 	return (0);
 }
 
-/**
- * @brief parse and save the data from the file data
- *
- * @return 0 on success, other on error
- */
 /**
  * @brief Orchestrates the extraction of all data from the file content.
  *

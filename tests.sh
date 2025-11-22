@@ -45,6 +45,7 @@ run_map_test "./assets/maps/valid_basic.cub" 0
 run_map_test "./assets/maps/valid_complex.cub" 0
 run_map_test "./assets/maps/valid_order.cub" 0
 run_map_test "./assets/maps/valid_spacing.cub" 0
+run_map_test "./assets/maps/valid_more_spacing.cub" 0
 run_map_test "./assets/maps/.valid_hidden_file.cub" 0
 
 # Invalid maps should return non-zero (error)
@@ -60,13 +61,14 @@ run_map_test "./assets/maps/invalid_color_format.cub" 1
 run_map_test "./assets/maps/invalid_extension.txt" 1
 run_map_test "./assets/maps/invalid_extension_double.cub.all" 1
 run_map_test "./assets/maps/invalid_texture_extension.cub" 1
-run_map_test "./assets/maps/invalid_texture_path.cub" 1
 run_map_test "./assets/maps/invalid_duplicate_player.cub" 1
 run_map_test "./assets/maps/invalid_no_player.cub" 1
 run_map_test "./assets/maps/invalid_open_map.cub" 1
 run_map_test "./assets/maps/invalid_char.cub" 1
 run_map_test "./assets/maps/invalid_map_first.cub" 1
+# this is a hidden file (name = '', extension = '.cub') / (name = 'cub', extension = '')
 run_map_test "./assets/maps/.cub" 1
+run_map_test "./assets/maps/invalid_texture_path.cub" 1
 
 echo -e "\nTotal tests: $total_tests"
 echo -e "${GREEN}Passed tests: $passed_tests${NC}"

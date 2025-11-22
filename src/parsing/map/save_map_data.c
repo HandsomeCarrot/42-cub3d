@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 17:10:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 14:52:43 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 18:52:30 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,6 @@ static int	call_save_function(t_map_id *data_id, char *line, int row,
 	return (1);
 }
 
-/**
- * saves the data on the current line, if there is some and it is valid
- *
- * @return 0 on success, other on error
- */
 /**
  * @brief Processes and saves data from a single line of the map file.
  *
