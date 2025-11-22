@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 18:15:52 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 13:14:00 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/22 15:56:14 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	log_close(int fd, const char *file, int line)
  *                  including the leading dot (e.g., ".cub").
  * @return 0 if the file has the correct extension, 1 otherwise.
  */
-static int	has_correct_extension(const char *file, const char *extension)
+static bool	has_correct_extension(const char *file, const char *extension)
 {
 	size_t	file_len;
 	size_t	extension_len;
@@ -118,12 +118,12 @@ static int	has_correct_extension(const char *file, const char *extension)
 
 	file_len = ft_strlen(file);
 	extension_len = ft_strlen(extension);
-	file_extension = file_len - extension_len;
 	if (file_len <= extension_len)
-		return (0);
+		return (false);
+	file_extension = file_len - extension_len;
 	if (ft_strncmp((file + file_extension), extension, extension_len) != 0)
-		return (0);
-	return (1);
+		return (false);
+	return (true);
 }
 
 /**
@@ -154,7 +154,7 @@ int	correct_file_extension(const char *file, const char *extension)
 		filename = (char *)file;
 	else
 		filename++;
-	if (!has_correct_extension(file, extension))
+	if (!has_correct_extension(filename, extension))
 	{
 		log_invalid_file(file, extension);
 		return (1);
