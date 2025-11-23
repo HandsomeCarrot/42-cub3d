@@ -6,11 +6,11 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 19:29:44 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 13:12:44 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/23 18:19:43 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "logging.h"
+#include "../../include/logging.h"
 
 /**
  * @brief Allocates memory for an array of elements with logging capabilities.

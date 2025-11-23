@@ -6,11 +6,11 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 15:23:22 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 13:14:21 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/23 18:53:28 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../../../include/parsing.h"
 
 /**
  * @brief Validates that no extra content follows the image path

@@ -6,11 +6,11 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 13:14:42 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 13:12:30 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/23 18:54:38 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cleanup.h"
+#include "../../include/cleanup.h"
 
 /**
  * @brief Frees an array of strings and sets pointers to NULL.

@@ -6,11 +6,11 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:34:49 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 13:12:40 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/23 18:50:00 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "logging.h"
+#include "../../include/logging.h"
 
 /**
  * @brief Prints the log level prefix if the current logging level allows it.

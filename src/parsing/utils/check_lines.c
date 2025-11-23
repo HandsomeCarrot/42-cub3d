@@ -6,11 +6,11 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 19:28:02 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 13:13:48 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/23 18:52:04 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../../../include/parsing.h"
 
 /**
  * @brief checks if the 'line' only consists of whitespace characters

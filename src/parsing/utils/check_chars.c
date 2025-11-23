@@ -6,11 +6,11 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 17:12:48 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 13:13:45 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/23 18:51:53 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../../../include/parsing.h"
 
 /**
  * @brief checks if 'c' is a whitespace character

@@ -6,11 +6,11 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 18:31:51 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 14:51:41 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/23 18:53:31 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../../include/parsing.h"
 
 /**
  * @brief Parses the input of the user

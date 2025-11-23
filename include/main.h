@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 17:26:06 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 14:54:03 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/23 18:20:39 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MAIN_H
 
 # include "definitions.h"
-# include "libft.h"
+# include "../libft/libft.h"
 
 int		parse(int argc, char **argv, t_map_data *map_data);
 void	main_cleanup(t_map_data *data);

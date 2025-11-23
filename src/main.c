@@ -6,11 +6,11 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 17:26:09 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 14:53:37 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/23 18:51:12 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "../include/main.h"
 
 /**
  * @brief Main entry point of the Cub3D program.

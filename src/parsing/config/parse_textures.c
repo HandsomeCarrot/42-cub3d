@@ -6,11 +6,11 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 13:24:00 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 14:27:03 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/23 18:51:15 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../../../include/parsing.h"
 
 /**
  * @brief Sets the texture path for the corresponding wall identifier.

@@ -6,11 +6,11 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 18:21:00 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 13:13:55 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/23 18:52:13 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../../../include/parsing.h"
 
 /**
  * @brief Sets a specific color channel value in an integer color.

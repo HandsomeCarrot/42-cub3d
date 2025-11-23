@@ -6,11 +6,11 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 16:12:14 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 13:13:10 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/23 18:50:44 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../../../include/parsing.h"
 
 /**
  * @brief Calculates the height of the map and validates each line.

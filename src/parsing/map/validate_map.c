@@ -6,11 +6,11 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 14:05:56 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 15:11:50 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/23 18:19:51 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../../../include/parsing.h"
 
 /**
  * @brief Checks if the map is playable (enclosed by walls).

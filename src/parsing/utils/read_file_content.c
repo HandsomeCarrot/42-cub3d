@@ -6,11 +6,11 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:41:23 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 13:14:13 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/23 18:51:46 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../../../include/parsing.h"
 
 /**
  * @brief Reads lines from file descriptor into the array.

@@ -6,11 +6,11 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 20:08:44 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 15:20:17 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/23 18:53:23 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "logging.h"
+#include "../../../include/parsing.h"
 
 /**
  * @brief Logs an error message for an invalid file name.

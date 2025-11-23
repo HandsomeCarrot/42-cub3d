@@ -6,11 +6,11 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:56:02 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 13:13:51 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/23 18:51:59 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../../../include/parsing.h"
 
 /**
  * @brief Initializes a new dynamic array.

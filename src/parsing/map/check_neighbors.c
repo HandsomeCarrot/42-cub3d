@@ -6,11 +6,11 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 15:43:55 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 15:20:24 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/23 18:50:31 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../../../include/parsing.h"
 
 /**
  * @brief Checks if a character represents valid map terrain (0 or 1).

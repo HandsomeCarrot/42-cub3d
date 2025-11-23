@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:34:28 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 13:12:10 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/23 18:27:37 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 # define LOGGING_H
 
 # include "definitions.h"
-# include "libft.h"
-# include "parsing.h"
+# include "../libft/libft.h"
 # include <stdio.h>
 
 // 0 = ERROR

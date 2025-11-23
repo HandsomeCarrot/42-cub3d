@@ -6,11 +6,11 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 17:55:19 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 14:27:57 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/23 18:53:34 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cleanup.h"
+#include "../../include/cleanup.h"
 
 /**
  * @brief Frees all allocated memory within the map data structure.

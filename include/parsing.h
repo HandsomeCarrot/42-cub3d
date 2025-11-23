@@ -6,20 +6,25 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 14:50:53 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/23 18:45:20 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
-# include "cleanup.h"
 # include "logging.h"
 # include "definitions.h"
-# include "libft.h"
+# include "../libft/libft.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <string.h>
+
+//-----CLEANUP-----//
+
+void		free_string_array(char ***string_array);
+
+//-----parse.c-----//
 
 int			parse(int argc, char **argv, t_map_data *data);
 

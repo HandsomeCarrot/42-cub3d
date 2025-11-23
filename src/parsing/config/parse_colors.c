@@ -6,11 +6,11 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 13:41:51 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 13:12:52 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/23 18:51:08 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../../../include/parsing.h"
 
 /**
  * @brief Parses and validates a single color channel value from the string
