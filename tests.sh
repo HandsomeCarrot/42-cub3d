@@ -39,36 +39,22 @@ run_map_test() {
 
 echo -e "\n${YELLOW}=== Running Map Tests ===${NC}"
 
+echo -e "\n${YELLOW}=== Valid Maps ===${NC}"
 # Run all test cases with expected return codes
 # Valid maps should return 0 (success)
-run_map_test "./assets/maps/valid/basic.cub" 0
-run_map_test "./assets/maps/valid/complex.cub" 0
-run_map_test "./assets/maps/valid/order.cub" 0
-run_map_test "./assets/maps/valid/spacing.cub" 0
-run_map_test "./assets/maps/valid/more_spacing.cub" 0
-run_map_test "./assets/maps/.valid/hidden_file.cub" 0
+for file in assets/maps/valid/*; do
+    if [ -f "$file" ]; then
+        run_map_test "$file" 0
+    fi
+done
 
+echo -e "\n${YELLOW}=== Invalid Maps ===${NC}"
 # Invalid maps should return non-zero (error)
-run_map_test "./assets/maps/invalid/empty.cub" 1
-run_map_test "./assets/maps/invalid/extra_color.cub" 1
-run_map_test "./assets/maps/invalid/extra_map_layout.cub" 1
-run_map_test "./assets/maps/invalid/extra_texture.cub" 1
-run_map_test "./assets/maps/invalid/missing_color.cub" 1
-run_map_test "./assets/maps/invalid/missing_extension" 1
-run_map_test "./assets/maps/invalid/missing_map_layout.cub" 1
-run_map_test "./assets/maps/invalid/missing_texture.cub" 1
-run_map_test "./assets/maps/invalid/color_format.cub" 1
-run_map_test "./assets/maps/invalid/extension.txt" 1
-run_map_test "./assets/maps/invalid/extension_double.cub.all" 1
-run_map_test "./assets/maps/invalid/texture_extension.cub" 1
-run_map_test "./assets/maps/invalid/duplicate_player.cub" 1
-run_map_test "./assets/maps/invalid/no_player.cub" 1
-run_map_test "./assets/maps/invalid/open_map.cub" 1
-run_map_test "./assets/maps/invalid/char.cub" 1
-run_map_test "./assets/maps/invalid/map_first.cub" 1
-# this is a hidden file (name = '', extension = '.cub') / (name = 'cub', extension = '')
-run_map_test "./assets/maps/invalid/.cub" 1
-run_map_test "./assets/maps/invalid/texture_path.cub" 1
+for file in assets/maps/invalid/*; do
+    if [ -f "$file" ]; then
+        run_map_test "$file" 1
+    fi
+done
 
 echo -e "\nTotal tests: $total_tests"
 echo -e "${GREEN}Passed tests: $passed_tests${NC}"
