@@ -53,4 +53,10 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# program
 cub3d
+
+# vpoka
+assets/maps/invalid/no_read_right.cub
+assets/maps/invalid/no_rights.cub
