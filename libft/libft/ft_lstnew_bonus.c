@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:09:20 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/28 00:09:07 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/23 18:02:54 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@
  */
 t_list	*ft_lstnew(void *content)
 {
-	t_list	*new;
+	t_list	*new_node;
 
-	new = malloc(sizeof(t_list));
-	if (!new)
+	new_node = malloc(sizeof(t_list));
+	if (!new_node)
 		return (NULL);
-	new->content = content;
-	new->next = NULL;
-	return (new);
+	new_node->content = content;
+	new_node->next = NULL;
+	return (new_node);
 }

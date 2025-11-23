@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:50:46 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/28 00:09:07 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/23 17:55:40 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,24 @@
 static int	count_words(char const *s, char c)
 {
 	int	counter;
-	int	new;
+	int	is_new_word;
 	int	pos;
 
 	counter = 0;
 	pos = 0;
-	new = 1;
+	is_new_word = 1;
 	while (s[pos])
 	{
 		if (s[pos] == c)
 		{
 			while (s[pos] == c)
 				pos++;
-			new = 1;
+			is_new_word = 1;
 		}
-		if (new == 1 && s[pos])
+		if (is_new_word == 1 && s[pos])
 		{
 			counter++;
-			new = 0;
+			is_new_word = 0;
 		}
 		if (s[pos])
 			pos++;

@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:54:52 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/28 00:09:07 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/23 18:00:27 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
  * and inserts the new element at the beginning of the list.
  *
  * @param lst A pointer to the first element of the list.
- * @param new The new element to be added to the list.
+ * @param new_node The new element to be added to the list.
  */
-void	ft_lstadd_front(t_list **lst, t_list *new)
+void	ft_lstadd_front(t_list **lst, t_list *new_node)
 {
-	new->next = *lst;
-	*lst = new;
+	new_node->next = *lst;
+	*lst = new_node;
 }
