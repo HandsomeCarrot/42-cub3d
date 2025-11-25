@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:41:23 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/23 18:51:46 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/25 15:03:37 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static int	read_file_lines(int file_fd, t_array *lines)
 		{
 			free(line);
 			free_string_array((char ***)&lines->ptr);
+			get_next_line(-1);
 			return (1);
 		}
 		current_line++;
