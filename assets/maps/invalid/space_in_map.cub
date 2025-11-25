@@ -1,7 +1,7 @@
-SO         ./src/textures/Metal.xpm   
-WE ./src/textures/Stone.xpm
-NO ./src/textures/Brick.xpm
-EA ./src/textures/Wood.xpm
+SO         ./assets/textures/xpm/Metal.xpm   
+WE ./assets/textures/xpm/Stone.xpm
+NO ./assets/textures/xpm/Brick.xpm
+EA ./assets/textures/xpm/Wood.xpm
 
 C                                   0,0,0          
 F 220,100,0        
