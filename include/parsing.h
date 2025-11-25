@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/25 19:34:44 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/25 20:09:02 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,8 @@ void		log_line_error(int line_num, const char *message,
 void		log_id_processing(t_map_id *data_id, char *src_file, int src_line);
 void		log_found_img(const char *id, char *img_path, char *src_file,
 				int src_line);
-void		log_found_color(int color, char *src_file, int src_line);
+void		log_found_color(const char *id, int color, char *src_file,
+				int src_line);
 
 //-----log_parsing_error.c-----//
 

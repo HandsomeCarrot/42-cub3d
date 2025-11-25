@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 16:12:14 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/23 18:50:44 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/25 20:08:40 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	extract_map_layout(char **lines, size_t *row, t_map *map)
 
 	if (!lines || !row || !map)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
-	log_msg(INFO, __FILE__, __LINE__, "getting map layout");
+	log_msg(DEBUG, __FILE__, __LINE__, "getting map layout");
 	map_start = skip_empty_lines(lines, *row);
 	map_height = get_map_height(lines, map_start, map);
 	if (map_height == 0)

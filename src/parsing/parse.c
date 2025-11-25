@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 18:31:51 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/23 18:53:31 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/25 20:01:31 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	parse_input(int argc, char **argv)
  */
 int	parse(int argc, char **argv, t_map_data *data)
 {
-	log_msg(INFO, __FILE__, __LINE__, "parsing data");
+	log_msg(DEBUG, __FILE__, __LINE__, "parsing data");
 	if (!argv || !data)
 	{
 		log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM);
@@ -72,5 +72,6 @@ int	parse(int argc, char **argv, t_map_data *data)
 		return (1);
 	if (parse_map_layout(data))
 		return (1);
+	log_msg(INFO, __FILE__, __LINE__, "map loaded successfully");
 	return (0);
 }

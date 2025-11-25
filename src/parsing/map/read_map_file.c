@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 17:07:29 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/25 19:26:06 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/25 20:08:48 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int	parse_map_file(char *file, t_map_data *data)
 	char	**lines;
 	int		ret;
 
-	log_msg(INFO, __FILE__, __LINE__, "parsing map file");
+	log_msg(DEBUG, __FILE__, __LINE__, "parsing map file");
 	if (correct_file_extension(file, ".cub"))
 		return (1);
 	lines = read_file(file);

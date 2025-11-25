@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 13:41:51 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/23 18:51:08 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/25 20:08:36 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static int	assign_final_color(t_map_id *data_id, t_colors *colors,
 	else
 		return (log_msg(ERROR, __FILE__, __LINE__,
 				"invalid color identifier"), 1);
-	log_found_color(final_color, __FILE__, __LINE__);
+	log_found_color(data_id->id, final_color, __FILE__, __LINE__);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 20:08:44 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/25 19:34:40 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/25 20:08:52 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,11 +129,11 @@ void	log_found_img(const char *id, char *img_path, char *src_file,
  * @param src_file The source file calling this function.
  * @param src_line The source line calling this function.
  */
-void	log_found_color(int color, char *src_file, int src_line)
+void	log_found_color(const char *id, int color, char *src_file, int src_line)
 {
 	int	log_fd;
 
-	if (!src_file)
+	if (!id || !src_file)
 	{
 		log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM);
 		return ;
@@ -142,7 +142,7 @@ void	log_found_color(int color, char *src_file, int src_line)
 	if (log_fd < 0)
 		return ;
 	ft_putstr_fd(CYAN, log_fd);
-	ft_putstr_fd("COLOR", log_fd);
+	ft_putstr_fd((char *)id, log_fd);
 	ft_putstr_fd(NC, log_fd);
 	ft_putstr_fd(" -> ", log_fd);
 	ft_putnbr_fd(get_color_channel(color, RED_CH), log_fd);

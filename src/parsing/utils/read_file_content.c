@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:41:23 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/25 15:03:37 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/25 20:08:43 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	**read_file(const char *file)
 	int		file_fd;
 	int		log_fd;
 
-	log_fd = log_start(INFO, __FILE__, __LINE__);
+	log_fd = log_start(DEBUG, __FILE__, __LINE__);
 	if (log_fd >= 0)
 	{
 		ft_putstr_fd("reading from file '", log_fd);
