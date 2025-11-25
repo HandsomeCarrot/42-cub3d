@@ -1,7 +1,7 @@
-NO ./src/textures/Wood.xpm
-SO ./src/textures/Stone.xpm
-WE ./src/textures/Metal.xpm
-EA ./src/textures/Brick.xpm
+NO ./assets/textures/xpm/Wood.xpm
+SO ./assets/textures/xpm/Stone.xpm
+WE ./assets/textures/xpm/Metal.xpm
+EA ./assets/textures/xpm/Brick.xpm
 
 C 123, 123, 100
 F 123, 123, 123

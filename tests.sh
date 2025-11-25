@@ -37,9 +37,9 @@ run_map_test() {
     fi
 }
 
-echo -e "\n${YELLOW}=== Running Map Tests ===${NC}"
+echo -e "\n${YELLOW}=============== Running Map Tests ===============${NC}"
 
-echo -e "\n${YELLOW}=== Valid Maps ===${NC}"
+echo -e "\n${YELLOW}========= Valid Maps =========${NC}"
 # Run all test cases with expected return codes
 # Valid maps should return 0 (success)
 for file in assets/maps/valid/*; do
@@ -48,13 +48,15 @@ for file in assets/maps/valid/*; do
     fi
 done
 
-echo -e "\n${YELLOW}=== Invalid Maps ===${NC}"
+echo -e "\n${YELLOW}========= Invalid Maps =========${NC}"
 # Invalid maps should return non-zero (error)
 for file in assets/maps/invalid/*; do
     if [ -f "$file" ]; then
         run_map_test "$file" 1
     fi
 done
+
+run_map_test "assets/maps/invalid/folder.cub" 1
 
 echo -e "\nTotal tests: $total_tests"
 echo -e "${GREEN}Passed tests: $passed_tests${NC}"
