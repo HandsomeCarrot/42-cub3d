@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 20:08:44 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/23 18:53:23 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/25 19:34:40 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	log_id_processing(t_map_id *data_id, char *src_file, int src_line)
 		log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM);
 		return ;
 	}
-	log_fd = log_start(INFO, src_file, src_line);
+	log_fd = log_start(DEBUG, src_file, src_line);
 	if (log_fd < 0)
 		return ;
 	ft_putstr_fd("extracting data for ", log_fd);
@@ -101,11 +101,12 @@ void	log_id_processing(t_map_id *data_id, char *src_file, int src_line)
  * @param src_file The source file calling this function.
  * @param src_line The source line calling this function.
  */
-void	log_found_img(char *img_path, char *src_file, int src_line)
+void	log_found_img(const char *id, char *img_path, char *src_file,
+		int src_line)
 {
 	int	log_fd;
 
-	if (!img_path || !src_file)
+	if (!id || !img_path || !src_file)
 	{
 		log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM);
 		return ;
@@ -113,9 +114,11 @@ void	log_found_img(char *img_path, char *src_file, int src_line)
 	log_fd = log_start(INFO, src_file, src_line);
 	if (log_fd >= 0)
 	{
-		ft_putstr_fd("FOUND: '", log_fd);
-		ft_putstr_fd(img_path, log_fd);
-		ft_putendl_fd("'", log_fd);
+		ft_putstr_fd(CYAN, log_fd);
+		ft_putstr_fd((char *)id, log_fd);
+		ft_putstr_fd(NC, log_fd);
+		ft_putstr_fd(" -> ", log_fd);
+		ft_putendl_fd(img_path, log_fd);
 	}
 }
 
@@ -138,11 +141,14 @@ void	log_found_color(int color, char *src_file, int src_line)
 	log_fd = log_start(INFO, src_file, src_line);
 	if (log_fd < 0)
 		return ;
-	ft_putstr_fd("FOUND: r:", log_fd);
+	ft_putstr_fd(CYAN, log_fd);
+	ft_putstr_fd("COLOR", log_fd);
+	ft_putstr_fd(NC, log_fd);
+	ft_putstr_fd(" -> ", log_fd);
 	ft_putnbr_fd(get_color_channel(color, RED_CH), log_fd);
-	ft_putstr_fd(", g:", log_fd);
+	ft_putstr_fd(",", log_fd);
 	ft_putnbr_fd(get_color_channel(color, GREEN_CH), log_fd);
-	ft_putstr_fd(", b:", log_fd);
+	ft_putstr_fd(",", log_fd);
 	ft_putnbr_fd(get_color_channel(color, BLUE_CH), log_fd);
 	ft_putendl_fd("", log_fd);
 }

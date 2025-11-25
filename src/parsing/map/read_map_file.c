@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 17:07:29 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/23 18:51:01 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/25 19:26:06 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int	extract_texture_data(char **file_data, t_map_data *data,
 	t_map_id	*ids;
 	int			line;
 
-	log_msg(DEBUG, __FILE__, __LINE__, "extracting texture data from map file");
+	log_msg(INFO, __FILE__, __LINE__, "searching for texture configs");
 	if (!file_data || !data || !row)
 		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), 1);
 	ids = get_map_identifiers();
@@ -76,7 +76,7 @@ static int	extract_texture_data(char **file_data, t_map_data *data,
 	}
 	*row = (size_t)line;
 	free(ids);
-	log_msg(INFO, __FILE__, __LINE__, "extracted all necessary texture data");
+	log_msg(INFO, __FILE__, __LINE__, "all config data found");
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 13:24:00 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/25 17:31:05 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/25 19:28:15 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static bool	set_wall_texture_path(char *img_path, t_map_id *id, t_images *imgs,
 		log_line_error(row, "unknown image type", __FILE__, __LINE__);
 		return (false);
 	}
-	log_found_img(img_path, __FILE__, __LINE__);
+	log_found_img(id->id, img_path, __FILE__, __LINE__);
 	return (true);
 }
 
