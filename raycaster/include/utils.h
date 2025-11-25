@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 13:20:08 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/22 11:02:07 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/25 14:50:12 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ void cleanup_game(t_game *game);
 //player.c
 void	init_player(t_player *player, int grid_x, int grid_y, char orientation);
 
-//utils.h
+//utils.c
 double get_time(void);
+int	get_pixel_color(t_texture *tex, int x, int y);
+void put_pixel(t_mlx *mlx, int x, int y, int color);
 
 #endif

@@ -6,18 +6,18 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 10:59:07 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/21 21:47:55 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/25 14:19:02 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/render.h"
 
-double get_time(void)
+double	get_time(void)
 {
-    struct timeval tv;
-    
-    gettimeofday(&tv, NULL);
-    return (tv.tv_sec + tv.tv_usec / 1000000.0);
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec + tv.tv_usec / 1000000.0);
 }
 
 void	put_pixel(t_mlx *mlx, int x, int y, int color)
@@ -28,4 +28,12 @@ void	put_pixel(t_mlx *mlx, int x, int y, int color)
 		return ;
 	offset = (y * mlx->line_length + x * mlx->bytes_per_pixel);
 	*(unsigned int *)(mlx->img_data + offset) = color;
+}
+
+int	get_pixel_color(t_texture *tex, int x, int y)
+{
+	int	offset;
+
+	offset = y * tex->line_length + x * tex->bytes_per_pixel;
+	return (*(int *)(tex->img_data + offset));
 }

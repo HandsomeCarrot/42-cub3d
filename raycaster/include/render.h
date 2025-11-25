@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 16:55:33 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/21 21:38:54 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/25 14:45:13 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,10 @@
 #define SAFE_STEP 0.2
 
 //mlx_setup.c
-void	put_pixel(t_mlx *mlx, int x, int y, int color);
-int		get_pixel_color(t_texture *tex, int x, int y);
 int		init_mlx(t_game *game);
+
+//texture_utils.c
+int	load_all_textures(t_game *game);
 
 //movement.c
 void new_pos(t_game *game);

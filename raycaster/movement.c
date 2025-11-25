@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 09:13:56 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/21 21:57:41 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/25 14:07:47 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ void	perform_move(t_game *game, char op, t_vector v2)
 
 	move_speed = game->player.speed;
 	move_speed = move_speed * game->player.delta_time;
-		//? make maybe a define for 5.0
 	if (op == '+')
 	{
 		tmp.x = game->player.pos.x + v2.x * move_speed;
