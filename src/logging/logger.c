@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:34:49 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/23 18:50:00 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/25 20:16:08 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,21 @@
  */
 static int	print_log_level(t_log_level level, int *fd)
 {
+	static bool	first_error = true;
+
 	if (LOGGING_LEVEL < level)
 		return (0);
 	if (level <= WARNING)
 		*fd = STDERR_FILENO;
 	if (level == ERROR)
+	{
+		if (first_error)
+		{
+			ft_putendl_fd("Error", *fd);
+			first_error = false;
+		}
 		ft_putstr_fd(RED"[ERROR]"NC, *fd);
+	}
 	else if (level == WARNING)
 		ft_putstr_fd(YELLOW"[WARNING]"NC, *fd);
 	else if (level == INFO)
@@ -71,7 +80,7 @@ int	log_start(t_log_level lvl, const char *file, int line)
 		ft_putnbr_fd(line, fd);
 		ft_putstr_fd(NC")", fd);
 	}
-	ft_putstr_fd(" -> ", fd);
+	ft_putstr_fd(" ", fd);
 	return (fd);
 }
 

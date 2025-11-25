@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 17:26:09 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/23 18:51:12 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/25 20:19:28 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char **argv)
 {
 	t_map_data	map_data;
 
-	log_msg(INFO, __FILE__, __LINE__, "executing cub3d");
+	log_msg(DEBUG, __FILE__, __LINE__, "executing cub3d");
 	ft_bzero(&map_data, sizeof(t_map_data));
 	if (parse(argc, argv, &map_data))
 		return (main_cleanup(&map_data), 1);
