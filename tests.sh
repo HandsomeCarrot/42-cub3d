@@ -11,6 +11,44 @@ total_tests=0
 passed_tests=0
 failed_tests=0
 
+# Initialize flags
+USE_VAL=0
+USE_FUNCHECK=0
+SHOW_OUTPUT=0
+
+# Parse arguments
+while getopts "tfo" opt; do
+  case $opt in
+    t)
+      USE_VAL=1
+      ;;
+    f)
+      USE_FUNCHECK=1
+      ;;
+    o)
+      SHOW_OUTPUT=1
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+  esac
+done
+
+# Check for mutual exclusivity
+if [ "$USE_VAL" -eq 1 ] && [ "$USE_FUNCHECK" -eq 1 ]; then
+    echo -e "${RED}Error: -t (valgrind) and -f (funcheck) cannot be used together. -f will be ignored${NC}"
+    sleep 1
+fi
+
+# Set command prefix
+CMD_PREFIX=""
+if [ "$USE_VAL" -eq 1 ]; then
+    CMD_PREFIX="valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --trace-children=yes --track-fds=yes"
+elif [ "$USE_FUNCHECK" -eq 1 ]; then
+    CMD_PREFIX="funcheck -a"
+fi
+
 # Test function that takes map file path and expected return code
 # Returns 0 if test passes, 1 if test fails
 run_map_test() {
@@ -22,7 +60,11 @@ run_map_test() {
 	total_tests=$((total_tests + 1))
     
     # Run cub3d with the map file and capture exit code
-    ./cub3d "$map_file" #> /dev/null 2>&1
+    if [ "$SHOW_OUTPUT" -eq 1 ]; then
+        $CMD_PREFIX ./cub3d "$map_file"
+    else
+        $CMD_PREFIX ./cub3d "$map_file" > /dev/null 2>&1
+    fi
     local actual_code=$?
     
     # Compare actual and expected codes

@@ -6,27 +6,53 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 18:15:52 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/23 18:51:34 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/25 18:20:46 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/parsing.h"
+#include <fcntl.h>
 
 /**
- * @brief Opens a file for reading and returns its file descriptor.
+ * @brief Checks if the given file path points to a directory.
  *
- * This function validates the input file path, attempts to open the file
- * in read-only mode, and returns the file descriptor. If the file cannot
- * be opened, it logs an error message including the system error
- * description and returns -1.
+ * This function attempts to open the file with the O_DIRECTORY flag.
+ * If the open call succeeds, it indicates the path is a directory,
+ * which is treated as an error. The file descriptor is closed immediately.
  *
- * @param file A null-terminated string representing the path to the file
- *             to be opened. Must not be NULL or empty.
- * @return The file descriptor of the opened file on success, or -1 if
- *         the file could not be opened or if invalid parameters were
- *         provided.
- * @note This function logs warnings for invalid parameters and errors
- *       for file opening failures using the logging system.
+ * @param file The path to the file to check.
+ * @return -1 if the file is a directory, 0 otherwise.
+ */
+static int	file_is_directory(const char *file)
+{
+	int	fd;
+	int	log_fd;
+
+	fd = open(file, O_RDONLY | O_DIRECTORY);
+	if (fd >= 0)
+	{
+		log_fd = log_start(ERROR, __FILE__, __LINE__);
+		if (log_fd >= 0)
+		{
+			ft_putstr_fd("invalid file: '", log_fd);
+			ft_putstr_fd((char *)file, log_fd);
+			ft_putendl_fd("': is a directory", log_fd);
+		}
+		close(fd);
+		return (1);
+	}
+	return (0);
+}
+
+/**
+ * @brief Opens a file for reading after validating it is not a directory.
+ *
+ * This function first checks if the provided path is a directory using
+ * check_if_directory(). If it is not, it attempts to open the file
+ * in read-only mode.
+ *
+ * @param file The path to the file to open.
+ * @return The file descriptor if successful, or -1 on error.
  */
 int	open_file_read(const char *file)
 {
@@ -35,10 +61,9 @@ int	open_file_read(const char *file)
 
 	log_msg(DEBUG, __FILE__, __LINE__, "opening file for reading");
 	if (!file || !*file)
-	{
-		log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM);
+		return (log_msg(ERROR, __FILE__, __LINE__, LOG_INVALID_PARAM), -1);
+	if (file_is_directory(file))
 		return (-1);
-	}
 	file_fd = open(file, O_RDONLY);
 	if (file_fd < 0)
 	{
