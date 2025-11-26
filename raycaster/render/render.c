@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 14:32:38 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/26 17:50:49 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/26 18:53:26 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,22 @@ static void	calculate_perp_dist(t_ray *ray, t_game *game)
 				+ (1 - ray->step.y) / 2.0) / ray->dir.y;
 }
 
+static void	step_ray(t_ray *ray)
+{
+	if (ray->side_dist.x < ray->side_dist.y)
+	{
+		ray->side_dist.x += ray->delta_dist.x;
+		ray->map.x += ray->step.x;
+		ray->side = 0;
+	}
+	else
+	{
+		ray->side_dist.y += ray->delta_dist.y;
+		ray->map.y += ray->step.y;
+		ray->side = 1;
+	}
+}
+
 void	perform_dda(t_ray *ray, t_game *game)
 {
 	int	hit;
@@ -77,18 +93,7 @@ void	perform_dda(t_ray *ray, t_game *game)
 	hit = 0;
 	while (!hit)
 	{
-		if (ray->side_dist.x < ray->side_dist.y)
-		{
-			ray->side_dist.x += ray->delta_dist.x;
-			ray->map.x += ray->step.x;
-			ray->side = 0;
-		}
-		else
-		{
-			ray->side_dist.y += ray->delta_dist.y;
-			ray->map.y += ray->step.y;
-			ray->side = 1;
-		}
+		step_ray(ray);
 		if (ray->map.y < 0 || ray->map.x < 0 || ray->map.y >= game->map_height
 			|| ray->map.x >= game->map_width)
 		{
