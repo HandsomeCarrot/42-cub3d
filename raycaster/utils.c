@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 10:59:07 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/25 14:19:02 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/25 14:57:38 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,22 @@ int	get_pixel_color(t_texture *tex, int x, int y)
 
 	offset = y * tex->line_length + x * tex->bytes_per_pixel;
 	return (*(int *)(tex->img_data + offset));
+}
+
+bool	check_wall(t_game *game, double x, double y)
+{
+	int	map_x;
+	int	map_y;
+
+	map_x = (int)x;
+	map_y = (int)y;
+	if (map_y < 0 || map_x < 0)
+		return (true);
+	if (game->map[map_y] == NULL)
+		return (true);
+	if (game->map[map_y][map_x] == '\0')
+		return (true);
+	if (game->map[map_y][map_x] == '1')
+		return (true);
+	return (false);
 }

@@ -6,7 +6,7 @@
 #    By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/16 18:57:48 by hasaliho          #+#    #+#              #
-#    Updated: 2025/11/25 14:45:53 by hasaliho         ###   ########.fr        #
+#    Updated: 2025/11/25 16:34:40 by hasaliho         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ else ifeq ($(UNAME_S),Linux)
     MLX_FLAGS = -lmlx -lXext -lX11 -lm
 endif
 
-SRC = main.c setup/player_setup.c test_map.c setup/mlx_setup.c setup/texture_utils.c hooks.c cleanup.c render.c utils.c minimap/minimap.c movement.c minimap/minimap_utils.c
+SRC = main.c setup/player_setup.c test_map.c setup/mlx_setup.c setup/texture_utils.c hooks.c cleanup.c render/render.c utils.c minimap/minimap.c movement.c minimap/minimap_utils.c render/drawing_utils.c
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)

@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 16:55:33 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/25 14:45:13 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/25 16:36:44 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,8 @@ void	draw_player_triangle(t_game *game, double tile_size);
 void 	draw_minimap_rays(t_game *game, double tile_size);
 int		color_picker(t_game *game, int map_y, int map_x);
 double	get_tile_size(t_game *game);
+
+//drawing_utils.c
+void	draw_column(t_ray *ray, t_game *game, int x);
 
 #endif

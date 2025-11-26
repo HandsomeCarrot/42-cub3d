@@ -6,11 +6,11 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 14:32:38 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/19 15:17:35 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/26 17:50:49 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/render.h"
+#include "../include/render.h"
 
 static void	calculate_ray_steps(t_ray *ray, t_game *game)
 {
@@ -60,6 +60,16 @@ void	init_ray(t_ray *ray, t_game *game, int x)
 	calculate_ray_steps(ray, game);
 }
 
+static void	calculate_perp_dist(t_ray *ray, t_game *game)
+{
+	if (ray->side == 0)
+		ray->perp_wall_dist = (ray->map.x - game->player.pos.x
+				+ (1 - ray->step.x) / 2.0) / ray->dir.x;
+	else
+		ray->perp_wall_dist = (ray->map.y - game->player.pos.y
+				+ (1 - ray->step.y) / 2.0) / ray->dir.y;
+}
+
 void	perform_dda(t_ray *ray, t_game *game)
 {
 	int	hit;
@@ -89,92 +99,7 @@ void	perform_dda(t_ray *ray, t_game *game)
 			hit = 1;
 	}
 	if (ray->perp_wall_dist != 1e30)
-	{
-		if (ray->side == 0)
-			ray->perp_wall_dist = (ray->map.x - game->player.pos.x + (1
-						- ray->step.x) / 2.0) / ray->dir.x;
-		else
-			ray->perp_wall_dist = (ray->map.y - game->player.pos.y + (1
-						- ray->step.y) / 2.0) / ray->dir.y;
-	}
-}
-
-t_texture	*get_texture(t_game *game, t_ray *ray)
-{
-	t_texture	*tex;
-
-	if (ray->side == 0)
-	{
-		if (ray->dir.x > 0)
-			tex = &game->west_texture;
-		else
-			tex = &game->east_texture;
-	}
-	else
-	{
-		if (ray->dir.y > 0)
-			tex = &game->north_texture;
-		else
-			tex = &game->south_texture;
-	}
-	return (tex);
-}
-
-void	draw_column(t_ray *ray, t_game *game, int x)
-{
-	int			line_height;
-	int			original_draw_start;
-	int			draw_start;
-	int			draw_end;
-	int			y;
-	double		wallX;
-	int			texX;
-	int			texY;
-	t_texture	*tex;
-	double		step;
-	double		tex_pos;
-
-	line_height = (int)(game->mlx.height / ray->perp_wall_dist);
-	original_draw_start = -line_height / 2 + game->mlx.height / 2;
-	draw_start = original_draw_start;
-	if (draw_start < 0)
-		draw_start = 0;
-	draw_end = line_height / 2 + game->mlx.height / 2;
-	if (draw_end >= game->mlx.height)
-		draw_end = game->mlx.height - 1;
-	y = 0;
-	while (y < draw_start)
-	{
-		put_pixel(&game->mlx, x, y, game->ceiling_color);
-		y++;
-	}
-	if (ray->side == 0)
-		wallX = game->player.pos.y + ray->perp_wall_dist * ray->dir.y;
-	else
-		wallX = game->player.pos.x + ray->perp_wall_dist * ray->dir.x;
-	wallX = wallX - (int)wallX;
-	tex = get_texture(game, ray);
-	texX = (int)(wallX * (tex->width));
-	step = (double)tex->height / line_height;
-	tex_pos = (draw_start - original_draw_start) * step;
-	y = draw_start;
-	while (y <= draw_end)
-	{
-		texY = (int)tex_pos;
-		if (texY < 0)
-			texY = 0;
-		if (texY >= tex->height)
-			texY = tex->height - 1;
-		put_pixel(&game->mlx, x, y, get_pixel_color(tex, texX, texY));
-		tex_pos += step;
-		y++;
-	}
-	y = draw_end + 1;
-	while (y < game->mlx.height)
-	{
-		put_pixel(&game->mlx, x, y, game->floor_color);
-		y++;
-	}
+		calculate_perp_dist(ray, game);
 }
 
 int	render(t_game *game)

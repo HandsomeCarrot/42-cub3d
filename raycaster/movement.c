@@ -6,29 +6,11 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 09:13:56 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/25 14:07:47 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/25 14:57:23 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/render.h"
-
-bool	check_wall(t_game *game, double x, double y)
-{
-	int	map_x;
-	int	map_y;
-
-	map_x = (int)x;
-	map_y = (int)y;
-	if (map_y < 0 || map_x < 0)
-		return (true);
-	if (game->map[map_y] == NULL)
-		return (true);
-	if (game->map[map_y][map_x] == '\0')
-		return (true);
-	if (game->map[map_y][map_x] == '1')
-		return (true);
-	return (false);
-}
 
 bool	check_wall_collision(t_game *game, double x, double y)
 {

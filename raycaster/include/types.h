@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 16:57:12 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/18 12:31:44 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/26 17:27:19 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,11 @@ typedef struct s_vector
 	double		y;
 }				t_vector;
 
+
 typedef struct s_point
 {
-	int			x;
-	int			y;
+	int		x;
+	int		y;
 }				t_point;
 
 typedef struct s_player
@@ -59,6 +60,18 @@ typedef struct s_texture
 	bool				is_img_created;
 	struct s_texture	*next;
 }	t_texture;
+
+typedef struct s_draw_info
+{
+	double		wall_x;
+	int			x;
+	int			y;
+	int			draw_start;
+	double		step;
+	t_point		tex_int;
+	double		tex_pos;
+	t_texture	*tex;
+}				t_draw_info;
 
 typedef struct s_mlx
 {
@@ -95,6 +108,14 @@ typedef struct s_keys
 	bool	rotate_right;
 	bool	shift;
 }	t_keys;
+
+typedef struct s_draw_ctx
+{
+	int	x;
+	int	draw_start;
+	int	draw_end;
+	int	line_height;
+}	t_draw_ctx;
 
 typedef struct s_game
 {
