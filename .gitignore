@@ -60,3 +60,8 @@ cub3d
 # vpoka
 assets/maps/invalid/no_read_right.cub
 assets/maps/invalid/no_rights.cub
+
+# Hamza container
+.devcontainer
+.DS_Store
+raycaster/sandbox
