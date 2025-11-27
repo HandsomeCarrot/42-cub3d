@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   player_setup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 07:20:33 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/25 14:16:19 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/27 19:09:59 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/types.h"
+#include "../../../include/types.h"
 
 void	set_player(double *p_src, double nbr)
 {
