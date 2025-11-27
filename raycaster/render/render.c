@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 14:32:38 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/26 18:53:26 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/27 09:29:59 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,53 +60,6 @@ void	init_ray(t_ray *ray, t_game *game, int x)
 	calculate_ray_steps(ray, game);
 }
 
-static void	calculate_perp_dist(t_ray *ray, t_game *game)
-{
-	if (ray->side == 0)
-		ray->perp_wall_dist = (ray->map.x - game->player.pos.x
-				+ (1 - ray->step.x) / 2.0) / ray->dir.x;
-	else
-		ray->perp_wall_dist = (ray->map.y - game->player.pos.y
-				+ (1 - ray->step.y) / 2.0) / ray->dir.y;
-}
-
-static void	step_ray(t_ray *ray)
-{
-	if (ray->side_dist.x < ray->side_dist.y)
-	{
-		ray->side_dist.x += ray->delta_dist.x;
-		ray->map.x += ray->step.x;
-		ray->side = 0;
-	}
-	else
-	{
-		ray->side_dist.y += ray->delta_dist.y;
-		ray->map.y += ray->step.y;
-		ray->side = 1;
-	}
-}
-
-void	perform_dda(t_ray *ray, t_game *game)
-{
-	int	hit;
-
-	hit = 0;
-	while (!hit)
-	{
-		step_ray(ray);
-		if (ray->map.y < 0 || ray->map.x < 0 || ray->map.y >= game->map_height
-			|| ray->map.x >= game->map_width)
-		{
-			hit = 1;
-			ray->perp_wall_dist = 1e30;
-		}
-		else if (game->map[ray->map.y][ray->map.x] == '1')
-			hit = 1;
-	}
-	if (ray->perp_wall_dist != 1e30)
-		calculate_perp_dist(ray, game);
-}
-
 int	render(t_game *game)
 {
 	int		x;
@@ -139,8 +92,8 @@ int	render_loop(t_game *game)
 	draw_minimap_rays(game, tile_size);
 	draw_player_triangle(game, tile_size);
 	mlx_put_image_to_window(game->mlx.mlx, game->mlx.win, game->mlx.img, 0, 0);
-#ifdef __APPLE__
+	#ifdef __APPLE__
 	mlx_do_sync(game->mlx.mlx);
-#endif
+	#endif
 	return (0);
 }
