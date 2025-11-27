@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.h                                          :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/16 20:31:32 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/27 15:30:21 by vpoka            ###   ########.fr       */
+/*   Created: 2024/09/03 13:49:58 by vpoka             #+#    #+#             */
+/*   Updated: 2025/10/28 00:09:07 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CLEANUP_H
-# define CLEANUP_H
+#include "std_libft.h"
 
-# include "definitions.h"
-# include "../libft/libft.h"
-# include "logging.h"
-
-//-----cleanup_main.c-----//
-
-void	main_cleanup(t_map_data *data);
-
-//-----cleanup_strings.c-----//
-
-void	free_string_array(char ***string_array);
-
-#endif /* CLEANUP_H */
+/**
+ * @brief Checks if the given character is an alphabetic character.
+ *
+ * @param c The character to be checked.
+ * @return 1 if the character is an alphabetic character, 0 otherwise.
+ */
+int	ft_isalpha(int c)
+{
+	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122))
+		return (1);
+	return (0);
+}

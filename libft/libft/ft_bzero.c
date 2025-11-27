@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.h                                          :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/16 20:31:32 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/27 15:30:21 by vpoka            ###   ########.fr       */
+/*   Created: 2024/09/04 18:36:56 by vpoka             #+#    #+#             */
+/*   Updated: 2025/10/28 00:09:07 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CLEANUP_H
-# define CLEANUP_H
+#include "std_libft.h"
 
-# include "definitions.h"
-# include "../libft/libft.h"
-# include "logging.h"
+/**
+ * Sets the first 'n' bytes of the memory pointed to by 's' to zero.
+ *
+ * @param s - Pointer to the memory to be zeroed.
+ * @param n - Number of bytes to be zeroed.
+ */
+void	ft_bzero(void *s, size_t n)
+{
+	size_t	pos;
 
-//-----cleanup_main.c-----//
-
-void	main_cleanup(t_map_data *data);
-
-//-----cleanup_strings.c-----//
-
-void	free_string_array(char ***string_array);
-
-#endif /* CLEANUP_H */
+	pos = 0;
+	while (pos < n)
+	{
+		*((char *)s + pos) = 0;
+		pos++;
+	}
+}

@@ -5,25 +5,25 @@
 #                                                     +:+ +:+         +:+      #
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/10/14 12:43:39 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/15 15:41:14 by vpoka            ###   ########.fr        #
+#    Created: 2025/10/19 10:07:29 by vpoka             #+#    #+#              #
+#    Updated: 2025/10/28 00:11:43 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #-----VARIABLES-----#
 
-NAME = libft.a
+NAME := libft.a
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -MD -MP
+CC := cc
+CFLAGS := -Wall -Wextra -Werror
+DPFLAGS := -MP -MD
+INCLUDE := -I.
 
-INC = -Iinclude
-COMP = $(CC) $(CFLAGS) $(INC)
+ARNAME := ar rcs $(NAME)
+RM := rm -f
 
-ARNAME = ar rcs $(NAME)
-
-S = src
-SRCS =	$(addprefix $(S)/, \
+LIBFT := libft
+LIBFT_SRCS :=	$(addprefix $(LIBFT)/, \
 		ft_atoi.c \
 		ft_bzero.c \
 		ft_calloc.c \
@@ -66,29 +66,36 @@ SRCS =	$(addprefix $(S)/, \
 		ft_lstiter_bonus.c \
 		ft_lstlast_bonus.c \
 		ft_lstmap_bonus.c \
+		ft_lstnew_bonus.c \
 		ft_lstsize_bonus.c)
 
-B = build
-OBJS = $(SRCS:$(S)/%.c=$(B)/%.o)
-DEPS = $(OBJS:.o=.d)
+GNL := getNextLine
+GNL_SRCS :=	$(addprefix $(GNL)/, \
+				get_next_line_bonus.c \
+				get_next_line_utils_bonus.c)
+
+SRCS := $(LIBFT_SRCS) $(GNL_SRCS)
+B := build
+OBJS := $(SRCS:%.c=$(B)/%.o)
+DEPS := $(OBJS:%.o=%.d)
 
 #-----COLORS-----#
 
-RST = \033[0m
-RED = \033[1;31m
-GREEN = \033[1;32m
-YELLOW = \033[1;33m
-BLUE = \033[1;34m
-MAGENTA = \033[1;35m
-CYAN = \033[1;36m
+RST := \033[0m
+RED := \033[1;31m
+GREEN := \033[1;32m
+YELLOW := \033[1;33m
+BLUE := \033[1;34m
+MAGENTA := \033[1;35m
+CYAN := \033[1;36m
 
 #-----LOG LEVELS-----#
 
-INFO = $(BLUE)
-WARNING = $(YELLOW)
-ERROR = $(RED)
-SUCCESS = $(GREEN)
-DEBUG = $(MAGENTA)
+INFO := $(BLUE)
+WARNING := $(YELLOW)
+ERROR := $(RED)
+SUCCESS := $(GREEN)
+DEBUG := $(MAGENTA)
 
 #-----LOG FUNCTION-----#
 
@@ -102,29 +109,26 @@ endef
 
 all: $(NAME)
 
-$(B):
-	@ mkdir -p $(B)
-	$(call log,INFO,Created $(B) directory for $(NAME))
-
-$(B)/%.o: $(S)/%.c | $(B)
-	$(call log,DEBUG,Compiling $<)
-	@ $(COMP) -c $< -o $@
-
 $(NAME): $(OBJS)
 	$(call log,INFO,Linking $(NAME) (standard functions))
-	@ $(ARNAME) $(OBJS)
-	$(call log,SUCCESS,$(NAME) linked successfully!)
+	@ $(ARNAME) $^
+	@ $(call log,SUCCESS,$(NAME) linked successfully!)\
+
+$(B)/%.o: %.c
+	$(call log,INFO,Compiling $<)
+	@ mkdir -p $(@D)
+	@ $(CC) $(CFLAGS) $(DPFLAGS) $(INCLUDE) -c $< -o $@
 
 clean:
-	@ rm -rf $(B)
+	@ $(RM) -r $(B)
 	$(call log,WARNING,deleted $(B) directory for $(NAME)!)
 
 fclean: clean
-	@ rm -f $(NAME)
+	$(RM) $(NAME)
 	$(call log,WARNING,deleted $(NAME)!)
 
 re: fclean $(NAME)
 
-.PHONY: all clean fclean re
+.PHONY: all bonus clean fclean re
 
 -include $(DEPS)

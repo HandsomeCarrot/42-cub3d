@@ -6,19 +6,28 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 17:26:09 by vpoka             #+#    #+#             */
-/*   Updated: 2025/10/16 17:56:01 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/27 15:29:12 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "../include/main.h"
 
-int	main(void)
+/**
+ * @brief Main entry point of the Cub3D program.
+ *
+ * Initializes data, parses arguments and map file, and starts the game loop.
+ *
+ * @param argc Argument count.
+ * @param argv Argument vector.
+ * @return 0 on success, 1 on error.
+ */
+int	main(int argc, char **argv)
 {
-	t_data	*data;
+	t_map_data	map_data;
 
-	data = init_data();
-	if (!data)
-		return (1);
-	main_cleanup(data);
-	return (0);
+	log_msg(DEBUG, __FILE__, __LINE__, "executing cub3d");
+	ft_bzero(&map_data, sizeof(t_map_data));
+	if (parse(argc, argv, &map_data))
+		return (main_cleanup(&map_data), 1);
+	return (main_cleanup(&map_data), 0);
 }

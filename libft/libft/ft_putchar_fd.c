@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.h                                          :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/16 20:31:32 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/27 15:30:21 by vpoka            ###   ########.fr       */
+/*   Created: 2024/09/30 19:25:07 by vpoka             #+#    #+#             */
+/*   Updated: 2025/10/28 00:09:07 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CLEANUP_H
-# define CLEANUP_H
+#include "std_libft.h"
 
-# include "definitions.h"
-# include "../libft/libft.h"
-# include "logging.h"
-
-//-----cleanup_main.c-----//
-
-void	main_cleanup(t_map_data *data);
-
-//-----cleanup_strings.c-----//
-
-void	free_string_array(char ***string_array);
-
-#endif /* CLEANUP_H */
+/**
+ * @file ft_putchar_fd.c
+ * @brief Outputs the character 'c' to the given file descriptor.
+ *
+ * This function writes the character 'c' to the file descriptor specified by
+ *  'fd'.
+ *
+ * @param c The character to output.
+ * @param fd The file descriptor on which to write.
+ */
+void	ft_putchar_fd(char c, int fd)
+{
+	write(fd, &c, sizeof(char));
+}

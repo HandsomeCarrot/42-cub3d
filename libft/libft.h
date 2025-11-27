@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.h                                          :+:      :+:    :+:   */
+/*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/16 20:31:32 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/27 15:30:21 by vpoka            ###   ########.fr       */
+/*   Created: 2025/10/27 23:04:00 by vpoka             #+#    #+#             */
+/*   Updated: 2025/10/28 00:09:54 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CLEANUP_H
-# define CLEANUP_H
+#ifndef LIBFT_H
+# define LIBFT_H
 
-# include "definitions.h"
-# include "../libft/libft.h"
-# include "logging.h"
+# include "libft/std_libft.h"
+# include "getNextLine/get_next_line_bonus.h"
 
-//-----cleanup_main.c-----//
-
-void	main_cleanup(t_map_data *data);
-
-//-----cleanup_strings.c-----//
-
-void	free_string_array(char ***string_array);
-
-#endif /* CLEANUP_H */
+#endif /* LIBFT_H */
