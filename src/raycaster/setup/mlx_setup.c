@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_setup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 07:31:49 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/25 14:48:55 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/27 18:35:06 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/render.h"
+#include "../../../include/render.h"
 
 static int	init_mlx_window(t_game *game)
 {

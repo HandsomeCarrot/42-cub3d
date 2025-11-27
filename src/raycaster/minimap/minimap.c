@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 17:06:00 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/21 17:32:30 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/27 18:35:06 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/render.h"
+#include "../../../include/render.h"
 
 static void	fill_tile(t_game *game, int map_x, int map_y, double tile_size)
 {

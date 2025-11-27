@@ -6,11 +6,11 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 13:09:50 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/27 17:49:14 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/27 18:38:45 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/render.h"
+#include "../../include/render.h"
 
 void	texture_img_destroyer(t_game *g, t_texture *tex)
 {

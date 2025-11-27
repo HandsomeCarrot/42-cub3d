@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 10:59:07 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/27 11:30:47 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/27 18:38:45 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/render.h"
+#include "../../include/render.h"
 
 double	get_time(void)
 {

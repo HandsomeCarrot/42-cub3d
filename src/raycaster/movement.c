@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 09:13:56 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/27 11:30:47 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/27 18:38:45 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/render.h"
+#include "../../include/render.h"
 
 bool	check_wall_collision(t_game *game, double x, double y)
 {

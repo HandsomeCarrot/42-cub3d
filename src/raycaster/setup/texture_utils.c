@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   texture_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 14:42:32 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/25 14:47:29 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/27 18:35:06 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/render.h"
+#include "../../../include/render.h"
 
 static void	init_texture_node(t_texture *texture)
 {

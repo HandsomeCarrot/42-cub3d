@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 14:32:38 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/27 09:39:47 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/27 18:35:06 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/render.h"
+#include "../../../include/render.h"
 
 static void	calculate_ray_steps(t_ray *ray, t_game *game)
 {

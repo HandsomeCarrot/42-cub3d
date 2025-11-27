@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 11:07:26 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/07 10:31:40 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/27 18:38:45 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/render.h"
+#include "../../include/render.h"
 
 int	close_handler(void *param)
 {

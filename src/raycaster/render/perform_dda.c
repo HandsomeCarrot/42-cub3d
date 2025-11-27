@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   perform_dda.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 09:27:24 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/27 09:29:06 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/27 18:35:06 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/render.h"
+#include "../../../include/render.h"
 
 static void	calculate_perp_dist(t_ray *ray, t_game *game)
 {

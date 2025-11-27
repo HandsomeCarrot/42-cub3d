@@ -6,11 +6,11 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 09:32:42 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/27 17:50:39 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/27 18:38:45 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/render.h"
+#include "../../include/render.h"
 
 int	main(void)
 {
