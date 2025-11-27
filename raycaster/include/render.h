@@ -6,16 +6,17 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 16:55:33 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/27 09:33:01 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/27 09:43:28 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RENDER_H
 # define RENDER_H
 
-# include "keys.h"
 # include "types.h"
 # include "utils.h"
+# include <X11/X.h>
+# include <X11/keysym.h>
 # include <math.h>
 # include <mlx.h>
 # include <stdbool.h>

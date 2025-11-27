@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 14:32:38 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/27 09:29:59 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/27 09:39:47 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,5 @@ int	render_loop(t_game *game)
 	draw_minimap_rays(game, tile_size);
 	draw_player_triangle(game, tile_size);
 	mlx_put_image_to_window(game->mlx.mlx, game->mlx.win, game->mlx.img, 0, 0);
-	#ifdef __APPLE__
-	mlx_do_sync(game->mlx.mlx);
-	#endif
 	return (0);
 }
