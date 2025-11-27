@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 16:56:19 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/10/18 16:43:00 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/27 11:30:47 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "types.h"
 
-extern char *test_map[];
+extern char	*test_map[];
 
 //# define MAP_WIDTH 8
 //# define MAP_HEIGHT 7

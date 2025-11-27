@@ -6,7 +6,7 @@
 /*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 13:09:50 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/21 15:27:21 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/27 11:30:15 by hasaliho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,21 @@ void	texture_img_destroyer(t_game *g, t_texture *tex)
 
 void	cleanup_game(t_game *game)
 {
+//	int	i;
 	texture_img_destroyer(game, &game->north_texture);
 	if (game->mlx.img)
 		mlx_destroy_image(game->mlx.mlx, game->mlx.img);
 	if (game->mlx.win)
 		mlx_destroy_window(game->mlx.mlx, game->mlx.win);
-#ifdef __linux__
 	if (game->mlx.mlx)
 		mlx_destroy_display(game->mlx.mlx);
-#endif
 	if (game->mlx.mlx)
 		free(game->mlx.mlx);
-	/* 	i = 0;
-		if (game->map)
-		{
-			while (game->map[i])
-				free(game->map[i++]);
-			free(game->map);
-		} */
+/* 	i = 0;
+	if (game->map)
+	{
+		while (game->map[i])
+			free(game->map[i++]);
+		free(game->map);
+	} */
 }
