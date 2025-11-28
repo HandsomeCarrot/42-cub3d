@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
+#    By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/11/27 15:38:37 by vpoka            ###   ########.fr        #
+#    Updated: 2025/11/28 18:05:08 by hasaliho         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ CC := cc
 
 CFLAGS := -Wall -Wextra -Werror
 DPFLAGS := -MP -MD
-LIBS := -lmlx -lXext -lX11
+LIBS := -lmlx -lXext -lX11 -lm
 
 INCLUDE := -Iinclude -Ilibft
 COMP := $(CC) $(CFLAGS) $(INCLUDE)
@@ -64,11 +64,14 @@ PARSING_SRCS :=	$(addprefix parsing/, \
 				$(addprefix validation/, \
 				validate_content.c))
 
+TRACING_SRC = $(addprefix raycaster/, setup/player_setup.c setup/mlx_setup.c setup/texture_utils.c hooks.c cleanup.c render/render.c utils.c minimap/minimap.c movement.c minimap/minimap_utils.c render/drawing_utils.c render/perform_dda.c)
+
 SRCS :=	$(addprefix $(S)/, \
 		main.c \
 		$(CLEANUP_SRCS) \
 		$(LOGGING_SRCS) \
-		$(PARSING_SRCS))
+		$(PARSING_SRCS) \
+		$(TRACING_SRC))
 
 B := build
 OBJS := $(SRCS:$(S)/%.c=$(B)/%.o)
