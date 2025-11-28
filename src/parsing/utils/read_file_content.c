@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:41:23 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/25 20:08:43 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/29 00:25:09 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@
 static int	read_file_lines(int file_fd, t_array *lines)
 {
 	char	*line;
-	size_t	current_line;
 
-	current_line = 0;
 	while (1)
 	{
 		line = log_get_next_line(file_fd, __FILE__, __LINE__);
@@ -41,7 +39,6 @@ static int	read_file_lines(int file_fd, t_array *lines)
 			get_next_line(-1);
 			return (1);
 		}
-		current_line++;
 	}
 	return (0);
 }
