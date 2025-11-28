@@ -6,16 +6,16 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 20:31:32 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/27 15:30:21 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/28 17:14:37 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CLEANUP_H
 # define CLEANUP_H
 
-# include "definitions.h"
-# include "../libft/libft.h"
 # include "logging.h"
+# include "../../libft/libft.h"
+# include "../parsing/parsing_types.h"
 
 //-----cleanup_main.c-----//
 

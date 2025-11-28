@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/render.h"
+#include "../../../include/raycaster/render.h"
 
 static int	init_mlx_window(t_game *game)
 {

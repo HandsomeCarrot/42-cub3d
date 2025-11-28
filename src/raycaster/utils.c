@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/render.h"
+#include "../../include/raycaster/render.h"
 
 double	get_time(void)
 {

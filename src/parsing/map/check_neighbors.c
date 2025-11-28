@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/parsing.h"
+#include "../../../include/parsing/parsing.h"
 
 /**
  * @brief Checks if a character represents valid map terrain (0 or 1).

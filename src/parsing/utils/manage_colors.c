@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/parsing.h"
+#include "../../../include/parsing/parsing.h"
 
 /**
  * @brief Sets a specific color channel value in an integer color.

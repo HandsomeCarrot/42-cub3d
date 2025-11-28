@@ -6,11 +6,11 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 07:20:33 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/27 19:09:59 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/28 17:26:58 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/types.h"
+#include "../../../include/raycaster/raycaster_types.h"
 
 void	set_player(double *p_src, double nbr)
 {

@@ -6,16 +6,17 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:52:41 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/25 20:09:02 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/28 17:23:24 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
-# include "logging.h"
-# include "definitions.h"
-# include "../libft/libft.h"
+# include "../common/logging.h"
+# include "parsing_types.h"
+# include "parsing_constants.h"
+# include "../../libft/libft.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <string.h>

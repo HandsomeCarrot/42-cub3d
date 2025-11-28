@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/render.h"
+#include "../../../include/raycaster/render.h"
 
 static void	init_texture_node(t_texture *texture)
 {

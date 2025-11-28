@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   types.h                                            :+:      :+:    :+:   */
+/*   raycaster_types.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/17 16:57:12 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/27 11:30:47 by hasaliho         ###   ########.fr       */
+/*   Created: 2025/11/28 14:00:00 by hasaliho          #+#    #+#             */
+/*   Updated: 2025/11/28 17:30:06 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TYPES_H
-# define TYPES_H
+#ifndef RAYCASTER_TYPES_H
+# define RAYCASTER_TYPES_H
 
 # include <stdbool.h>
 # include <stdio.h>
@@ -132,4 +132,4 @@ typedef struct s_game
 	int					ceiling_color;
 }						t_game;
 
-#endif
+#endif /* RAYCASTER_TYPES_H */

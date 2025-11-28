@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/render.h"
+#include "../../../include/raycaster/render.h"
 
 static void	fill_tile(t_game *game, int map_x, int map_y, double tile_size)
 {

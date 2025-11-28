@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/render.h"
+#include "../../../include/raycaster/render.h"
 
 t_texture	*get_texture(t_game *game, t_ray *ray)
 {

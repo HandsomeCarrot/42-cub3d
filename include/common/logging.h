@@ -6,16 +6,23 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:34:28 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/27 15:29:47 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/28 15:41:33 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LOGGING_H
 # define LOGGING_H
 
-# include "definitions.h"
-# include "../libft/libft.h"
+# include "../../libft/libft.h"
 # include <stdio.h>
+
+typedef enum e_log_level
+{
+	ERROR,
+	WARNING,
+	INFO,
+	DEBUG
+}					t_log_level;
 
 // 0 = ERROR
 // 1 = WARNING

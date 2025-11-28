@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cleanup.h"
+#include "../../include/common/cleanup.h"
 
 /**
  * @brief Frees all allocated memory within the map data structure.

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/render.h"
+#include "../../../include/raycaster/render.h"
 
 static void	calculate_ray_steps(t_ray *ray, t_game *game)
 {

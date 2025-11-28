@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/render.h"
+#include "../../include/raycaster/render.h"
 
 bool	check_wall_collision(t_game *game, double x, double y)
 {

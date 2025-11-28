@@ -1,29 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   definitions.h                                      :+:      :+:    :+:   */
+/*   parsing_types.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/16 20:31:25 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/22 14:49:11 by vpoka            ###   ########.fr       */
+/*   Created: 2025/11/28 14:00:00 by vpoka             #+#    #+#             */
+/*   Updated: 2025/11/28 17:09:05 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DEFINITIONS_H
-# define DEFINITIONS_H
+#ifndef PARSING_TYPES_H
+# define PARSING_TYPES_H
 
 # include <stdbool.h>
 # include <stddef.h>
-
-# define WHITESPACE "\t\n\v\f\r "
-
-# define MAP_PADDING " "
-# define MAP_TERRAIN "01"
-# define PLAYER_SPAWN "NESW"
-# define MAP_LAYOUT_CHARACTERS " 01NESW"
-
-# define BYTE 8
 
 typedef enum e_color_channel
 {
@@ -88,28 +79,20 @@ typedef struct s_colors
 	int				floor;
 }					t_colors;
 
-typedef struct s_player
+typedef struct s_player_spawn
 {
 	int				found;
 	int				pos_x;
 	int				pos_y;
 	char			orientation;
-}					t_player;
+}					t_player_spawn;
 
 typedef struct s_map_data
 {
 	t_map			map;
 	t_images		images;
 	t_colors		colors;
-	t_player		player;
+	t_player_spawn	player;
 }					t_map_data;
 
-typedef enum e_log_level
-{
-	ERROR,
-	WARNING,
-	INFO,
-	DEBUG
-}					t_log_level;
-
-#endif /* DEFINITIONS_H */
+#endif /* PARSING_TYPES_H */

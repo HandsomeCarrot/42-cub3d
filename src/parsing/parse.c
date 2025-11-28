@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/parsing.h"
+#include "../../include/parsing/parsing.h"
 
 /**
  * @brief Parses the input of the user

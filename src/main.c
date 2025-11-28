@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/main.h"
+#include "../include/cub3d.h"
 
 /**
  * @brief Main entry point of the Cub3D program.

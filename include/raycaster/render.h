@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 16:55:33 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/27 11:30:47 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/28 17:14:04 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RENDER_H
 # define RENDER_H
 
-# include "types.h"
-# include "utils.h"
+# include "raycaster_types.h"
+# include "raycaster_utils.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <math.h>

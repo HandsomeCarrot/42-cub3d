@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   raycaster_utils.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasaliho <hasaliho@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 13:20:08 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/27 11:30:47 by hasaliho         ###   ########.fr       */
+/*   Updated: 2025/11/28 17:14:08 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#ifndef RAYCASTER_UTILS_H
+# define RAYCASTER_UTILS_H
 
-# include "types.h"
+# include "raycaster_types.h"
 
 // hooks.c
 int		key_handler(int keycode, void *param);

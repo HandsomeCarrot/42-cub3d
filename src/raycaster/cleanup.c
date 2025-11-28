@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/render.h"
+#include "../../include/raycaster/render.h"
 
 void	texture_img_destroyer(t_game *g, t_texture *tex)
 {
