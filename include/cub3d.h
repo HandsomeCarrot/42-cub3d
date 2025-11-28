@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:00:00 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/28 17:18:10 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/28 17:44:25 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,6 @@
 # include "common/logging.h"
 # include "common/cleanup.h"
 # include "parsing/parsing.h"
+# include "raycaster/render.h"
 
 #endif /* CUB3D_H */
