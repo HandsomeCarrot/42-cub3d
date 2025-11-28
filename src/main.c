@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 17:26:09 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/28 17:51:00 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/28 23:47:09 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	main(int argc, char **argv)
 	if (!init_mlx(&game))
 	{
 		log_msg(ERROR, __FILE__, __LINE__, "MLX initialization failed");
+		main_cleanup(&map_data);
 		return (1);
 	}
 	setup_hooks(&game);
