@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/11/28 17:57:05 by vpoka            ###   ########.fr        #
+#    Updated: 2025/11/28 23:42:16 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,9 +19,9 @@ CC := cc
 
 CFLAGS := -Wall -Wextra -Werror
 DPFLAGS := -MP -MD
-LIBS := -lmlx -lXext -lX11
+LIBS := -lmlx -lXext -lX11 -lm
 
-INCLUDE := -Iinclude -Ilibft
+INCLUDE := -Ilibft -Iinclude -Iinclude/raycaster
 COMP := $(CC) $(CFLAGS) $(INCLUDE)
 
 RM := rm -f
