@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 07:31:49 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/27 18:35:06 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/29 00:55:49 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	init_mlx_image(t_game *game)
 	return (1);
 }
 
-int	init_mlx(t_game *game)
+int	init_mlx(t_game *game, t_map_data *config)
 {
 	if (!init_mlx_window(game))
 	{
@@ -57,7 +57,7 @@ int	init_mlx(t_game *game)
 		cleanup_game(game);
 		return (0);
 	}
-	if (!load_all_textures(game))
+	if (!load_all_textures(game, config))
 	{
 		cleanup_game(game);
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 14:42:32 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/27 18:35:06 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/29 00:54:38 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,13 @@ static int	load_texture(t_game *g, t_texture *dest, const char *path)
 	return (1);
 }
 
-int	load_all_textures(t_game *game)
+int	load_all_textures(t_game *game, t_map_data *config)
 {
-	static char	*north_path = "./textures/xpm/Futuristic_1024.xpm";
-	static char	*south_path = "./textures/xpm/Metal_1024.xpm";
-	static char	*east_path = "./textures/xpm/Wood_1024.xpm";
-	static char	*west_path = "./textures/xpm/Stone_1024.xpm";
-
 	init_texture_list(game);
-	if (!load_texture(game, &game->north_texture, north_path)
-		|| !load_texture(game, &game->south_texture, south_path)
-		|| !load_texture(game, &game->east_texture, east_path)
-		|| !load_texture(game, &game->west_texture, west_path))
+	if (!load_texture(game, &game->north_texture, config->images.north_wall)
+		|| !load_texture(game, &game->south_texture, config->images.south_wall)
+		|| !load_texture(game, &game->east_texture, config->images.east_wall)
+		|| !load_texture(game, &game->west_texture, config->images.west_wall))
 		return (0);
 	return (1);
 }

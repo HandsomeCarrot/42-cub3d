@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 16:55:33 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/28 17:14:04 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/29 00:55:37 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <math.h>
 # include <mlx.h>
 # include <stdbool.h>
+#include "../parsing/parsing_types.h"
 
 // --- Basic Colors ---
 # define COLOR_WHITE 0xFFFFFF
@@ -52,10 +53,10 @@
 # define SAFE_STEP 0.2
 
 // mlx_setup.c
-int		init_mlx(t_game *game);
+int		init_mlx(t_game *game, t_map_data *config);
 
 // texture_utils.c
-int		load_all_textures(t_game *game);
+int		load_all_textures(t_game *game, t_map_data *config);
 
 // movement.c
 void	new_pos(t_game *game);
