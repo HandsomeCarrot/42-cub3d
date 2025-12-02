@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/11/28 23:42:16 by vpoka            ###   ########.fr        #
+#    Updated: 2025/12/02 20:21:04 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -137,8 +137,10 @@ $(NAME): $(LIBFT) $(OBJS)
 	@ $(COMP) $(OBJS) $(LIBFT) $(LIBS) -o $(NAME)
 	$(call log,SUCCESS,$(NAME) built successfully!)
 
-$(LIBFT):
+$(LIBFT): FORCE
 	$(call run_in_dir,libft)
+
+FORCE:
 
 $(B)/%.o: $(S)/%.c
 	$(call log,INFO,Compiling $<)
@@ -180,6 +182,6 @@ debug: COMP += -DLOGGING_LEVEL=3
 debug: re
 	$(call log,INFO,logging level set to DEBUG)
 
-.PHONY: all libft clean fclean re run error warning info debug
+.PHONY: all libft clean fclean re run error warning info debug FORCE
 
 -include $(DEPS)
