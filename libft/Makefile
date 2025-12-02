@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/19 10:07:29 by vpoka             #+#    #+#              #
-#    Updated: 2025/12/02 19:44:12 by vpoka            ###   ########.fr        #
+#    Updated: 2025/12/02 19:56:00 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -114,7 +114,7 @@ $(NAME): $(OBJS)
 	@ $(ARNAME) $^
 	@ $(call log,SUCCESS,$(NAME) linked successfully!)\
 
-$(B)/%.o: %.c
+$(B)/%.o: %.c libft.h
 	$(call log,INFO,Compiling $<)
 	@ mkdir -p $(@D)
 	@ $(CC) $(CFLAGS) $(DPFLAGS) $(INCLUDE) -c $< -o $@
