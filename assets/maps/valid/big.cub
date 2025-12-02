@@ -1,7 +1,7 @@
-NO ./assets/textures/xpm/chillCarrot.xpm
-SO ./assets/textures/xpm/chillCarrot.xpm
-WE ./assets/textures/xpm/chillCarrot.xpm
-EA ./assets/textures/xpm/chillCarrot.xpm
+NO ./assets/textures/xpm/chillCarrot_1024.xpm
+SO ./assets/textures/xpm/chillCarrot_1024.xpm
+WE ./assets/textures/xpm/chillCarrot_1024.xpm
+EA ./assets/textures/xpm/chillCarrot_1024.xpm
 
 C 0, 0, 100
 F 0, 0, 0
