@@ -6,11 +6,28 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 17:26:09 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/29 00:56:08 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/12/02 14:22:36 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
+
+static int	move_info(t_game *game, t_map_data *config)
+{
+	if (!game || !config)
+	{
+		log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM);
+		return (1);
+	}
+	init_player(&game->player, config->player.pos_x, config->player.pos_y,
+		config->player.orientation);
+	game->map = config->map.layout;
+	game->floor_color = config->colors.floor;
+	game->ceiling_color = config->colors.ceiling;
+	game->map_width = config->map.width;
+	game->map_height = config->map.width;
+	return (0);
+}
 
 /**
  * @brief Main entry point of the Cub3D program.
@@ -24,6 +41,7 @@
 int	main(int argc, char **argv)
 {
 	t_map_data	map_data;
+	t_game		game;
 
 	log_msg(DEBUG, __FILE__, __LINE__, "executing cub3d");
 	ft_bzero(&map_data, sizeof(t_map_data));
@@ -32,18 +50,8 @@ int	main(int argc, char **argv)
 		main_cleanup(&map_data);
 		return (1);
 	}
-
-	t_game		game;
-
 	ft_bzero(&game, sizeof(t_game));
-	init_player(&game.player, map_data.player.pos_x, map_data.player.pos_y, map_data.player.orientation);
-	game.map = map_data.map.layout;
-	game.floor_color = map_data.colors.floor;
-	game.ceiling_color = map_data.colors.ceiling;
-	game.map_width = map_data.map.width;
-	game.map_height = map_data.map.width;
-
-	if (!init_mlx(&game, &map_data))
+	if (move_info(&game, &map_data) || !init_mlx(&game, &map_data))
 	{
 		log_msg(ERROR, __FILE__, __LINE__, "MLX initialization failed");
 		main_cleanup(&map_data);
@@ -51,6 +59,5 @@ int	main(int argc, char **argv)
 	}
 	setup_hooks(&game);
 	mlx_loop(game.mlx.mlx);
-
 	return (main_cleanup(&map_data), 0);
 }
