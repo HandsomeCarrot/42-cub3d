@@ -6,13 +6,15 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 16:55:33 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/12/02 14:23:05 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/12/02 15:39:11 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RENDER_H
 # define RENDER_H
 
+# include "../common/logging.h"
+# include "../parsing/parsing_types.h"
 # include "raycaster_types.h"
 # include "raycaster_utils.h"
 # include <X11/X.h>
@@ -20,7 +22,6 @@
 # include <math.h>
 # include <mlx.h>
 # include <stdbool.h>
-# include "../parsing/parsing_types.h"
 
 // --- Basic Colors ---
 # define COLOR_WHITE 0xFFFFFF

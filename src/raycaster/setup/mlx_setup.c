@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 07:31:49 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/29 00:55:49 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/12/02 15:39:49 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static int	init_mlx_image(t_game *game)
 
 int	init_mlx(t_game *game, t_map_data *config)
 {
+	log_msg(DEBUG, __FILE__, __LINE__, "initializing mlx");
 	if (!init_mlx_window(game))
 	{
 		cleanup_game(game);

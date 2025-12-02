@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 14:42:32 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/29 00:54:38 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/12/02 15:41:21 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static void	init_texture_list(t_game *game)
 
 static int	load_texture(t_game *g, t_texture *dest, const char *path)
 {
+	if (log_start(INFO, __FILE__, __LINE__) >= 0)
+		printf("loading image '%s'\n", path);
 	dest->img = mlx_xpm_file_to_image(g->mlx.mlx, (char *)path, &dest->width,
 			&dest->height);
 	if (!dest->img)
