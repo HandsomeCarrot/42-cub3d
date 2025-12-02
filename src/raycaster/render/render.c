@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 14:32:38 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/27 18:35:06 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/12/02 15:29:22 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	init_ray(t_ray *ray, t_game *game, int x)
 		ray->delta_dist.y = 1e30;
 	else
 		ray->delta_dist.y = fabs(1.0 / ray->dir.y);
+	ray->perp_wall_dist = 0;
 	calculate_ray_steps(ray, game);
 }
 
