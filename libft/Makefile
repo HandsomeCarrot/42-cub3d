@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/19 10:07:29 by vpoka             #+#    #+#              #
-#    Updated: 2025/10/28 00:11:43 by vpoka            ###   ########.fr        #
+#    Updated: 2025/12/02 19:44:12 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -124,7 +124,7 @@ clean:
 	$(call log,WARNING,deleted $(B) directory for $(NAME)!)
 
 fclean: clean
-	$(RM) $(NAME)
+	@ $(RM) $(NAME)
 	$(call log,WARNING,deleted $(NAME)!)
 
 re: fclean $(NAME)
