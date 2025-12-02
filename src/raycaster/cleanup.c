@@ -6,11 +6,12 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 13:09:50 by hasaliho          #+#    #+#             */
-/*   Updated: 2025/11/27 18:38:45 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/12/02 15:18:31 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/raycaster/render.h"
+#include "../../include/common/cleanup.h"
 
 void	texture_img_destroyer(t_game *g, t_texture *tex)
 {
@@ -36,4 +37,6 @@ void	cleanup_game(t_game *game)
 		mlx_destroy_display(game->mlx.mlx);
 	if (game->mlx.mlx)
 		free(game->mlx.mlx);
+	if (game->map)
+		free_string_array(&game->map);
 }

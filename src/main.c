@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 17:26:09 by vpoka             #+#    #+#             */
-/*   Updated: 2025/12/02 15:08:06 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/12/02 15:23:46 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	main(int argc, char **argv)
 		main_cleanup(&map_data);
 		return (1);
 	}
+	free_image_paths(&map_data);
 	setup_hooks(&game);
 	mlx_loop(game.mlx.mlx);
 	return (main_cleanup(&map_data), 0);

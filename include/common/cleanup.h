@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 20:31:32 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/28 17:14:37 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/12/02 15:23:46 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 //-----cleanup_main.c-----//
 
 void	main_cleanup(t_map_data *data);
+void	free_image_paths(t_map_data *data);
 
 //-----cleanup_strings.c-----//
 
