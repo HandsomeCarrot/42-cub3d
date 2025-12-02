@@ -6,7 +6,7 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 17:26:09 by vpoka             #+#    #+#             */
-/*   Updated: 2025/12/02 14:22:36 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/12/02 15:08:06 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ int	main(int argc, char **argv)
 	t_game		game;
 
 	log_msg(DEBUG, __FILE__, __LINE__, "executing cub3d");
-	ft_bzero(&map_data, sizeof(t_map_data));
+	map_data = (t_map_data){0};
 	if (parse(argc, argv, &map_data))
 	{
 		main_cleanup(&map_data);
 		return (1);
 	}
-	ft_bzero(&game, sizeof(t_game));
+	game = (t_game){0};
 	if (move_info(&game, &map_data) || !init_mlx(&game, &map_data))
 	{
 		log_msg(ERROR, __FILE__, __LINE__, "MLX initialization failed");
