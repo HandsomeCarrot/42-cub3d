@@ -6,11 +6,12 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:34:49 by vpoka             #+#    #+#             */
-/*   Updated: 2025/11/25 20:16:08 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/11/28 17:21:25 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/logging.h"
+#include "../../include/common/logging.h"
+#include <stdbool.h>
 
 /**
  * @brief Prints the log level prefix if the current logging level allows it.

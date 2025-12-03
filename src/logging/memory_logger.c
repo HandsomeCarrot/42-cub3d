@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/logging.h"
+#include "../../include/common/logging.h"
 
 /**
  * @brief Allocates memory for an array of elements with logging capabilities.

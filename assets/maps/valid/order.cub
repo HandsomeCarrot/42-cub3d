@@ -1,9 +1,9 @@
 F 220,100,0
-NO ./assets/textures/xpm/Wood.xpm
-EA ./assets/textures/xpm/Stone.xpm
+NO ./assets/textures/xpm/Wood_1024.xpm
+EA ./assets/textures/xpm/Stone_1024.xpm
 C 225,30,0
-SO ./assets/textures/xpm/Metal.xpm
-WE ./assets/textures/xpm/Brick.xpm
+SO ./assets/textures/xpm/Metal_1024.xpm
+WE ./assets/textures/xpm/Brick_4k.xpm
 
 111111
 100001

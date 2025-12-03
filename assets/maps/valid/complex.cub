@@ -1,7 +1,7 @@
-NO ./assets/textures/xpm/Wood.xpm
-SO ./assets/textures/xpm/Metal.xpm
-WE ./assets/textures/xpm/Brick.xpm
-EA ./assets/textures/xpm/Stone.xpm
+NO ./assets/textures/xpm/Wood_4k.xpm
+SO ./assets/textures/xpm/Metal_4k.xpm
+WE ./assets/textures/xpm/Brick_4k.xpm
+EA ./assets/textures/xpm/Stone_4k.xpm
 
 F 220,100,0
 C 225,30,0

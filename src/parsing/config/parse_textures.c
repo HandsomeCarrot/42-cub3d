@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/parsing.h"
+#include "../../../include/parsing/parsing.h"
 
 /**
  * @brief Sets the texture path for the corresponding wall identifier.

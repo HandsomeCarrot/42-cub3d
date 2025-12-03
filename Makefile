@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/11/27 15:38:37 by vpoka            ###   ########.fr        #
+#    Updated: 2025/12/03 18:24:18 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,9 +19,9 @@ CC := cc
 
 CFLAGS := -Wall -Wextra -Werror
 DPFLAGS := -MP -MD
-LIBS := -lmlx -lXext -lX11
+LIBS := -lmlx -lXext -lX11 -lm
 
-INCLUDE := -Iinclude -Ilibft
+INCLUDE := -Ilibft -Iinclude
 COMP := $(CC) $(CFLAGS) $(INCLUDE)
 
 RM := rm -f
@@ -64,11 +64,29 @@ PARSING_SRCS :=	$(addprefix parsing/, \
 				$(addprefix validation/, \
 				validate_content.c))
 
+RAYCASTER_SRCS :=	$(addprefix raycaster/, \
+					cleanup.c \
+					hooks.c \
+					movement.c \
+					utils.c \
+					$(addprefix minimap/, \
+					minimap.c \
+					minimap_utils.c) \
+					$(addprefix render/, \
+					render.c \
+					perform_dda.c \
+					drawing_utils.c) \
+					$(addprefix setup/, \
+					texture_utils.c \
+					player_setup.c \
+					mlx_setup.c))
+
 SRCS :=	$(addprefix $(S)/, \
 		main.c \
 		$(CLEANUP_SRCS) \
 		$(LOGGING_SRCS) \
-		$(PARSING_SRCS))
+		$(PARSING_SRCS) \
+		$(RAYCASTER_SRCS))
 
 B := build
 OBJS := $(SRCS:$(S)/%.c=$(B)/%.o)
@@ -119,8 +137,10 @@ $(NAME): $(LIBFT) $(OBJS)
 	@ $(COMP) $(OBJS) $(LIBFT) $(LIBS) -o $(NAME)
 	$(call log,SUCCESS,$(NAME) built successfully!)
 
-$(LIBFT):
+$(LIBFT): FORCE
 	$(call run_in_dir,libft)
+
+FORCE:
 
 $(B)/%.o: $(S)/%.c
 	$(call log,INFO,Compiling $<)
@@ -162,6 +182,6 @@ debug: COMP += -DLOGGING_LEVEL=3
 debug: re
 	$(call log,INFO,logging level set to DEBUG)
 
-.PHONY: all libft clean fclean re run error warning info debug
+.PHONY: all libft clean fclean re run error warning info debug FORCE
 
 -include $(DEPS)

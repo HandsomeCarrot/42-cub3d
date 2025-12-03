@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/parsing.h"
+#include "../../../include/parsing/parsing.h"
 
 /**
  * @brief Logs which texture identifiers are missing

@@ -1,11 +1,11 @@
-NO ./assets/textures/xpm/Wood.xpm
+NO ./assets/textures/xpm/Wood_1024.xpm
 
-SO                                                     ./assets/textures/xpm/Metal.xpm
+SO                                                     ./assets/textures/xpm/Metal_1024.xpm
 
 
-WE ./assets/textures/xpm/Brick.xpm
+WE ./assets/textures/xpm/Brick_4k.xpm
 
-EA ./assets/textures/xpm/Stone.xpm
+EA ./assets/textures/xpm/Stone_1024.xpm
 
 F       220,        100 ,       0       
 

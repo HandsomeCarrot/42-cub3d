@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cleanup.h"
+#include "../../include/common/cleanup.h"
 
 /**
  * @brief Frees an array of strings and sets pointers to NULL.

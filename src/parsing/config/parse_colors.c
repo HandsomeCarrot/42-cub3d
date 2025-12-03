@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/parsing.h"
+#include "../../../include/parsing/parsing.h"
 
 /**
  * @brief Parses and validates a single color channel value from the string
