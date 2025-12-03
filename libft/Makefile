@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/19 10:07:29 by vpoka             #+#    #+#              #
-#    Updated: 2025/12/02 19:56:00 by vpoka            ###   ########.fr        #
+#    Updated: 2025/12/03 23:07:16 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,10 +17,9 @@ NAME := libft.a
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
 DPFLAGS := -MP -MD
-INCLUDE := -I.
 
-ARNAME := ar rcs $(NAME)
-RM := rm -f
+INCLUDE := -I.
+COMP := $(CC) $(CFLAGS) $(INCLUDE)
 
 LIBFT := libft
 LIBFT_SRCS :=	$(addprefix $(LIBFT)/, \
@@ -75,34 +74,40 @@ GNL_SRCS :=	$(addprefix $(GNL)/, \
 				get_next_line_utils_bonus.c)
 
 SRCS := $(LIBFT_SRCS) $(GNL_SRCS)
+
 B := build
 OBJS := $(SRCS:%.c=$(B)/%.o)
 DEPS := $(OBJS:%.o=%.d)
 
 #-----COLORS-----#
 
-RST := \033[0m
-RED := \033[1;31m
-GREEN := \033[1;32m
-YELLOW := \033[1;33m
-BLUE := \033[1;34m
-MAGENTA := \033[1;35m
-CYAN := \033[1;36m
+GREEN = \033[1;32m
+RED = \033[1;31m
+BLUE = \033[1;34m
+YELLOW = \033[1;33m
+CYAN = \033[1;36m
+RESET = \033[0m
 
-#-----LOG LEVELS-----#
+#-----PRINTING TOOLS-----#
 
-INFO := $(BLUE)
-WARNING := $(YELLOW)
-ERROR := $(RED)
-SUCCESS := $(GREEN)
-DEBUG := $(MAGENTA)
+# Usage: $(call print_target, target_name)
+define print_target
+	@printf "$(BLUE)🛠️  Linking target: $(CYAN)$(1)$(RESET)\n"
+endef
 
-#-----LOG FUNCTION-----#
+# Usage: $(call print_compile, file_name)
+define print_compile
+	@printf "$(YELLOW)🔧 Compiling: $(RESET)$(1)\n"
+endef
 
-# Usage: $(call log,LEVEL,message)
-# Example: $(call log,INFO,Building library...)
-define log
-	@ printf "$($(1))[$(1)]$(RST) $(2)\n"
+# Usage: $(call print_clean, message)
+define print_clean
+	@printf "$(RED)🧹 $(1)$(RESET)\n"
+endef
+
+# Usage: $(call print_success, message)
+define print_success
+	@printf "$(GREEN)✨ $(1)$(RESET)\n"
 endef
 
 #-----RULES-----#
@@ -110,25 +115,25 @@ endef
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(call log,INFO,Linking $(NAME) (standard functions))
-	@ $(ARNAME) $^
-	@ $(call log,SUCCESS,$(NAME) linked successfully!)\
+	$(call print_target, $(NAME))
+	@ar rcs $(NAME) $^
+	$(call print_success, $(NAME) ready!)
 
 $(B)/%.o: %.c libft.h
-	$(call log,INFO,Compiling $<)
-	@ mkdir -p $(@D)
-	@ $(CC) $(CFLAGS) $(DPFLAGS) $(INCLUDE) -c $< -o $@
+	@mkdir -p $(@D)
+	$(call print_compile, $<)
+	@$(COMP) $(DPFLAGS) -c $< -o $@
 
 clean:
-	@ $(RM) -r $(B)
-	$(call log,WARNING,deleted $(B) directory for $(NAME)!)
+	@rm -rf $(B)
+	$(call print_clean, Removed build directory)
 
 fclean: clean
-	@ $(RM) $(NAME)
-	$(call log,WARNING,deleted $(NAME)!)
+	@rm -f $(NAME)
+	$(call print_clean, Removed library file)
 
-re: fclean $(NAME)
+re: fclean all
 
-.PHONY: all bonus clean fclean re
+.PHONY: all clean fclean re
 
 -include $(DEPS)

@@ -6,7 +6,7 @@
 #    By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 18:01:26 by vpoka             #+#    #+#              #
-#    Updated: 2025/12/03 18:24:18 by vpoka            ###   ########.fr        #
+#    Updated: 2025/12/03 23:13:43 by vpoka            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,17 +16,12 @@ NAME := cub3d
 LIBFT := libft/libft.a
 
 CC := cc
-
 CFLAGS := -Wall -Wextra -Werror
 DPFLAGS := -MP -MD
-LIBS := -lmlx -lXext -lX11 -lm
 
-INCLUDE := -Ilibft -Iinclude
+INCLUDE := -Iinclude -Ilibft
+LIBS := -Llibft -lft -lmlx -lXext -lX11 -lm
 COMP := $(CC) $(CFLAGS) $(INCLUDE)
-
-RM := rm -f
-
-S := src
 
 CLEANUP_SRCS :=	$(addprefix cleanup/, \
 				cleanup_main.c \
@@ -81,6 +76,7 @@ RAYCASTER_SRCS :=	$(addprefix raycaster/, \
 					player_setup.c \
 					mlx_setup.c))
 
+S := src
 SRCS :=	$(addprefix $(S)/, \
 		main.c \
 		$(CLEANUP_SRCS) \
@@ -94,28 +90,33 @@ DEPS := $(OBJS:%.o=%.d)
 
 #-----COLORS-----#
 
-RST := \033[0m
-RED := \033[1;31m
-GREEN := \033[1;32m
-YELLOW := \033[1;33m
-BLUE := \033[1;34m
-MAGENTA := \033[1;35m
-CYAN := \033[1;36m
+GREEN = \033[1;32m
+RED = \033[1;31m
+BLUE = \033[1;34m
+YELLOW = \033[1;33m
+CYAN = \033[1;36m
+RESET = \033[0m
 
-#-----LOG LEVELS-----#
+#-----PRINTING TOOLS-----#
 
-INFO := $(BLUE)
-WARNING := $(YELLOW)
-ERROR := $(RED)
-SUCCESS := $(GREEN)
-DEBUG := $(MAGENTA)
+# Usage: $(call print_target, target_name)
+define print_target
+	@printf "$(BLUE)🛠️  Compiling target: $(CYAN)$(1)$(RESET)\n"
+endef
 
-#-----LOG FUNCTION-----#
+# Usage: $(call print_compile, file_name)
+define print_compile
+	@printf "$(YELLOW)🔧 Compiling: $(RESET)$(1)\n"
+endef
 
-# Usage: $(call log,LEVEL,message)
-# Example: $(call log,INFO,Building library...)
-define log
-	@ printf "$($(1))[$(1)]$(RST) $(2)\n"
+# Usage: $(call print_clean, message)
+define print_clean
+	@printf "$(RED)🧹 $(1)$(RESET)\n"
+endef
+
+# Usage: $(call print_success, message)
+define print_success
+	@printf "$(GREEN)✨ $(1)$(RESET)\n"
 endef
 
 #-----RUN IN DIRECTORY FUNCTION-----#
@@ -123,9 +124,9 @@ endef
 # Usage: $(call run_in_dir,directory_path,make_command)
 # Example: $(call run_in_dir,libft,complete)
 define run_in_dir
-	$(call log,DEBUG,changing directory to $(1))
-	@ make $(2) -C $(1)
-	$(call log,DEBUG,returning from directory $(1))
+	@printf "$(BLUE)📂 Entering directory: $(CYAN)$(1)$(RESET)\n"
+	@make $(2) -C $(1) --no-print-directory
+	@printf "$(BLUE)📂 Leaving directory: $(CYAN)$(1)$(RESET)\n"
 endef
 
 #-----RULES-----#
@@ -133,55 +134,47 @@ endef
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(call log,INFO,building $(NAME))
-	@ $(COMP) $(OBJS) $(LIBFT) $(LIBS) -o $(NAME)
-	$(call log,SUCCESS,$(NAME) built successfully!)
+	$(call print_target, $(NAME))
+	@$(COMP) $(OBJS) $(LIBS) -o $(NAME)
+	$(call print_success, $(NAME) ready!)
 
 $(LIBFT): FORCE
-	$(call run_in_dir,libft)
+	$(call run_in_dir,libft,)
 
 FORCE:
 
 $(B)/%.o: $(S)/%.c
-	$(call log,INFO,Compiling $<)
-	@ mkdir -p $(@D)
-	@ $(COMP) $(DPFLAGS) -c $< -o $@
+	@mkdir -p $(@D)
+	$(call print_compile, $<)
+	@$(COMP) $(DPFLAGS) -c $< -o $@
 
 clean:
-	@ $(RM) -r $(B)
-	$(call log,WARNING,deleted $(B) directory for $(NAME)!)
+	@rm -rf $(B)
+	$(call print_clean, Removed build directory)
 	$(call run_in_dir,libft,clean)
 
 fclean: clean
-	@ $(RM) $(NAME)
-	$(call log,WARNING,deleted $(NAME)!)
+	@rm -f $(NAME)
+	$(call print_clean, Removed executable)
 	$(call run_in_dir,libft,fclean)
 
 re: fclean all
 
-run: all
-	@ printf "\n"
-	$(call log,INFO,executing $(NAME))
-	@ ./$(NAME) ./assets/maps/valid/basic.cub
+run: re
+	@printf "$(BLUE)🚀 Running $(NAME)...$(RESET)\n"
+	@printf "$(CYAN)--------------------------------$(RESET)\n"
+	@./$(NAME) ./assets/maps/valid/basic.cub
 
 #-----LOG LEVEL RULES-----#
 
-error: COMP += -DLOGGING_LEVEL=0
-error: re
-	$(call log,INFO,logging level set to ERROR)
+error: COMP += -DLOGGING_LEVEL=0 re
 
-warning: COMP += -DLOGGING_LEVEL=1
-warning: re
-	$(call log,INFO,logging level set to WARNING)
+warning: COMP += -DLOGGING_LEVEL=1 re
 
-info: COMP += -DLOGGING_LEVEL=2
-info: re
-	$(call log,INFO,logging level set to INFO)
+info: COMP += -DLOGGING_LEVEL=2 re
                  
-debug: COMP += -DLOGGING_LEVEL=3
-debug: re
-	$(call log,INFO,logging level set to DEBUG)
+debug: COMP += -DLOGGING_LEVEL=3 re
 
-.PHONY: all libft clean fclean re run error warning info debug FORCE
+.PHONY: all clean fclean re run FORCE error warning info debug
 
 -include $(DEPS)
