@@ -6,19 +6,14 @@
 /*   By: vpoka <vpoka@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 17:26:09 by vpoka             #+#    #+#             */
-/*   Updated: 2025/12/02 15:23:46 by vpoka            ###   ########.fr       */
+/*   Updated: 2025/12/03 16:39:42 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-static int	move_info(t_game *game, t_map_data *config)
+static void	move_info(t_game *game, t_map_data *config)
 {
-	if (!game || !config)
-	{
-		log_msg(WARNING, __FILE__, __LINE__, LOG_INVALID_PARAM);
-		return (1);
-	}
 	init_player(&game->player, config->player.pos_x, config->player.pos_y,
 		config->player.orientation);
 	game->map = config->map.layout;
@@ -26,7 +21,6 @@ static int	move_info(t_game *game, t_map_data *config)
 	game->ceiling_color = config->colors.ceiling;
 	game->map_width = config->map.width;
 	game->map_height = config->map.width;
-	return (0);
 }
 
 /**
@@ -51,10 +45,11 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	game = (t_game){0};
-	if (move_info(&game, &map_data) || !init_mlx(&game, &map_data))
+	move_info(&game, &map_data);
+	if (!init_mlx(&game, &map_data))
 	{
 		log_msg(ERROR, __FILE__, __LINE__, "MLX initialization failed");
-		main_cleanup(&map_data);
+		free_image_paths(&map_data);
 		return (1);
 	}
 	free_image_paths(&map_data);
